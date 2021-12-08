@@ -302,13 +302,13 @@ aws cloudformation delete-stack --stack-name IoTTwinMakerCookieFactoryS3 --regio
 
 Run the following if you installed the add-on AWS IoT TwinMaker Insights and Simulation content and would like to remove it. These stacks may take several minutes to delete.
 
-Delete installed assets
+Delete installed assets.
 
 ```
 python3 $INSIGHT_DIR/install_insights_module.py --workspace-id $WORKSPACE_ID --region-name $AWS_DEFAULT_REGION --kda-stack-name $KDA_STACK_NAME --sagemaker-stack-name $SAGEMAKER_STACK_NAME --delete-all
 ```
 
-Delete cloudformation stacks
+Delete cloudformation stacks.
 
 ```
 aws cloudformation delete-stack --stack-name $KDA_STACK_NAME --region $AWS_DEFAULT_REGION && aws cloudformation wait stack-delete-complete --stack-name $KDA_STACK_NAME --region $AWS_DEFAULT_REGION
