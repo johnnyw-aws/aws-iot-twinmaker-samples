@@ -389,7 +389,7 @@
           "properties": {
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_0_35a2fc78-ca0a-46e1-a24d-9243acfa9ac5"
+                "stringValue": "Mixer_0_35a2fc78-ca0a-46e1-a24d-9243acfa9ac5:Mixer"
               }
             }
           }
@@ -399,12 +399,12 @@
           "properties": {
             "alarm_key": {
               "value": {
-                "stringValue": "Mixer_0_237685e2-3f33-42f9-8cff-5f761c94aa73"
+                "stringValue": "Mixer_0_237685e2-3f33-42f9-8cff-5f761c94aa73:Alarm"
               }
             },
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_0_237685e2-3f33-42f9-8cff-5f761c94aa73"
+                "stringValue": "Mixer_0_237685e2-3f33-42f9-8cff-5f761c94aa73:Alarm"
               }
             }
           }
@@ -439,7 +439,7 @@
           "properties": {
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_1_d2e1fb9c-308e-4801-9241-e4d3aa35255c"
+                "stringValue": "Mixer_1_d2e1fb9c-308e-4801-9241-e4d3aa35255c:Mixer"
               }
             }
           }
@@ -449,12 +449,12 @@
           "properties": {
             "alarm_key": {
               "value": {
-                "stringValue": "Mixer_1_597c735b-38fd-476c-b276-7592b1699ef8"
+                "stringValue": "Mixer_1_597c735b-38fd-476c-b276-7592b1699ef8:Alarm"
               }
             },
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_1_597c735b-38fd-476c-b276-7592b1699ef8"
+                "stringValue": "Mixer_1_597c735b-38fd-476c-b276-7592b1699ef8:Alarm"
               }
             }
           }
@@ -489,7 +489,7 @@
           "properties": {
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_10_8f562465-f2c2-4653-804c-a1f2c5f10ecb"
+                "stringValue": "Mixer_10_8f562465-f2c2-4653-804c-a1f2c5f10ecb:Mixer"
               }
             }
           }
@@ -499,12 +499,12 @@
           "properties": {
             "alarm_key": {
               "value": {
-                "stringValue": "Mixer_10_54205d7c-1407-4f17-8b38-188e437e8d9d"
+                "stringValue": "Mixer_10_54205d7c-1407-4f17-8b38-188e437e8d9d:Alarm"
               }
             },
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_10_54205d7c-1407-4f17-8b38-188e437e8d9d"
+                "stringValue": "Mixer_10_54205d7c-1407-4f17-8b38-188e437e8d9d:Alarm"
               }
             }
           }
@@ -539,7 +539,7 @@
           "properties": {
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_11_86e56d44-c19b-48d7-94a2-fdd68732f9aa"
+                "stringValue": "Mixer_11_86e56d44-c19b-48d7-94a2-fdd68732f9aa:Mixer"
               }
             }
           }
@@ -549,12 +549,12 @@
           "properties": {
             "alarm_key": {
               "value": {
-                "stringValue": "Mixer_11_2ef76a9e-825b-4405-992f-f6fb401412ac"
+                "stringValue": "Mixer_11_2ef76a9e-825b-4405-992f-f6fb401412ac:Alarm"
               }
             },
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_11_2ef76a9e-825b-4405-992f-f6fb401412ac"
+                "stringValue": "Mixer_11_2ef76a9e-825b-4405-992f-f6fb401412ac:Alarm"
               }
             }
           }
@@ -589,7 +589,7 @@
           "properties": {
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_12_9216fb6b-123c-4549-8551-c17e17d15d1d"
+                "stringValue": "Mixer_12_9216fb6b-123c-4549-8551-c17e17d15d1d:Mixer"
               }
             }
           }
@@ -599,12 +599,12 @@
           "properties": {
             "alarm_key": {
               "value": {
-                "stringValue": "Mixer_12_18786fcb-0b98-4e12-8d56-c7ab06007588"
+                "stringValue": "Mixer_12_18786fcb-0b98-4e12-8d56-c7ab06007588:Alarm"
               }
             },
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_12_18786fcb-0b98-4e12-8d56-c7ab06007588"
+                "stringValue": "Mixer_12_18786fcb-0b98-4e12-8d56-c7ab06007588:Alarm"
               }
             }
           }
@@ -639,7 +639,7 @@
           "properties": {
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_13_1e5bf8d3-99c9-42ae-839a-900794d31a22"
+                "stringValue": "Mixer_13_1e5bf8d3-99c9-42ae-839a-900794d31a22:Mixer"
               }
             }
           }
@@ -649,12 +649,12 @@
           "properties": {
             "alarm_key": {
               "value": {
-                "stringValue": "Mixer_13_e8061c85-73de-43f5-a772-4b14323abdf1"
+                "stringValue": "Mixer_13_e8061c85-73de-43f5-a772-4b14323abdf1:Alarm"
               }
             },
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_13_e8061c85-73de-43f5-a772-4b14323abdf1"
+                "stringValue": "Mixer_13_e8061c85-73de-43f5-a772-4b14323abdf1:Alarm"
               }
             }
           }
@@ -689,7 +689,7 @@
           "properties": {
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_14_bd4a1a32-c07b-43e7-a675-e34c26919f33"
+                "stringValue": "Mixer_14_bd4a1a32-c07b-43e7-a675-e34c26919f33:Mixer"
               }
             }
           }
@@ -699,12 +699,12 @@
           "properties": {
             "alarm_key": {
               "value": {
-                "stringValue": "Mixer_14_57a12ffb-6b5d-499f-95d8-9c1f88e9151a"
+                "stringValue": "Mixer_14_57a12ffb-6b5d-499f-95d8-9c1f88e9151a:Alarm"
               }
             },
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_14_57a12ffb-6b5d-499f-95d8-9c1f88e9151a"
+                "stringValue": "Mixer_14_57a12ffb-6b5d-499f-95d8-9c1f88e9151a:Alarm"
               }
             }
           }
@@ -739,7 +739,7 @@
           "properties": {
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_15_0bb566cd-d6f3-4804-9fe1-7d2abcad82d0"
+                "stringValue": "Mixer_15_0bb566cd-d6f3-4804-9fe1-7d2abcad82d0:Mixer"
               }
             }
           }
@@ -749,12 +749,12 @@
           "properties": {
             "alarm_key": {
               "value": {
-                "stringValue": "Mixer_15_445782e9-808d-459b-86bf-6267f3fd1971"
+                "stringValue": "Mixer_15_445782e9-808d-459b-86bf-6267f3fd1971:Alarm"
               }
             },
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_15_445782e9-808d-459b-86bf-6267f3fd1971"
+                "stringValue": "Mixer_15_445782e9-808d-459b-86bf-6267f3fd1971:Alarm"
               }
             }
           }
@@ -789,7 +789,7 @@
           "properties": {
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_16_ab6f7e9c-a4e3-48bf-ad23-98107b7da084"
+                "stringValue": "Mixer_16_ab6f7e9c-a4e3-48bf-ad23-98107b7da084:Mixer"
               }
             }
           }
@@ -799,12 +799,12 @@
           "properties": {
             "alarm_key": {
               "value": {
-                "stringValue": "Mixer_16_6393f849-ca84-4e43-9605-d20fa2477264"
+                "stringValue": "Mixer_16_6393f849-ca84-4e43-9605-d20fa2477264:Alarm"
               }
             },
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_16_6393f849-ca84-4e43-9605-d20fa2477264"
+                "stringValue": "Mixer_16_6393f849-ca84-4e43-9605-d20fa2477264:Alarm"
               }
             }
           }
@@ -839,7 +839,7 @@
           "properties": {
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_17_b0a69283-1626-4e0e-bf08-bc0feeecf01d"
+                "stringValue": "Mixer_17_b0a69283-1626-4e0e-bf08-bc0feeecf01d:Mixer"
               }
             }
           }
@@ -849,12 +849,12 @@
           "properties": {
             "alarm_key": {
               "value": {
-                "stringValue": "Mixer_17_92cdfa24-6cac-45e3-9b69-92a0117fd66a"
+                "stringValue": "Mixer_17_92cdfa24-6cac-45e3-9b69-92a0117fd66a:Alarm"
               }
             },
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_17_92cdfa24-6cac-45e3-9b69-92a0117fd66a"
+                "stringValue": "Mixer_17_92cdfa24-6cac-45e3-9b69-92a0117fd66a:Alarm"
               }
             }
           }
@@ -889,7 +889,7 @@
           "properties": {
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_18_bbc6cf6e-3633-4795-83d9-d8f36368e4fb"
+                "stringValue": "Mixer_18_bbc6cf6e-3633-4795-83d9-d8f36368e4fb:Mixer"
               }
             }
           }
@@ -899,12 +899,12 @@
           "properties": {
             "alarm_key": {
               "value": {
-                "stringValue": "Mixer_18_1774f1e2-a64b-4273-8572-d50fd7be2ed3"
+                "stringValue": "Mixer_18_1774f1e2-a64b-4273-8572-d50fd7be2ed3:Alarm"
               }
             },
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_18_1774f1e2-a64b-4273-8572-d50fd7be2ed3"
+                "stringValue": "Mixer_18_1774f1e2-a64b-4273-8572-d50fd7be2ed3:Alarm"
               }
             }
           }
@@ -939,7 +939,7 @@
           "properties": {
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_19_0a9f9294-d97e-47f1-8257-502249d17406"
+                "stringValue": "Mixer_19_0a9f9294-d97e-47f1-8257-502249d17406:Mixer"
               }
             }
           }
@@ -949,12 +949,12 @@
           "properties": {
             "alarm_key": {
               "value": {
-                "stringValue": "Mixer_19_46603486-4777-484b-ac6c-df287a8a0aaf"
+                "stringValue": "Mixer_19_46603486-4777-484b-ac6c-df287a8a0aaf:Alarm"
               }
             },
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_19_46603486-4777-484b-ac6c-df287a8a0aaf"
+                "stringValue": "Mixer_19_46603486-4777-484b-ac6c-df287a8a0aaf:Alarm"
               }
             }
           }
@@ -989,7 +989,7 @@
           "properties": {
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_2_d8e76844-e739-4845-a748-a83983279376"
+                "stringValue": "Mixer_2_d8e76844-e739-4845-a748-a83983279376:Mixer"
               }
             }
           }
@@ -999,12 +999,12 @@
           "properties": {
             "alarm_key": {
               "value": {
-                "stringValue": "Mixer_2_23a4ba92-f85c-423a-ba95-0a2f392d68eb"
+                "stringValue": "Mixer_2_23a4ba92-f85c-423a-ba95-0a2f392d68eb:Alarm"
               }
             },
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_2_23a4ba92-f85c-423a-ba95-0a2f392d68eb"
+                "stringValue": "Mixer_2_23a4ba92-f85c-423a-ba95-0a2f392d68eb:Alarm"
               }
             }
           }
@@ -1039,7 +1039,7 @@
           "properties": {
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_20_0568f25f-116c-429c-a974-5ceec065a6ac"
+                "stringValue": "Mixer_20_0568f25f-116c-429c-a974-5ceec065a6ac:Mixer"
               }
             }
           }
@@ -1049,12 +1049,12 @@
           "properties": {
             "alarm_key": {
               "value": {
-                "stringValue": "Mixer_20_db23cc52-ecd6-43a4-8b45-dc286089905a"
+                "stringValue": "Mixer_20_db23cc52-ecd6-43a4-8b45-dc286089905a:Alarm"
               }
             },
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_20_db23cc52-ecd6-43a4-8b45-dc286089905a"
+                "stringValue": "Mixer_20_db23cc52-ecd6-43a4-8b45-dc286089905a:Alarm"
               }
             }
           }
@@ -1089,7 +1089,7 @@
           "properties": {
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_21_3f539772-2555-4a4f-8586-9e4cee497de0"
+                "stringValue": "Mixer_21_3f539772-2555-4a4f-8586-9e4cee497de0:Mixer"
               }
             }
           }
@@ -1099,12 +1099,12 @@
           "properties": {
             "alarm_key": {
               "value": {
-                "stringValue": "Mixer_21_aacc32af-d1f2-4bec-be43-08baef9d9339"
+                "stringValue": "Mixer_21_aacc32af-d1f2-4bec-be43-08baef9d9339:Alarm"
               }
             },
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_21_aacc32af-d1f2-4bec-be43-08baef9d9339"
+                "stringValue": "Mixer_21_aacc32af-d1f2-4bec-be43-08baef9d9339:Alarm"
               }
             }
           }
@@ -1139,7 +1139,7 @@
           "properties": {
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_22_680b5b8e-1afe-4a77-87ab-834fbe5ba01e"
+                "stringValue": "Mixer_22_680b5b8e-1afe-4a77-87ab-834fbe5ba01e:Mixer"
               }
             }
           }
@@ -1149,12 +1149,12 @@
           "properties": {
             "alarm_key": {
               "value": {
-                "stringValue": "Mixer_22_fc8faca3-c6fa-4bdc-9a60-045d3d6134b7"
+                "stringValue": "Mixer_22_fc8faca3-c6fa-4bdc-9a60-045d3d6134b7:Alarm"
               }
             },
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_22_fc8faca3-c6fa-4bdc-9a60-045d3d6134b7"
+                "stringValue": "Mixer_22_fc8faca3-c6fa-4bdc-9a60-045d3d6134b7:Alarm"
               }
             }
           }
@@ -1189,7 +1189,7 @@
           "properties": {
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_23_ba808290-9abc-44df-8db9-ee63f0740340"
+                "stringValue": "Mixer_23_ba808290-9abc-44df-8db9-ee63f0740340:Mixer"
               }
             }
           }
@@ -1199,12 +1199,12 @@
           "properties": {
             "alarm_key": {
               "value": {
-                "stringValue": "Mixer_23_7025eb0a-1950-4142-a30a-90b90b12c56a"
+                "stringValue": "Mixer_23_7025eb0a-1950-4142-a30a-90b90b12c56a:Alarm"
               }
             },
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_23_7025eb0a-1950-4142-a30a-90b90b12c56a"
+                "stringValue": "Mixer_23_7025eb0a-1950-4142-a30a-90b90b12c56a:Alarm"
               }
             }
           }
@@ -1239,7 +1239,7 @@
           "properties": {
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_24_7ff0b75b-f0fa-43f0-bc89-b96337586d00"
+                "stringValue": "Mixer_24_7ff0b75b-f0fa-43f0-bc89-b96337586d00:Mixer"
               }
             }
           }
@@ -1249,12 +1249,12 @@
           "properties": {
             "alarm_key": {
               "value": {
-                "stringValue": "Mixer_24_a328de22-4e43-40da-b11d-5705bf8297c6"
+                "stringValue": "Mixer_24_a328de22-4e43-40da-b11d-5705bf8297c6:Alarm"
               }
             },
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_24_a328de22-4e43-40da-b11d-5705bf8297c6"
+                "stringValue": "Mixer_24_a328de22-4e43-40da-b11d-5705bf8297c6:Alarm"
               }
             }
           }
@@ -1289,7 +1289,7 @@
           "properties": {
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_25_cf42effc-ba19-48ba-bbc3-d21d2508ce31"
+                "stringValue": "Mixer_25_cf42effc-ba19-48ba-bbc3-d21d2508ce31:Mixer"
               }
             }
           }
@@ -1299,12 +1299,12 @@
           "properties": {
             "alarm_key": {
               "value": {
-                "stringValue": "Mixer_25_4d403849-b962-44ed-8458-3994fb60d9fd"
+                "stringValue": "Mixer_25_4d403849-b962-44ed-8458-3994fb60d9fd:Alarm"
               }
             },
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_25_4d403849-b962-44ed-8458-3994fb60d9fd"
+                "stringValue": "Mixer_25_4d403849-b962-44ed-8458-3994fb60d9fd:Alarm"
               }
             }
           }
@@ -1339,7 +1339,7 @@
           "properties": {
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_3_1c19dcc4-7e76-458e-83a0-f6cd0f72c37e"
+                "stringValue": "Mixer_3_1c19dcc4-7e76-458e-83a0-f6cd0f72c37e:Mixer"
               }
             }
           }
@@ -1349,12 +1349,12 @@
           "properties": {
             "alarm_key": {
               "value": {
-                "stringValue": "Mixer_3_f813ecad-e144-4105-a4dd-64b8070fe012"
+                "stringValue": "Mixer_3_f813ecad-e144-4105-a4dd-64b8070fe012:Alarm"
               }
             },
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_3_f813ecad-e144-4105-a4dd-64b8070fe012"
+                "stringValue": "Mixer_3_f813ecad-e144-4105-a4dd-64b8070fe012:Alarm"
               }
             }
           }
@@ -1389,7 +1389,7 @@
           "properties": {
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_4_31dfa9b3-2dc9-4ae2-8de6-fbffd1c972df"
+                "stringValue": "Mixer_4_31dfa9b3-2dc9-4ae2-8de6-fbffd1c972df:Mixer"
               }
             }
           }
@@ -1399,12 +1399,12 @@
           "properties": {
             "alarm_key": {
               "value": {
-                "stringValue": "Mixer_4_137a2b35-33ff-4590-aa98-3299aab56203"
+                "stringValue": "Mixer_4_137a2b35-33ff-4590-aa98-3299aab56203:Alarm"
               }
             },
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_4_137a2b35-33ff-4590-aa98-3299aab56203"
+                "stringValue": "Mixer_4_137a2b35-33ff-4590-aa98-3299aab56203:Alarm"
               }
             }
           }
@@ -1439,7 +1439,7 @@
           "properties": {
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_5_794a4271-0b9c-4447-a492-228ecf77e5c7"
+                "stringValue": "Mixer_5_794a4271-0b9c-4447-a492-228ecf77e5c7:Mixer"
               }
             }
           }
@@ -1449,12 +1449,12 @@
           "properties": {
             "alarm_key": {
               "value": {
-                "stringValue": "Mixer_5_a15993f9-dfb5-41f4-b7fe-acd3e1b838c4"
+                "stringValue": "Mixer_5_a15993f9-dfb5-41f4-b7fe-acd3e1b838c4:Alarm"
               }
             },
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_5_a15993f9-dfb5-41f4-b7fe-acd3e1b838c4"
+                "stringValue": "Mixer_5_a15993f9-dfb5-41f4-b7fe-acd3e1b838c4:Alarm"
               }
             }
           }
@@ -1489,7 +1489,7 @@
           "properties": {
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_6_b66db3d3-c144-47b5-afb9-3a0150c53456"
+                "stringValue": "Mixer_6_b66db3d3-c144-47b5-afb9-3a0150c53456:Mixer"
               }
             }
           }
@@ -1499,12 +1499,12 @@
           "properties": {
             "alarm_key": {
               "value": {
-                "stringValue": "Mixer_6_93efa292-4bd2-4e01-bcee-bb943c332dd2"
+                "stringValue": "Mixer_6_93efa292-4bd2-4e01-bcee-bb943c332dd2:Alarm"
               }
             },
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_6_93efa292-4bd2-4e01-bcee-bb943c332dd2"
+                "stringValue": "Mixer_6_93efa292-4bd2-4e01-bcee-bb943c332dd2:Alarm"
               }
             }
           }
@@ -1539,7 +1539,7 @@
           "properties": {
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_7_851608fb-def2-4b0e-aa71-9021d1c4846a"
+                "stringValue": "Mixer_7_851608fb-def2-4b0e-aa71-9021d1c4846a:Mixer"
               }
             }
           }
@@ -1549,12 +1549,12 @@
           "properties": {
             "alarm_key": {
               "value": {
-                "stringValue": "Mixer_7_ca6b9bd9-6ace-433f-a095-da4b8ab53b1b"
+                "stringValue": "Mixer_7_ca6b9bd9-6ace-433f-a095-da4b8ab53b1b:Alarm"
               }
             },
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_7_ca6b9bd9-6ace-433f-a095-da4b8ab53b1b"
+                "stringValue": "Mixer_7_ca6b9bd9-6ace-433f-a095-da4b8ab53b1b:Alarm"
               }
             }
           }
@@ -1589,7 +1589,7 @@
           "properties": {
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_8_6db988de-16f7-4ad6-bcbb-7c0416fed471"
+                "stringValue": "Mixer_8_6db988de-16f7-4ad6-bcbb-7c0416fed471:Mixer"
               }
             }
           }
@@ -1599,12 +1599,12 @@
           "properties": {
             "alarm_key": {
               "value": {
-                "stringValue": "Mixer_8_f058a7eb-4c6c-4990-8a5f-e39168f16f03"
+                "stringValue": "Mixer_8_f058a7eb-4c6c-4990-8a5f-e39168f16f03:Alarm"
               }
             },
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_8_f058a7eb-4c6c-4990-8a5f-e39168f16f03"
+                "stringValue": "Mixer_8_f058a7eb-4c6c-4990-8a5f-e39168f16f03:Alarm"
               }
             }
           }
@@ -1639,7 +1639,7 @@
           "properties": {
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_9_a22d4ca4-0fc6-464f-9ea1-14de9d799c52"
+                "stringValue": "Mixer_9_a22d4ca4-0fc6-464f-9ea1-14de9d799c52:Mixer"
               }
             }
           }
@@ -1649,12 +1649,12 @@
           "properties": {
             "alarm_key": {
               "value": {
-                "stringValue": "Mixer_9_515ed6a1-0fb1-4e09-a513-b682938a2bb4"
+                "stringValue": "Mixer_9_515ed6a1-0fb1-4e09-a513-b682938a2bb4:Alarm"
               }
             },
             "telemetryAssetId": {
               "value": {
-                "stringValue": "Mixer_9_515ed6a1-0fb1-4e09-a513-b682938a2bb4"
+                "stringValue": "Mixer_9_515ed6a1-0fb1-4e09-a513-b682938a2bb4:Alarm"
               }
             }
           }
@@ -1689,7 +1689,7 @@
           "properties": {
             "telemetryAssetId": {
               "value": {
-                "stringValue": "WaterTank_76bff931-8642-424b-ac5d-636a089669f4"
+                "stringValue": "WaterTank_76bff931-8642-424b-ac5d-636a089669f4:WaterTank"
               }
             }
           }
@@ -1699,12 +1699,12 @@
           "properties": {
             "alarm_key": {
               "value": {
-                "stringValue": "WaterTank_ce63b782-c855-4cff-8d1c-6e542e0a3cbf"
+                "stringValue": "WaterTank_ce63b782-c855-4cff-8d1c-6e542e0a3cbf:Alarm"
               }
             },
             "telemetryAssetId": {
               "value": {
-                "stringValue": "WaterTank_ce63b782-c855-4cff-8d1c-6e542e0a3cbf"
+                "stringValue": "WaterTank_ce63b782-c855-4cff-8d1c-6e542e0a3cbf:Alarm"
               }
             }
           }

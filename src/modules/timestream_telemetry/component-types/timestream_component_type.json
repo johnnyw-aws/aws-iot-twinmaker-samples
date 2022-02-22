@@ -9,6 +9,7 @@
             }
         }
     },
+    "description": "Models a telemetry asset (i.e. data stream) stored in Timestream. Note: 'asset' here refers to the data stream not the physical asset. TelemetryAssetId uniquely identifies the data stream in the IoT TwinMaker-external system (Timestream in this case) hence it is marked as 'isExternalId=true'.",
     "propertyDefinitions": {
         "telemetryAssetType": {
             "dataType": {
@@ -23,7 +24,7 @@
             "dataType": {
                 "type": "STRING"
             },
-            "isExternalId": false,
+            "isExternalId": true,
             "isStoredExternally": false,
             "isTimeSeries": false,
             "isRequiredInEntity": true

@@ -48,8 +48,12 @@ class TimestreamReader(SingleEntityReader, MultiEntityReader):
         property_filter = request.property_filters[0] if request.property_filters else None
         filter_clause = f"AND measure_value::varchar {property_filter['operator']} '{property_filter['value']['stringValue']}'" if property_filter else ""
 
-        telemetry_asset_type = request.udq_context['properties']['telemetryAssetType']['value']['stringValue']
-        telemetry_asset_id = request.udq_context['properties']['telemetryAssetId']['value']['stringValue']
+        telemetry_asset_id_composite = request.udq_context['properties']['telemetryAssetId']['value']['stringValue']
+
+        # telemetry_asset_id is a composite key like "Mixer_0_35a2fc78-ca0a-46e1-a24d-9243acfa9ac5:Mixer" or "Mixer_0_237685e2-3f33-42f9-8cff-5f761c94aa73:Alarm"
+        # split it apart to query the datastore
+        telemetry_asset_id = telemetry_asset_id_composite.split(":")[0]
+        telemetry_asset_type = telemetry_asset_id_composite.split(":")[1]
 
         if property_filter: 
             sample_query = f"""SELECT TelemetryAssetId, measure_name, time, measure_value::double, measure_value::varchar FROM CookieFactoryTelemetry.Telemetry  WHERE time > from_iso8601_timestamp('2021-10-18T21:42:58') AND time <= from_iso8601_timestamp('2021-10-18T21:43:35') AND TelemetryAssetType = 'test' AND TelemetryAssetId = 'test' AND measure_name = 'alarm_status' AND measure_value::varchar {property_filter['operator']} 'abc'  ORDER BY time ASC"""
@@ -179,7 +183,7 @@ class TimestreamDataRow(IoTTwinMakerDataRow):
         else:
             return IoTTwinMakerReference(external_id_property={
                 # special case Alarm and map the externalId to alarm_key
-                'alarm_key' if self._telemetry_asset_type == 'Alarm' else 'telemetryAssetId': self._row_as_dict['TelemetryAssetId'],
+                'alarm_key' if self._telemetry_asset_type == 'Alarm' else 'telemetryAssetId': f"{self._row_as_dict['TelemetryAssetId']}:{self._telemetry_asset_type}",
                 'propertyName': property_name if property_name != 'Status' else 'alarm_status'  # AWS IoT TwinMaker's alarm component in Grafana expects a particular property name for alarm telemetry
             })
 
