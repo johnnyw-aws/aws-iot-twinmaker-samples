@@ -18,10 +18,8 @@ jobs:
           name: "Say hello"
           command: "echo Hello, World!"
       - run:
-        name: "npm audit timestream_telemetry"
-        command: |
-          cd src/modules/timestream_telemetry/cdk/
-          npm audit
+          name: "npm audit timestream_telemetry"
+          command: "cd src/modules/timestream_telemetry/cdk/ && npm audit"
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
