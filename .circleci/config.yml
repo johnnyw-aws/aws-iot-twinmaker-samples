@@ -2,6 +2,10 @@
 # See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 
+# https://circleci.com/developer/orbs/orb/circleci/node for npm
+orbs:
+  node: circleci/node@x.y
+
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
