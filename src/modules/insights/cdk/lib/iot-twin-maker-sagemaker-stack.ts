@@ -2,33 +2,42 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import * as path from "path";
-import * as cdk from "@aws-cdk/core";
-import * as assets from "@aws-cdk/aws-s3-assets";
+import {App, Fn, Tags, Stack, StackProps, CfnOutput, Duration} from 'aws-cdk-lib'
+import { Construct } from 'constructs';
+import { aws_iam as iam } from 'aws-cdk-lib';
+// import { aws_logs as logs } from 'aws-cdk-lib';
+// import { aws_lambda as lambda } from 'aws-cdk-lib';
+import { aws_sagemaker as aws_sm } from 'aws-cdk-lib';
+// import {PythonFunction, PythonLayerVersion} from '@aws-cdk/aws-lambda-python-alpha';
+// import * as cdk from "@aws-cdk/core";
+// import * as assets from "@aws-cdk/aws-s3-assets";
+import {aws_s3_assets as assets } from 'aws-cdk-lib';
 import { SimulationType } from "./utils";
-import {
-  CfnEndpoint,
-  CfnEndpointConfig,
-  CfnModel,
-} from "@aws-cdk/aws-sagemaker";
-import {
-  Effect,
-  PolicyDocument,
-  PolicyStatement,
-  Role,
-  ServicePrincipal,
-} from "@aws-cdk/aws-iam";
-import { DockerImageAsset } from "@aws-cdk/aws-ecr-assets";
+// import {
+//   CfnEndpoint,
+//   CfnEndpointConfig,
+//   CfnModel,
+// } from "@aws-cdk/aws-sagemaker";
+// import {
+//   Effect,
+//   PolicyDocument,
+//   PolicyStatement,
+//   Role,
+//   ServicePrincipal,
+// } from "@aws-cdk/aws-iam";
+// import { DockerImageAsset } from "@aws-cdk/aws-ecr-assets";
+import { aws_ecr_assets as ecr_a } from 'aws-cdk-lib';
 
-interface IotTwinMakerSageMakerStackProps extends cdk.StackProps {
+interface IotTwinMakerSageMakerStackProps extends StackProps {
   /**
    * simulation type
    */
   readonly simulationType: SimulationType;
 }
 
-export class IotTwinMakerSagemakerStack extends cdk.Stack {
+export class IotTwinMakerSagemakerStack extends Stack {
   constructor(
-    scope: cdk.Construct,
+    scope: Construct,
     id: string,
     props: IotTwinMakerSageMakerStackProps
   ) {
@@ -66,20 +75,20 @@ export class IotTwinMakerSagemakerStack extends cdk.Stack {
     /***********************************************************************
      *  ECR resources
      ***********************************************************************/
-    const dockerImageAsset = new DockerImageAsset(this, "BuildImage", {
+    const dockerImageAsset = new ecr_a.DockerImageAsset(this, "BuildImage", {
       directory: path.join(CDK_DIR, `assets/${props.simulationType}/`),
     });
 
     /***********************************************************************
      * Sagemaker resources
      ***********************************************************************/
-    const executionRole = new Role(this, "SageMakerExecutionRole", {
-      assumedBy: new ServicePrincipal("sagemaker.amazonaws.com"),
+    const executionRole = new iam.Role(this, "SageMakerExecutionRole", {
+      assumedBy: new iam.ServicePrincipal("sagemaker.amazonaws.com"),
       inlinePolicies: {
-        executionPolicies: new PolicyDocument({
+        executionPolicies: new iam.PolicyDocument({
           statements: [
-            new PolicyStatement({
-              effect: Effect.ALLOW,
+            new iam.PolicyStatement({
+              effect: iam.Effect.ALLOW,
               actions: [
                 "cloudwatch:PutMetricData",
                 "logs:CreateLogStream",
@@ -89,8 +98,8 @@ export class IotTwinMakerSagemakerStack extends cdk.Stack {
               ],
               resources: ["*"],
             }),
-            new PolicyStatement({
-              effect: Effect.ALLOW,
+            new iam.PolicyStatement({
+              effect: iam.Effect.ALLOW,
               actions: [
                 "ecr:GetAuthorizationToken",
                 "ecr:BatchCheckLayerAvailability",
@@ -99,8 +108,8 @@ export class IotTwinMakerSagemakerStack extends cdk.Stack {
               ],
               resources: ["*"],
             }),
-            new PolicyStatement({
-              effect: Effect.ALLOW,
+            new iam.PolicyStatement({
+              effect: iam.Effect.ALLOW,
               actions: [
                 "s3:GetObject",
                 "s3:PutObject",
@@ -132,21 +141,21 @@ export class IotTwinMakerSagemakerStack extends cdk.Stack {
       props.env?.region as string
     );
 
-    new cdk.CfnOutput(this, "SimulationEndpointName", {
+    new CfnOutput(this, "SimulationEndpointName", {
       value: simulationEndpoint.attrEndpointName,
     });
-    new cdk.CfnOutput(this, "AnomalyDetectionEndpointName", {
+    new CfnOutput(this, "AnomalyDetectionEndpointName", {
       value: anomalyDetectionEndpoint.attrEndpointName,
     });
   }
 
   private createSimulationEndpoint(
     props: IotTwinMakerSageMakerStackProps,
-    executionRole: Role,
-    dockerImageAsset: DockerImageAsset,
+    executionRole: iam.Role,
+    dockerImageAsset: ecr_a.DockerImageAsset,
     simulationModelAsset: assets.Asset
-  ): CfnEndpoint {
-    const sageMakerSimulationModel = new CfnModel(
+  ): aws_sm.CfnEndpoint {
+    const sageMakerSimulationModel = new aws_sm.CfnModel(
       this,
       "SageMakerSimulationModel",
       {
@@ -167,7 +176,7 @@ export class IotTwinMakerSagemakerStack extends cdk.Stack {
       executionRole
     );
 
-    const simulationEndpointConfig = new CfnEndpointConfig(
+    const simulationEndpointConfig = new aws_sm.CfnEndpointConfig(
       this,
       "SagemakerSimulationEndpointConfig",
       {
@@ -184,7 +193,7 @@ export class IotTwinMakerSagemakerStack extends cdk.Stack {
     );
     simulationEndpointConfig.node.addDependency(sageMakerSimulationModel);
 
-    const simulationEndpoint = new CfnEndpoint(this, "SimulationEndpoint", {
+    const simulationEndpoint = new aws_sm.CfnEndpoint(this, "SimulationEndpoint", {
       endpointConfigName: simulationEndpointConfig.attrEndpointConfigName!,
     });
     simulationEndpoint.node.addDependency(simulationEndpointConfig);
@@ -192,11 +201,11 @@ export class IotTwinMakerSagemakerStack extends cdk.Stack {
   }
 
   private createAnomalyDetectionEndpoint(
-    executionRole: Role,
+    executionRole: iam.Role,
     anomalyDetectionModelAsset: assets.Asset,
     region: string
-  ): CfnEndpoint {
-    const sageMakerModel = new CfnModel(
+  ): aws_sm.CfnEndpoint {
+    const sageMakerModel = new aws_sm.CfnModel(
       this,
       "SageMakerAnomalyDetectionModel",
       {
@@ -204,7 +213,7 @@ export class IotTwinMakerSagemakerStack extends cdk.Stack {
         modelName: `Anomaly-Detection-Model-${new Date().valueOf()}`,
         containers: [
           {
-            image: this.getRandomCutForestDockerRegistrationPath(region),
+            image: IotTwinMakerSagemakerStack.getRandomCutForestDockerRegistrationPath(region),
             imageConfig: { repositoryAccessMode: "Platform" },
             mode: "SingleModel",
             modelDataUrl: anomalyDetectionModelAsset.httpUrl,
@@ -217,7 +226,7 @@ export class IotTwinMakerSagemakerStack extends cdk.Stack {
       executionRole
     );
 
-    const sageMakerEndpointConfig = new CfnEndpointConfig(
+    const sageMakerEndpointConfig = new aws_sm.CfnEndpointConfig(
       this,
       "SagemakerAnomalyDetectionEndpointConfig",
       {
@@ -234,7 +243,7 @@ export class IotTwinMakerSagemakerStack extends cdk.Stack {
     );
     sageMakerEndpointConfig.node.addDependency(sageMakerModel);
 
-    const sageMakerEndpoint = new CfnEndpoint(
+    const sageMakerEndpoint = new aws_sm.CfnEndpoint(
       this,
       "AnomalyDetectionEndpoint",
       {
@@ -245,7 +254,7 @@ export class IotTwinMakerSagemakerStack extends cdk.Stack {
     return sageMakerEndpoint;
   }
 
-  private getRandomCutForestDockerRegistrationPath(region: string): string {
+  private static getRandomCutForestDockerRegistrationPath(region: string): string {
     switch (region) {
       case "us-east-1":
         return "382416733822.dkr.ecr.us-east-1.amazonaws.com/randomcutforest:1";
