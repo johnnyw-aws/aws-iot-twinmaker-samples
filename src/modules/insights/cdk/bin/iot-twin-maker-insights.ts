@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import "source-map-support/register";
-import {App, Fn, Tags} from 'aws-cdk-lib'
+import {App} from 'aws-cdk-lib'
 import { IotTwinMakerSagemakerStack } from "../lib/iot-twin-maker-sagemaker-stack";
 import { SimulationType } from "../lib/utils";
 import { IotTwinMakerKdaStack } from "../lib/iot-twin-maker-kda-stack";

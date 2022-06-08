@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import 'source-map-support/register';
-import {App, Fn, Tags} from 'aws-cdk-lib'
+import { App } from 'aws-cdk-lib'
 import { CdkStack } from '../lib/cdk-stack';
 
 const app = new App();

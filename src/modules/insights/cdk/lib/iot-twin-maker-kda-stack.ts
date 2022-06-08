@@ -1,21 +1,12 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved. 2021
 // SPDX-License-Identifier: Apache-2.0
 
-import {App, Fn, Tags, Stack, StackProps, CfnOutput, Duration} from 'aws-cdk-lib'
-import { Construct } from 'constructs';
+import {App, Fn, Stack, StackProps, CfnOutput} from 'aws-cdk-lib'
 import { aws_iam as iam } from 'aws-cdk-lib';
 import { aws_logs as logs } from 'aws-cdk-lib';
-import { aws_lambda as lambda } from 'aws-cdk-lib';
-import {PythonFunction, PythonLayerVersion} from '@aws-cdk/aws-lambda-python-alpha';
-// import * as cdk from '@aws-cdk/core';
-// import * as kda from "@aws-cdk/aws-kinesisanalytics";
 import { aws_kinesisanalytics as kda } from 'aws-cdk-lib';
 import { aws_glue as glue } from 'aws-cdk-lib';
-// import * as glue from "@aws-cdk/aws-glue";
-// import * as iam from "@aws-cdk/aws-iam";
 import { aws_s3 as s3 } from 'aws-cdk-lib';
-// import * as s3 from '@aws-cdk/aws-s3';
-// import { LogGroup, LogStream, RetentionDays } from '@aws-cdk/aws-logs';
 
 export class IotTwinMakerKdaStack extends Stack {
   constructor(scope: App, id: string, props?: StackProps) {

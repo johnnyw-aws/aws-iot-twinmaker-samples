@@ -1,16 +1,14 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved. 2021
 // SPDX-License-Identifier: Apache-2.0
 
-import {App, Fn, Tags, Stack, StackProps, CfnOutput, Duration} from 'aws-cdk-lib'
+import * as path from 'path';
+import { Stack, StackProps, CfnOutput, Duration } from 'aws-cdk-lib'
 import { Construct } from 'constructs';
+import { PythonFunction, PythonLayerVersion } from '@aws-cdk/aws-lambda-python-alpha';
 import { aws_iam as iam } from 'aws-cdk-lib';
 import { aws_logs as logs } from 'aws-cdk-lib';
 import { aws_lambda as lambda } from 'aws-cdk-lib';
-import {PythonFunction, PythonLayerVersion} from '@aws-cdk/aws-lambda-python-alpha';
-import * as path from 'path';
 import { aws_timestream as timestream } from 'aws-cdk-lib';
-// import * as timestream from "@aws-cdk/aws-timestream";
-// import * as iam from "@aws-cdk/aws-iam";
 
 export class TimestreamTelemetryCdkLambdasStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {

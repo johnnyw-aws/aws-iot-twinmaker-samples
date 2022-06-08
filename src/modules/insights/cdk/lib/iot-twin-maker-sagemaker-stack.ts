@@ -2,31 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import * as path from "path";
-import {App, Fn, Tags, Stack, StackProps, CfnOutput, Duration} from 'aws-cdk-lib'
+import { Stack, StackProps, CfnOutput } from 'aws-cdk-lib'
 import { Construct } from 'constructs';
 import { aws_iam as iam } from 'aws-cdk-lib';
-// import { aws_logs as logs } from 'aws-cdk-lib';
-// import { aws_lambda as lambda } from 'aws-cdk-lib';
 import { aws_sagemaker as aws_sm } from 'aws-cdk-lib';
-// import {PythonFunction, PythonLayerVersion} from '@aws-cdk/aws-lambda-python-alpha';
-// import * as cdk from "@aws-cdk/core";
-// import * as assets from "@aws-cdk/aws-s3-assets";
-import {aws_s3_assets as assets } from 'aws-cdk-lib';
-import { SimulationType } from "./utils";
-// import {
-//   CfnEndpoint,
-//   CfnEndpointConfig,
-//   CfnModel,
-// } from "@aws-cdk/aws-sagemaker";
-// import {
-//   Effect,
-//   PolicyDocument,
-//   PolicyStatement,
-//   Role,
-//   ServicePrincipal,
-// } from "@aws-cdk/aws-iam";
-// import { DockerImageAsset } from "@aws-cdk/aws-ecr-assets";
+import { aws_s3_assets as assets } from 'aws-cdk-lib';
 import { aws_ecr_assets as ecr_a } from 'aws-cdk-lib';
+import { SimulationType } from "./utils";
 
 interface IotTwinMakerSageMakerStackProps extends StackProps {
   /**
