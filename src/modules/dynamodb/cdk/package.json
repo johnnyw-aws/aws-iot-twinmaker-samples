@@ -1,0 +1,27 @@
+{
+  "name": "aws-iot-twinmaker-samples-dynamodb-telemetry",
+  "version": "0.1.0",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "test": "jest",
+    "cdk": "cdk"
+  },
+  "devDependencies": {
+    "@aws-cdk/assert": "^2.1.0",
+    "@types/jest": "27.0.2",
+    "@types/node": "^10.17.27",
+    "aws-cdk-lib": "^2.0.0",
+    "constructs": "^10.0.0",
+    "esbuild": "^0.15.12",
+    "jest": "27.0.2",
+    "ts-jest": "27.0.2",
+    "ts-node": "^9.0.0",
+    "typescript": "~3.9.7"
+  },
+  "dependencies": {
+    "@aws-cdk/aws-lambda-nodejs": "^1.178.0",
+    "aws-cdk-lib": "^2.27.0",
+    "constructs": "^10.0.0"
+  }
+}
