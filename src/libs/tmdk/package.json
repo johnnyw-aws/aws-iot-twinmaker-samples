@@ -1,0 +1,43 @@
+{
+  "name": "tmdk",
+  "version": "1.0.0",
+  "description": "AWS IoT TwinMaker Development Kit",
+  "main": "index.js",
+  "bin": {
+    "tmdk": "./build/cli.js"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/jest",
+    "integ-test": "./node_modules/.bin/jest -c jest.config.integration.js",
+    "build": "npx tsc && npm run package",
+    "build-global": "npx tsc && npm run package && npm install -g",
+    "package": "node build.js",
+    "package-linux": "pkg . --targets node14-linux-x64 --output tmdk_local",
+    "package-mac": "pkg . --targets node14-macos-x64 --output tmdk_local",
+    "clean": "npm uninstall -g tmdk && rm -rf build/ && rm tmdk_local"
+  },
+  "pkg": {
+    "scripts": "build/**/*.js"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@aws-sdk/client-cloudformation": "^3.142.0",
+    "@aws-sdk/client-iam": "^3.142.0",
+    "@aws-sdk/client-iottwinmaker": "^3.142.0",
+    "@aws-sdk/client-kinesis-video": "^3.142.0",
+    "@aws-sdk/client-s3": "^3.142.0",
+    "yargs": "^17.5.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.0.0",
+    "@types/node": "^18.6.1",
+    "@types/yargs": "^17.0.10",
+    "aws-sdk-client-mock": "^2.0.0",
+    "jest": "^28.0.0",
+    "jest-aws-client-mock": "^0.0.26",
+    "pkg": "^5.8.0",
+    "ts-jest": "^28.0.8",
+    "typescript": "^4.7.4"
+  }
+}

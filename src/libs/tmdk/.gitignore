@@ -1,0 +1,4 @@
+# Copyright 2022 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+tmdk_local
+node_modules
+build

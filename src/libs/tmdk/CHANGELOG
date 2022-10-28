@@ -1,0 +1,29 @@
+### Copyright 2022 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+### SPDX-License-Identifier: Apache-2.0
+
+v0.0.2
+- Added support for tileset exports in case of Cesium
+- Fixed missing dataType in entity creation. This is the case where an entity has an internal property used as a parameter for data sources like sitewise.
+- Added throttling of create entity api calls. 100ms delay. Better detection is needed.
+
+v0.0.1
+
+- handle scenario where scene files contain absolute s3 paths
+- update README to make global installation optional
+- add support for mac/linux packaging
+- add error handling that workspace exists during deploy
+- handle case where model references are in subdirectories in s3
+
+known bugs:
+- should update deploy to make URIs absolute path (preferred over relative to avoid confusion)
+- should add error handling for when workspaces dont exist - during init
+- look into a verbose mode for detecting when requests are getting throttled
+- "handle" scenario where scene contains models from other accounts
+- optimization: avoid unnecessary component-type calls during deploy
+
+feature requests:
+- support Grafana import/export
+- tmdk nuke: handle case where IAM role for workspace deleted
+- support for creating workspace via tool
+- support for replacing accountIds
+- support for replacing external links from one account to another (like grafana internal links)
