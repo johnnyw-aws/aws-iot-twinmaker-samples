@@ -14,7 +14,7 @@ v0.0.1
 - add error handling that workspace exists during deploy
 - handle case where model references are in subdirectories in s3
 
-known bugs:
+known bugs/suggested improvements:
 - should update deploy to make URIs absolute path (preferred over relative to avoid confusion)
 - should add error handling for when workspaces dont exist - during init
 - look into a verbose mode for detecting when requests are getting throttled
@@ -22,8 +22,14 @@ known bugs:
 - optimization: avoid unnecessary component-type calls during deploy
 
 feature requests:
-- support Grafana import/export
-- tmdk nuke: handle case where IAM role for workspace deleted
+- support for `tmdk nuke`
+    - add safeguards / confirmation before deletion (e.g. "dry-run" mode by default)
+    - and handle case where IAM role for workspace deleted (create temporary role to unblock workspace deletion)
+    - support deleting the workspace itself + S3 bucket
+- better support for cross-account deployments
+    - import/export for Lambda resources
+    - support for replacing accountIds
+    - support for replacing external links from one account to another (like grafana internal links)
+- support for Grafana import/export
 - support for creating workspace via tool
-- support for replacing accountIds
-- support for replacing external links from one account to another (like grafana internal links)
+

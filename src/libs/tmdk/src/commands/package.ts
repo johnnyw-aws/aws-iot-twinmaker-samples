@@ -15,9 +15,10 @@ import {importScene} from "../lib/scene";
 import {importResource} from "../lib/resource";
 import {EntityDefinition, importEntities} from "../lib/entity";
 
-type Options = {
-  name: string;
-  upper: boolean | undefined;
+export type Options = {
+  region: string | undefined;
+  "workspace-id": string | undefined;
+  "grafana-workspace-id": string | undefined;
 };
 
 export const command: string = 'package';
@@ -37,5 +38,5 @@ export const builder: CommandBuilder<Options, Options> = (yargs) =>
 
 export const handler = async (argv: Arguments<Options>) => {
   console.log("Not yet implemented");
-  process.exit(0);
+  return 0;
 };

@@ -53,6 +53,42 @@ async function createComponentTypeIfNotExists(
   }
 }
 
+async function deleteComponentTypes(workspaceId: string) {
+  var retryNeeded = true;
+
+  while (retryNeeded) {
+    retryNeeded = false;
+    var result = await aws().tm.listComponentTypes({
+      workspaceId
+    });
+
+    const componentTypeList = result["componentTypeSummaries"];
+    if (componentTypeList != undefined) {
+      for (const componentType of componentTypeList) {
+        if (componentType != undefined) {
+          var componentTypeId = componentType['componentTypeId'];
+
+          try {
+            await aws().tm.deleteComponentType({
+              workspaceId,
+              componentTypeId: componentTypeId,
+            });
+            console.log(`deleted component-type: ${componentTypeId}`); // TODO make sure reporting aligned with other delete functions
+          } catch (e) {
+            var error = String(e);
+            if (error.indexOf("Not allowed to modify component type in reserved namespace") > -1) {
+              // ignore
+            } else {
+              retryNeeded = true;
+            }
+          }
+        }
+      }
+    }
+  }
+  // FIXME handle pagination
+}
+
 async function waitForComponentTypeActive(
     workspaceId: string,
     componentTypeId: string
@@ -83,4 +119,5 @@ export {
   fromComponentTypeDefinition,
   createComponentTypeIfNotExists,
   waitForComponentTypeActive,
+  deleteComponentTypes,
 };

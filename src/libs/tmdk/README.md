@@ -1,6 +1,14 @@
+**Note: this project should be treated as "Experimental" and is not yet fully supported by AWS for production use.**
+
 This package contains functionality for the AWS IoT TwinMaker Development Kit (tmdk), a set of tools to aid in IoT TwinMaker project management.
 
 ### Install
+
+Can run following to only clone latest tip of this tool:
+
+```
+git clone https://github.com/johnnyw-aws/aws-iot-twinmaker-samples --depth 1 --branch main-tmdk && cd aws-iot-twinmaker-samples/src/libs/tmdk
+```
 
 From `tmdk` directory:
 
@@ -48,3 +56,15 @@ e.g. `tmdk deploy --region us-east-1 --workspace-id SyncB --dir /tmp/testproj`
 ### Uninstall
 
 `npm uninstall -g tmdk`
+
+---
+
+### (Experimental) Nuke a workspace
+
+The following will delete all entities, component types, and scenes from a workspace so that the workspace can be deleted.
+
+Warning: Safeguards and protection checks have not yet been fully implemented, please take care before running this command.
+
+```
+tmdk nuke --region [REGION] --workspace-id [WORKSPACE_TO_DELETE_RESOURCES_FOR]
+```

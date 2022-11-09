@@ -231,4 +231,17 @@ async function createWorkspaceIfNotExists(
   };
 }
 
-export { prepareWorkspace, createWorkspaceIfNotExists, getDashboardRole };
+async function workspaceExists(workspaceId: string) {
+  try {
+    await aws().tm.getWorkspace({workspaceId: workspaceId as string});
+    return true;
+  } catch (e) {
+    if (e instanceof ResourceNotFoundException) {
+      return false;
+    } else {
+      throw new Error(`Failed to get workspace. ${e}`);
+    }
+  }
+}
+
+export { prepareWorkspace, createWorkspaceIfNotExists, getDashboardRole, workspaceExists };

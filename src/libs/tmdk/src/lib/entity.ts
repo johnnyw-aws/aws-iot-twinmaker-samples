@@ -135,6 +135,66 @@ async function deleteEntities(workspaceId: string) {
   await recursiveDeleteEntities(workspaceId, "$ROOT");
 }
 
+async function deleteEntitiesWithServiceRecursion(workspaceId: string) {
+  const filters: ListEntitiesFilter[] = [{ parentEntityId: '$ROOT' }];
+
+  // for each child of $ROOT call delete with service-side recursive deletion flag set to true
+  const maxResults: number = 200;
+  while (true) {
+    let next_token: string | undefined = "";
+    let nextToken: string | undefined = next_token;
+    let resp = await aws().tm.listEntities({
+      workspaceId,
+      filters,
+      maxResults,
+      nextToken,
+    });
+    const rootEntities = resp["entitySummaries"];
+    if (rootEntities != undefined) {
+      for (const entity of rootEntities) {
+        if (entity["entityId"] != undefined) {
+          console.log(`recursively deleting entity: ${entity["entityId"]}`);
+          await aws().tm.deleteEntity({
+            workspaceId,
+            entityId: entity["entityId"],
+            isRecursive: true,
+          });
+        }
+      }
+    }
+    nextToken = resp["nextToken"];
+    if (nextToken == undefined) {
+      break;
+    }
+  }
+
+  // wait for all entities to be deleted
+  var total_entities_remaining = 1;
+  while(total_entities_remaining > 0) {
+    total_entities_remaining = 0;
+    let next_token: string | undefined = "";
+    let nextToken: string | undefined = next_token;
+    while (true) {
+      let listResp : any = await aws().tm.listEntities({ // TODO why does "any" need to be here but not above?
+        workspaceId,
+        maxResults,
+        nextToken,
+      });
+      const entities_on_page = listResp["entitySummaries"];
+      total_entities_remaining += entities_on_page?.length;
+      nextToken = listResp["nextToken"];
+      if (nextToken == undefined) {
+        break;
+      }
+    }
+
+    if (total_entities_remaining > 0) {
+      console.log(`waiting for entities to finish deleting... (${total_entities_remaining} remaining)`);
+      await delay(5000); // call throttling
+    }
+  }
+}
+
 function entity_in_state_transition(error_message: string) {
   if (error_message.indexOf("Cannot update Entity") > -1) {
     if (error_message.indexOf("when it is in CREATING state") > -1) {
@@ -186,4 +246,4 @@ async function updateEntity(
   console.log(`updated entity: ${entityId}`);
 }
 
-export { importEntities, deleteEntities, updateEntity, EntityDefinition };
+export { importEntities, deleteEntities, updateEntity, EntityDefinition, deleteEntitiesWithServiceRecursion };

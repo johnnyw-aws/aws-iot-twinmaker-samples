@@ -34,4 +34,19 @@ async function importScene(workspaceId: string, sceneFilePath: string) {
   );
 }
 
-export { importScene };
+async function deleteScenes(workspaceId: string) {
+  var result = await aws().tm.listScenes({ workspaceId });
+
+  const sceneList = result["sceneSummaries"];
+  if (sceneList != undefined) {
+    for (const scene of sceneList) {
+      var sceneId = scene['sceneId'];
+      await aws().tm.deleteScene({workspaceId: workspaceId, sceneId: sceneId})
+      console.log(`deleted scene: ${sceneId}`);
+    }
+  }
+  // FIXME handle pagination
+
+}
+
+export { importScene, deleteScenes };
