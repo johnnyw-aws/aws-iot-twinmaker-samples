@@ -1,4 +1,4 @@
-**Note: this project should be treated as "Experimental" and is not yet fully supported by AWS for production use.**
+**Note: this project should be treated as "Experimental" and is not yet fully supported by AWS for production use. (Currently only supported on OSX / Linux)**
 
 This package contains functionality for the AWS IoT TwinMaker Development Kit (tmdk), a set of tools to aid in IoT TwinMaker project management.
 
