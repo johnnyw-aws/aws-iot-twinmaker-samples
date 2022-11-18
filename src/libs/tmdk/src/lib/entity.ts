@@ -5,7 +5,7 @@ import {
   CreateEntityRequest,
   ListEntitiesFilter,
   ComponentUpdateRequest,
-  ParentEntityUpdateRequest, ValidationException
+  ParentEntityUpdateRequest, ValidationException, ConflictException
 } from "@aws-sdk/client-iottwinmaker";
 import { getDefaultAwsClients as aws } from "./aws-clients";
 import { delay } from "./utils";
@@ -44,11 +44,13 @@ async function importEntities(
             // console.log(`retry entity later once parent created: ${entityDefinition.entityId}`)
             // skip error may work later
             done = false;
-          } else if (e.message.indexOf("already exists under entity") >= 0) {
+          } else if (e.message.indexOf("already exists") >= 0) {
             // skip error
           } else {
             throw e;
           }
+        } else if (e instanceof ConflictException) {
+          // skip error
         } else {
           throw e
         }
