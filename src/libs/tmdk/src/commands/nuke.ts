@@ -18,8 +18,8 @@ import {deleteEntities, deleteEntitiesWithServiceRecursion, EntityDefinition, im
 import {workspaceExists} from "../lib/workspace";
 
 export type Options = {
-  "workspace-id": string;
-  region: string;
+  "workspace-id": string | undefined;
+  region: string | undefined;
 };
 
 export const command: string = 'nuke';
@@ -45,8 +45,8 @@ export const builder: CommandBuilder<Options, Options> = (yargs) =>
     });
 
 export const handler = async (argv: Arguments<Options>) => {
-  const workspaceId = argv["workspace-id"];
-  const region = argv.region;
+  const workspaceId = `${argv["workspace-id"]}`;
+  const region = `${argv.region}`;
 
   initDefaultAwsClients({ region: region });
 
