@@ -5,6 +5,8 @@ v0.0.2
 - Added support for tileset exports in case of Cesium
 - Fixed missing dataType in entity creation. This is the case where an entity has an internal property used as a parameter for data sources like sitewise.
 - Added throttling of create entity api calls. 100ms delay. Better detection is needed.
+- Added support for BIN references in GLTF files
+- Update deploy to use absolute content paths for URIs
 
 v0.0.1
 
@@ -15,8 +17,6 @@ v0.0.1
 - handle case where model references are in subdirectories in s3
 
 known bugs/suggested improvements:
-- should update deploy to make URIs absolute path (preferred over relative to avoid confusion)
-- should add error handling for when workspaces dont exist - during init
 - look into a verbose mode for detecting when requests are getting throttled
 - "handle" scenario where scene contains models from other accounts
 - optimization: avoid unnecessary component-type calls during deploy

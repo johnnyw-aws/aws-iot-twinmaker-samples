@@ -103,7 +103,7 @@ async function import_scenes_and_models(workspaceIdStr: string, tmdk_config: any
   var res2 = await aws().tm.listScenes({workspaceId: workspaceIdStr}); // FIXME pagination
   // console.log(res2);
   const sceneSummaries = res2['sceneSummaries'];
-  var contentBucket: string; // FIXME should be from workspace not scene files
+  var contentBucket: string = ""; // FIXME should be from workspace not scene files
   if (sceneSummaries != undefined) {
 
     const streamToString = (stream: any) =>
@@ -198,7 +198,7 @@ async function import_scenes_and_models(workspaceIdStr: string, tmdk_config: any
       }
     }
 
-    modelFiles.forEach(async (value) => { // TODO verify is not run in parallel?
+    for (const value of modelFiles) {
       console.log(`saving model file: ${value} ...`);
       var s3key = value as string;
 
@@ -220,7 +220,7 @@ async function import_scenes_and_models(workspaceIdStr: string, tmdk_config: any
 
         var dir_path = `${outDir}/3d_models`;
         for (let index = 0; index < splitKey.length; index++) {
-          var subpath = `${splitKey.slice(0, index+1).join("/")}`
+          var subpath = `${splitKey.slice(0, index + 1).join("/")}`
           if (!fs.existsSync(`${dir_path}/${subpath}`)) {
             console.log(`making path: ${dir_path}/${subpath} ...`);
             fs.mkdirSync(`${dir_path}/${subpath}`); // TODO idiomatic
@@ -233,10 +233,45 @@ async function import_scenes_and_models(workspaceIdStr: string, tmdk_config: any
       fs.writeFileSync(`${outDir}/3d_models/${s3key}`, bodyContents);
       (tmdk_config['models'] as string[]).push(`${s3key}`); // TODO idiomatic
 
+      // handle binary data references in gltf files - https://www.khronos.org/files/gltf20-reference-guide.pdf
+      if (s3key.endsWith(".gltf")) {
+        const gltfData = JSON.parse(bodyContents.toString("utf8"));
+        if (gltfData['buffers']) {
+          for (var buffer of gltfData['buffers']) {
+            if (!(buffer['uri'] as string).startsWith("data:")) {
+              const binRelativePath = `${(value as string).split("/").slice(0, -1).join("/")}/${buffer['uri']}`
+
+              console.log(`  saving referenced bin file: ${binRelativePath} ...`);
+              var binS3bucket = binRelativePath.split("/")[2];
+              var binS3key = binRelativePath.split("/").slice(3).join("/");
+              const binData = await aws().s3.send(new GetObjectCommand({Bucket: binS3bucket, Key: binS3key}));
+              const binBodyContents = await streamToBuffer(binData.Body) as Buffer;
+              fs.writeFileSync(`${outDir}/3d_models/${binS3key}`, binBodyContents);
+              (tmdk_config['models'] as string[]).push(`${binS3key}`); // TODO idiomatic
+            }
+          }
+        }
+
+        if (gltfData['images']) {
+          for (var image of gltfData['images']) {
+            if (!(image['uri'] as string).startsWith("data:")) {
+              const binRelativePath = `${(value as string).split("/").slice(0, -1).join("/")}/${image['uri']}`
+
+              console.log(`saving referenced gltf bin file: ${binRelativePath} ...`);
+              var binS3bucket = binRelativePath.split("/")[2];
+              var binS3key = binRelativePath.split("/").slice(3).join("/");
+              const binData = await aws().s3.send(new GetObjectCommand({Bucket: binS3bucket, Key: binS3key}));
+              const binBodyContents = await streamToBuffer(binData.Body) as Buffer;
+              fs.writeFileSync(`${outDir}/3d_models/${binS3key}`, binBodyContents);
+              (tmdk_config['models'] as string[]).push(`${binS3key}`); // TODO idiomatic
+            }
+          }
+        }
+      }
+
       // save each non-pre-defined types into files
       fs.writeFileSync(`${outDir}/tmdk.json`, JSON.stringify(tmdk_config, null, 4));
-    });
-
+    }
   }
   return tmdk_config;
 }
@@ -361,6 +396,7 @@ export const handler = async (argv: Arguments<Options>) => {
   }
   fs.writeFileSync(`${outDir}/entities.json`, JSON.stringify(entities, null, 4)); // TODO handle entity file name collisions
   tmdk_config['entities'] = "entities.json"
+
   fs.writeFileSync(`${outDir}/tmdk.json`, JSON.stringify(tmdk_config, null, 4));
 
   console.log("== Finishing bootstrap ... ==")

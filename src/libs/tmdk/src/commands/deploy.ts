@@ -16,9 +16,10 @@ import {importResource} from "../lib/resource";
 import {EntityDefinition, importEntities} from "../lib/entity";
 import {prepareWorkspace} from "../lib/workspace";
 
-type Options = {
-  name: string;
-  upper: boolean | undefined;
+export type Options = {
+  region: string | undefined;
+  "workspace-id": string | undefined;
+  dir: string | undefined;
 };
 
 export const command: string = 'deploy';
@@ -26,10 +27,6 @@ export const desc: string = 'Deploys a tmdk application';
 
 export const builder: CommandBuilder<Options, Options> = (yargs) =>
   yargs
-    // .options({
-    //   upper: { type: 'boolean' },
-    // })
-    // .positional('workspace-id', { type: 'string', demandOption: true });
     .options({
       region: {
         type: "string",
@@ -53,11 +50,6 @@ export const builder: CommandBuilder<Options, Options> = (yargs) =>
         // default: process.env.WORKSPACE_ID,
       }
     });
-// .middleware([
-//   (args) => {
-//     initDefaultAwsClients({ region: args.region });
-//   },
-// ])
 
 function syncReadFile(path: string) {
   const result = fs.readFileSync(path, 'utf-8');
@@ -65,13 +57,11 @@ function syncReadFile(path: string) {
 }
 
 export const handler = async (argv: Arguments<Options>) => {
-  const { name, upper } = argv; // TODO figure out idiomatc usage of yargs
-  const { region, workspaceId, dir } = argv; // TODO idiomatic usage
-  // const region = argv.region;
-  // console.log(argv);
+  const workspaceId = argv["workspace-id"] as string; // TODO allow it to be optional
+  const region = argv.region;
+  const dir = argv.dir;
   const workspaceIdStr = `${workspaceId}`; // TODO idiomatic
   const greeting = `Hello4, ${workspaceIdStr} in ${region}!\n`;
-  // process.stdout.write(upper ? greeting.toUpperCase() : greeting);
   console.log(`Deploying project from directory ${dir} into workspace ${workspaceIdStr} in ${region}`)
 
   initDefaultAwsClients({ region: `${region}` }); // TODO idiomatic
@@ -86,8 +76,12 @@ export const handler = async (argv: Arguments<Options>) => {
   console.log(tmdk_config);
 
   // verify workspace exists
+  var workspaceContentBucket: string = "";
   try {
-    await aws().tm.getWorkspace({ workspaceId: workspaceIdStr });
+    const workspaceDesc = await aws().tm.getWorkspace({ workspaceId: workspaceIdStr });
+    if (workspaceDesc['s3Location']) {
+      workspaceContentBucket = workspaceDesc['s3Location'].split(":").slice(-1)[0];
+    }
     console.log(`Verified workspace exists.`);
   } catch (e) {
     if (e instanceof ResourceNotFoundException) {
@@ -143,7 +137,7 @@ export const handler = async (argv: Arguments<Options>) => {
     for (var sceneFile of tmdk_config['scenes']) {
       console.log(`Importing scene: ${sceneFile} ...`)
       try {
-        await importScene(workspaceIdStr, `${dir}/${sceneFile}`)
+        await importScene(workspaceIdStr, `${dir}/${sceneFile}`, workspaceContentBucket)
       } catch (error) {
         if (error instanceof ConflictException) {
           console.log(`  ...skipping scene creation for ${sceneFile} due to pre-existing scene with same id`); // TODO should scan and warn instead

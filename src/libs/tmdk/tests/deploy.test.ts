@@ -1,7 +1,7 @@
 // Copyright 2022 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import { handler, Options } from '../src/commands/nuke';
+import { handler, Options } from '../src/commands/deploy';
 import {Arguments} from "yargs";
 
 import {
@@ -40,13 +40,14 @@ import {GetWorkspaceCommandInput} from "@aws-sdk/client-iottwinmaker/dist-types/
 //   }
 // })
 
-describe('testing nuke', () => {
+describe('testing deploy', () => {
   test('test01', () => {
     var argv2 = {
-      _: [ 'nuke' ],
+      _: [ 'init' ],
       '$0': 'tmdk_local',
       region: "us-east-1",
       "workspace-id": "SyncC",
+      dir: "/tmp/integ-test-init2"
     } as Arguments<Options>;
     return handler(argv2).then(result => expect(result).toBe(0));
   }, 120000);

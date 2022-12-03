@@ -5,8 +5,10 @@ import * as path from "path";
 import * as fsPromises from "fs/promises";
 
 import { getDefaultAwsClients as aws } from "./aws-clients";
+import {ListObjectsV2Command} from "@aws-sdk/client-s3";
+import fs from "fs";
 
-async function importScene(workspaceId: string, sceneFilePath: string) {
+async function importScene(workspaceId: string, sceneFilePath: string, workspaceContentBucket: string) {
   const ws = await aws().tm.getWorkspace({ workspaceId });
   const s3Arn = ws.s3Location;
 
@@ -15,6 +17,20 @@ async function importScene(workspaceId: string, sceneFilePath: string) {
 
   const sceneName = path.basename(sceneFilePath, ".json");
   const sceneContent = (await fsPromises.readFile(sceneFilePath)).toString();
+
+  // replace URIs with reference to new content bucket
+  var sceneJson = JSON.parse(`${sceneContent}`);
+  for (var n of sceneJson['nodes']) {
+    for (var c of n['components']) {
+      if (c['type'] == 'ModelRef') {
+        if (!c['uri'].startsWith("s3://")) {
+          // update reference to be absolute to content bucket
+          c['uri'] = `s3://${workspaceContentBucket}/${c['uri']}`;
+        }
+      }
+    }
+  }
+  const sceneContentWithUpdatedUriRefs = JSON.stringify(sceneJson, null, 4);
 
   await aws().tm.createScene({
     workspaceId,
@@ -25,7 +41,7 @@ async function importScene(workspaceId: string, sceneFilePath: string) {
   await aws().s3.putObject({
     Bucket: s3Bucket,
     Key: sceneName + ".json",
-    Body: sceneContent,
+    Body: sceneContentWithUpdatedUriRefs,
     ContentType: "application/json",
   });
 
