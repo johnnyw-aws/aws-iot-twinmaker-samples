@@ -14,6 +14,7 @@ import {createComponentTypeIfNotExists, waitForComponentTypeActive} from "../lib
 import {importScene} from "../lib/scene";
 import {importResource} from "../lib/resource";
 import {EntityDefinition, importEntities} from "../lib/entity";
+import {syncEntities} from "../lib/sync";
 import {prepareWorkspace} from "../lib/workspace";
 
 export type Options = {
@@ -162,7 +163,7 @@ export const handler = async (argv: Arguments<Options>) => {
     var entityFileName = tmdk_config['entities'];
     var entityFileJson = JSON.parse(syncReadFile(`${dir}/${entityFileName}`).toString());
     // const entityFileJson = JSON.parse((await fsPromises.readFile(argv.entityFilePath)).toString());
-    await importEntities(workspaceIdStr, entityFileJson)
+    await syncEntities(workspaceIdStr, entityFileJson)
   }
 
 
