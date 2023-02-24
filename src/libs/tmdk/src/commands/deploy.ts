@@ -70,9 +70,14 @@ export const handler = async (argv: Arguments<Options>) => {
   // console.log(result);
 
   // read tmdk json file
-  var tmdk_config_buffer = fs.readFileSync(`${dir}/tmdk.json`, 'utf-8'); // TODO encodings
-  var tmdk_config_str = `${tmdk_config_buffer}`
-  var tmdk_config: any = JSON.parse(tmdk_config_str)
+  try {
+    var tmdk_config_buffer = fs.readFileSync(`${dir}/tmdk.json`, 'utf-8'); // TODO encodings
+    var tmdk_config_str = `${tmdk_config_buffer}`
+    var tmdk_config: any = JSON.parse(tmdk_config_str)
+  } catch (e) {
+    console.log(`Error: could not read '${dir}'/tmdk.json.`)
+    process.exit(1);
+  }
   console.log("========= tmdk.json =========")
   console.log(tmdk_config);
 
