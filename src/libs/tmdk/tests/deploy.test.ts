@@ -28,7 +28,7 @@ jest.mock("../src/lib/aws-clients", () => {
       }
     }),
   }
-})
+});
 
 describe('testing deploy', () => {
   beforeEach(mockExit.mockClear);
@@ -43,5 +43,5 @@ describe('testing deploy', () => {
     } as Arguments<Options>;
     await expect(handler(argv2)).rejects.toThrow(Error);
     expect(mockExit).toHaveBeenCalledWith(1);
-  }, 120000);
+  });
 });
