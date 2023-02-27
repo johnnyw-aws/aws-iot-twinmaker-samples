@@ -50,9 +50,9 @@ export const handler = async (argv: Arguments<Options>) => {
 
   initDefaultAwsClients({ region: region });
 
-  if (!workspaceExists(workspaceId)) {
+  if (!(await workspaceExists(workspaceId))) {
     console.log(`Error: workspace '${workspaceId}' not found in region '${region}'. Exiting.`)
-    return 0;
+    process.exit(1);
   }
 
   // TODO also determine the current account
