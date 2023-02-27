@@ -2,53 +2,46 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { handler, Options } from '../src/commands/deploy';
-import {Arguments} from "yargs";
+import { Arguments } from "yargs";
+import { ResourceNotFoundException } from "@aws-sdk/client-iottwinmaker";
+import { GetWorkspaceCommandInput } from "@aws-sdk/client-iottwinmaker/dist-types/commands/GetWorkspaceCommand";
 
-import {
-  ConflictException,
-  CreateComponentTypeRequest,
-  ResourceNotFoundException, ValidationException,
-  GetWorkspaceCommand, IoTTwinMakerClient, GetWorkspaceCommandOutput
-} from "@aws-sdk/client-iottwinmaker";
+const mockExit = jest.spyOn(process, 'exit').mockImplementation((number) => { throw new Error('process.exit: ' + number); });
 
-const mockExit = jest.spyOn(process, 'exit').mockImplementation(() => { return undefined as never });
+jest.mock("../src/lib/aws-clients", () => {
+  return {
+    initDefaultAwsClients: () => {},
 
-import {GetWorkspaceCommandInput} from "@aws-sdk/client-iottwinmaker/dist-types/commands/GetWorkspaceCommand";
+    getDefaultAwsClients: jest.fn().mockImplementation(() => {
+      return {
+        tm: {
+          getWorkspace: (input: GetWorkspaceCommandInput) => {
+            console.log(`intercepted ws: ${input.workspaceId}`);
 
-// TODO uncomment to enable mocking behavior
-// jest.mock("../src/lib/aws-clients", () => {
-//   return {
-//     initDefaultAwsClients: () => {},
-//
-//     getDefaultAwsClients: jest.fn().mockImplementation(() => {
-//       return {
-//         tm: {
-//           getWorkspace: (input: GetWorkspaceCommandInput) => {
-//             console.log(`intercepted ws: ${input.workspaceId}`);
-//
-//             if (`${input.workspaceId}` == 'non-existent') {
-//               throw new ResourceNotFoundException({"$metadata": {}})
-//             } else if (`${input.workspaceId}` == 'error') {
-//               throw new Error("mock error");
-//             } else {
-//               return {};
-//             }
-//           }
-//         }
-//       }
-//     }),
-//   }
-// })
+            if (`${input.workspaceId}` == 'non-existent') {
+              throw new ResourceNotFoundException({"$metadata": {}, "message": ""})
+            } else {
+              return {};
+            }
+          }
+        }
+      }
+    }),
+  }
+});
 
 describe('testing deploy', () => {
-  test('test01', () => {
+  beforeEach(mockExit.mockClear);
+
+  test('deploy_givenNoTMDKProject_expectError', async () => {
     var argv2 = {
-      _: [ 'init' ],
+      _: [ 'deploy' ],
       '$0': 'tmdk_local',
       region: "us-east-1",
-      "workspace-id": "SyncC",
-      dir: "/tmp/integ-test-init2"
+      "workspace-id": "irrelevant",
+      dir: "/tmp/deploy-unit-tests/i-do-not-exist"
     } as Arguments<Options>;
-    return handler(argv2).then(result => expect(result).toBe(0));
-  }, 120000);
+    await expect(handler(argv2)).rejects.toThrow(Error);
+    expect(mockExit).toHaveBeenCalledWith(1);
+  });
 });
