@@ -306,6 +306,7 @@ export const handler = async (argv: Arguments<Options>) => {
   fs.writeFileSync(`${outDir}/tmdk.json`, JSON.stringify(tmdk_config, null, 4));
 
   // TODO revisit: import workspace bucket/role (probably need role for specialized permissions)
+  // TODO verify workspace exists
   var result = await aws().tm.getWorkspace({workspaceId: workspaceIdStr});
   // console.log(result);
 

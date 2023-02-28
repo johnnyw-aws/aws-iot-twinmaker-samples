@@ -3,6 +3,7 @@ node_modules
 package-lock.json
 *.iml
 .vscode
+.idea
 
 # Python
 __pycache__/
