@@ -1,3 +1,4 @@
+/* eslint-disable no-constant-condition */
 // Copyright 2022 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
@@ -5,68 +6,27 @@ import {
   CreateEntityRequest,
   ListEntitiesFilter,
   ComponentUpdateRequest,
-  ParentEntityUpdateRequest, ValidationException, ConflictException
+  ParentEntityUpdateRequest,
 } from "@aws-sdk/client-iottwinmaker";
 import { getDefaultAwsClients as aws } from "./aws-clients";
 import { delay } from "./utils";
 
 type EntityDefinition = Omit<CreateEntityRequest, "workspaceId">;
 
-async function importEntities(
-  workspaceId: string,
-  entityDefinitions: EntityDefinition[]
-) {
-
-  // FIXME resolve ordering needs
-  var done = false;
-  var created = 0;
-  while (!done) {
-
-    done = true;
-    for (const entityDefinition of entityDefinitions) {
-
-      try {
-      // TODO: parallize load
-      await aws().tm.createEntity({
-        workspaceId,
-        ...entityDefinition,
-      });
-
-      created += 1;
-      
-      //Throttle API calls
-      await delay(100);
-
-      console.log(`Created Entity (${created} / ${entityDefinitions.length}): ${entityDefinition.entityId}`);
-      } catch (e) {
-        if (e instanceof ValidationException) {
-          if (e.message.indexOf("Unable to find parent entity id") >= 0) {
-            // console.log(`retry entity later once parent created: ${entityDefinition.entityId}`)
-            // skip error may work later
-            done = false;
-          } else if (e.message.indexOf("already exists") >= 0) {
-            // skip error
-          } else {
-            throw e;
-          }
-        } else if (e instanceof ConflictException) {
-          // skip error
-        } else {
-          throw e
-        }
-      }
-    }
-  }
-}
+/**
+ * Function deletes all child entities, including the selected parent
+ * @param workspaceId TM workspaceId
+ * @param entityId top entity from which to delete (use $ROOT to delete all in workspace)
+ */
 async function recursiveDeleteEntities(workspaceId: string, entityId: string) {
   const filters: ListEntitiesFilter[] = [{ parentEntityId: entityId }];
-  const maxResults: number = 200;
+  const maxResults = 200;
   const isRecursive: boolean | undefined = true;
   // first we do a depth first recursive delete to get down to leaf nodes
   while (true) {
-    let next_token: string | undefined = "";
+    const next_token: string | undefined = "";
     let nextToken: string | undefined = next_token;
-    let resp = await aws().tm.listEntities({
+    const resp = await aws().tm.listEntities({
       workspaceId,
       filters,
       maxResults,
@@ -91,7 +51,7 @@ async function recursiveDeleteEntities(workspaceId: string, entityId: string) {
     workspaceId,
     filters,
   });
-  let numTries: number = 0;
+  let numTries = 0;
   while (
     resp["entitySummaries"] != undefined &&
     resp["entitySummaries"].length > 0
@@ -99,7 +59,7 @@ async function recursiveDeleteEntities(workspaceId: string, entityId: string) {
     console.log(
       `Waiting for children of ${entityId} to finish deleting. ${resp["entitySummaries"].length} remaining.`
     );
-    let prevRemaining = resp["entitySummaries"].length;
+    const prevRemaining = resp["entitySummaries"].length;
     await delay(2000);
     resp = await aws().tm.listEntities({
       workspaceId,
@@ -133,19 +93,27 @@ async function recursiveDeleteEntities(workspaceId: string, entityId: string) {
   }
 }
 
+/**
+ * Wrapper function that deletes all entities in a given workspace
+ * @param workspaceId TM workspace
+ */
 async function deleteEntities(workspaceId: string) {
   await recursiveDeleteEntities(workspaceId, "$ROOT");
 }
 
+/**
+ * Deletes all entities in workspace using service side recursion
+ * @param workspaceId TM workspace
+ */
 async function deleteEntitiesWithServiceRecursion(workspaceId: string) {
-  const filters: ListEntitiesFilter[] = [{ parentEntityId: '$ROOT' }];
+  const filters: ListEntitiesFilter[] = [{ parentEntityId: "$ROOT" }];
 
   // for each child of $ROOT call delete with service-side recursive deletion flag set to true
-  const maxResults: number = 200;
+  const maxResults = 200;
   while (true) {
-    let next_token: string | undefined = "";
+    const next_token: string | undefined = "";
     let nextToken: string | undefined = next_token;
-    let resp = await aws().tm.listEntities({
+    const resp = await aws().tm.listEntities({
       workspaceId,
       filters,
       maxResults,
@@ -171,13 +139,15 @@ async function deleteEntitiesWithServiceRecursion(workspaceId: string) {
   }
 
   // wait for all entities to be deleted
-  var total_entities_remaining = 1;
-  while(total_entities_remaining > 0) {
+  let total_entities_remaining = 1;
+  while (total_entities_remaining > 0) {
     total_entities_remaining = 0;
-    let next_token: string | undefined = "";
+    const next_token: string | undefined = "";
     let nextToken: string | undefined = next_token;
     while (true) {
-      let listResp : any = await aws().tm.listEntities({ // TODO why does "any" need to be here but not above?
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const listResp: any = await aws().tm.listEntities({
+        // TODO why does "any" need to be here but not above?
         workspaceId,
         maxResults,
         nextToken,
@@ -191,12 +161,19 @@ async function deleteEntitiesWithServiceRecursion(workspaceId: string) {
     }
 
     if (total_entities_remaining > 0) {
-      console.log(`waiting for entities to finish deleting... (${total_entities_remaining} remaining)`);
+      console.log(
+        `waiting for entities to finish deleting... (${total_entities_remaining} remaining)`
+      );
       await delay(5000); // call throttling
     }
   }
 }
 
+/**
+ * Helper function for updating entities that checks state
+ * @param error_message Passed in error message from API
+ * @returns
+ */
 function entity_in_state_transition(error_message: string) {
   if (error_message.indexOf("Cannot update Entity") > -1) {
     if (error_message.indexOf("when it is in CREATING state") > -1) {
@@ -208,6 +185,15 @@ function entity_in_state_transition(error_message: string) {
   return false;
 }
 
+/**
+ * Updates an existing entity with the provided parameters
+ * @param workspaceId TM workspace
+ * @param entityId entity which is to be updated
+ * @param entityName entity name (does not have to be new)
+ * @param description description (does not have to be new)
+ * @param componentUpdates componentUpdateRequest (does not have to be new)
+ * @param parentEntityUpdate parent entity ID (does not have to be new)
+ */
 async function updateEntity(
   workspaceId: string,
   entityId: string,
@@ -218,7 +204,8 @@ async function updateEntity(
   },
   parentEntityUpdate?: ParentEntityUpdateRequest
 ) {
-  let state_transition_error: string = "Cannot update Entity when it is in CREATING state";
+  let state_transition_error =
+    "Cannot update Entity when it is in CREATING state";
   console.log(`updating entity: ${entityId}`);
   while (entity_in_state_transition(state_transition_error)) {
     try {
@@ -228,12 +215,16 @@ async function updateEntity(
         entityName,
         description,
         componentUpdates,
-        parentEntityUpdate
+        parentEntityUpdate,
       });
       break; // fixed this bug from python version
     } catch (e) {
       state_transition_error = String(e);
-      if (state_transition_error.indexOf("cannot be created as it already exists") > -1) {
+      if (
+        state_transition_error.indexOf(
+          "cannot be created as it already exists"
+        ) > -1
+      ) {
         // pass
       } else if (entity_in_state_transition(state_transition_error)) {
         console.log(
@@ -248,4 +239,9 @@ async function updateEntity(
   console.log(`updated entity: ${entityId}`);
 }
 
-export { importEntities, deleteEntities, updateEntity, EntityDefinition, deleteEntitiesWithServiceRecursion };
+export {
+  deleteEntities,
+  updateEntity,
+  EntityDefinition,
+  deleteEntitiesWithServiceRecursion,
+};

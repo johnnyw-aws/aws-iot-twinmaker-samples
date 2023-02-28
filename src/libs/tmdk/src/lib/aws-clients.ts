@@ -21,7 +21,7 @@ class AwsClients {
 
   constructor(region: string) {
     this.region = region;
-    const options = { customUserAgent: 'tmdk/0.0.2', region: region };
+    const options = { customUserAgent: "tmdk/0.0.2", region: region };
     this.sts = new STS(options);
     this.tm = new IoTTwinMaker(options);
     this.iam = new IAM(options);
@@ -30,6 +30,10 @@ class AwsClients {
     this.kvs = new KinesisVideo(options);
   }
 
+  /**
+   * Calls getCallerIdentity or throws an error if invalid
+   * @returns Promise of the account ID and Arn
+   */
   async getCurrentIdentity() {
     const identity = await this.sts.getCallerIdentity({});
     if (!identity.Account || !identity.Arn) {
@@ -41,10 +45,18 @@ class AwsClients {
 
 let defaultAwsClients: AwsClients | null = null;
 
+/**
+ * Helper function that create new aws client with a given region
+ * @param options object containing the aws region
+ */
 function initDefaultAwsClients(options: { region: string }) {
   defaultAwsClients = new AwsClients(options.region);
 }
 
+/**
+ * getter function for the constructed aws client
+ * @returns instance of aws client class
+ */
 function getDefaultAwsClients() {
   if (!defaultAwsClients) {
     throw new Error(

@@ -13,9 +13,12 @@ import { getDefaultAwsClients as aws } from "./aws-clients";
 import WORKSPACE_ROLE_ASSUME_POLICY from "./policy/workspace-role-assume-policy.json";
 import WORKSPACE_DASHBOARD_ROLE_ASSUME_POLICY from "./policy/workspace-dashboard-role-assume-policy.json";
 
-// Heuristically get dashboard role from workspace's role.
-// We don't yet store dashboard role in workspace, but if the role is created
-// by the getting started guide, it has a fixed pattern.
+/**
+ * Heuristically get dashboard role from workspace's role. We don't yet store dashboard role in workspace,
+ * but if the role is createdby the getting started guide, it has a fixed pattern.
+ * @param workspaceId TM workspace
+ * @returns string promise
+ */
 async function getDashboardRole(workspaceId: string) {
   const workspace = await aws().tm.getWorkspace({ workspaceId: workspaceId });
 
@@ -27,6 +30,14 @@ async function getDashboardRole(workspaceId: string) {
   return workspaceDashboardRole;
 }
 
+/**
+ * Helper function for creating roles and policies
+ * @param uniqueId unique ID
+ * @param roleType role Type
+ * @param roleAssumePolicy role Assume Policy
+ * @param rolePolicy role Policy
+ * @returns string promise
+ */
 async function createRoleAndPolicy(
   uniqueId: string,
   roleType: "WorkspaceRole" | "WorkspaceDashboardRole",
@@ -71,6 +82,11 @@ async function createRoleAndPolicy(
   return roleArn;
 }
 
+/**
+ * Helper function to create an s3 bucket for a workspace
+ * @param uniqueId ID for the bucket
+ * @returns promise with the s3 bucket name and arn
+ */
 async function createWorkspaceS3Bucket(uniqueId: string) {
   const s3BucketName = `iot-twinmaker-workspace-bucket-${uniqueId}`;
 
@@ -99,6 +115,14 @@ async function createWorkspaceS3Bucket(uniqueId: string) {
   return { s3BucketName, s3BucketArn: `arn:aws:s3:::${s3BucketName}` };
 }
 
+/**
+ * Helper function prior to initializing a workspace
+ * @param workspaceId workspaceId
+ * @param workspaceRolePolicyTemplate workspaceRolePolicyTemplate
+ * @param workspaceDashboardRolePolicyTemplate workspaceDashboardRolePolicyTemplate
+ * @param amgIamRole amgIamRole
+ * @returns promise object containing workspace Arn, s3 bucket Arn, role Arn, dashboard role Arn
+ */
 async function prepareWorkspace(
   workspaceId: string,
   workspaceRolePolicyTemplate: string,
@@ -191,6 +215,14 @@ async function prepareWorkspace(
   };
 }
 
+/**
+ * Workspace creation function
+ * @param workspaceId workspaceId
+ * @param workspaceRolePolicy workspaceRolePolicy
+ * @param workspaceDashboardRolePolicyTemplate workspaceDashboardRolePolicyTemplate
+ * @param amgIamRole amgIamRole
+ * @returns promise of object with the workspace Id and Arn
+ */
 async function createWorkspaceIfNotExists(
   workspaceId: string,
   workspaceRolePolicy: string,
@@ -231,9 +263,14 @@ async function createWorkspaceIfNotExists(
   };
 }
 
+/**
+ * Helper function during workspace nuke for determining existance of workspace
+ * @param workspaceId TM workspace
+ * @returns promise boolean
+ */
 async function workspaceExists(workspaceId: string) {
   try {
-    await aws().tm.getWorkspace({workspaceId: workspaceId as string});
+    await aws().tm.getWorkspace({ workspaceId: workspaceId as string });
     return true;
   } catch (e) {
     if (e instanceof ResourceNotFoundException) {
@@ -244,4 +281,9 @@ async function workspaceExists(workspaceId: string) {
   }
 }
 
-export { prepareWorkspace, createWorkspaceIfNotExists, getDashboardRole, workspaceExists };
+export {
+  prepareWorkspace,
+  createWorkspaceIfNotExists,
+  getDashboardRole,
+  workspaceExists,
+};
