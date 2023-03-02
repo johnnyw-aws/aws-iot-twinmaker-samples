@@ -5,10 +5,18 @@ import * as path from "path";
 import * as fsPromises from "fs/promises";
 
 import { getDefaultAwsClients as aws } from "./aws-clients";
-import {ListObjectsV2Command} from "@aws-sdk/client-s3";
-import fs from "fs";
 
-async function importScene(workspaceId: string, sceneFilePath: string, workspaceContentBucket: string) {
+/**
+ * Scene import function used for TMDK deployment
+ * @param workspaceId TM workspace
+ * @param sceneFilePath string file path
+ * @param workspaceContentBucket workspace content bucket
+ */
+async function importScene(
+  workspaceId: string,
+  sceneFilePath: string,
+  workspaceContentBucket: string
+) {
   const ws = await aws().tm.getWorkspace({ workspaceId });
   const s3Arn = ws.s3Location;
 
@@ -19,13 +27,13 @@ async function importScene(workspaceId: string, sceneFilePath: string, workspace
   const sceneContent = (await fsPromises.readFile(sceneFilePath)).toString();
 
   // replace URIs with reference to new content bucket
-  var sceneJson = JSON.parse(`${sceneContent}`);
-  for (var n of sceneJson['nodes']) {
-    for (var c of n['components']) {
-      if (c['type'] == 'ModelRef') {
-        if (!c['uri'].startsWith("s3://")) {
+  const sceneJson = JSON.parse(`${sceneContent}`);
+  for (const n of sceneJson["nodes"]) {
+    for (const c of n["components"]) {
+      if (c["type"] == "ModelRef") {
+        if (!c["uri"].startsWith("s3://")) {
           // update reference to be absolute to content bucket
-          c['uri'] = `s3://${workspaceContentBucket}/${c['uri']}`;
+          c["uri"] = `s3://${workspaceContentBucket}/${c["uri"]}`;
         }
       }
     }
@@ -50,19 +58,25 @@ async function importScene(workspaceId: string, sceneFilePath: string, workspace
   );
 }
 
+/**
+ * mass scene deletion for a TM workspace
+ * @param workspaceId TM workspace
+ */
 async function deleteScenes(workspaceId: string) {
-  var result = await aws().tm.listScenes({ workspaceId });
+  const result = await aws().tm.listScenes({ workspaceId });
 
   const sceneList = result["sceneSummaries"];
   if (sceneList != undefined) {
     for (const scene of sceneList) {
-      var sceneId = scene['sceneId'];
-      await aws().tm.deleteScene({workspaceId: workspaceId, sceneId: sceneId})
+      const sceneId = scene["sceneId"];
+      await aws().tm.deleteScene({
+        workspaceId: workspaceId,
+        sceneId: sceneId,
+      });
       console.log(`deleted scene: ${sceneId}`);
     }
   }
   // FIXME handle pagination
-
 }
 
 export { importScene, deleteScenes };

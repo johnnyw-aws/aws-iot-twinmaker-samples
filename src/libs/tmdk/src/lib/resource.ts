@@ -5,6 +5,13 @@ import * as fsPromises from "fs/promises";
 
 import { getDefaultAwsClients as aws } from "./aws-clients";
 
+/**
+ * Resource creation function used for TMDK deployment
+ * @param workspaceId TM workspace
+ * @param filePath string path of resources
+ * @param destination model file
+ * @returns s3url promise
+ */
 async function importResource(
   workspaceId: string,
   filePath: string,

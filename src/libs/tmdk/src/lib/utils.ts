@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // Copyright 2022 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
@@ -35,12 +36,22 @@ class UnretryableError extends Error {
   }
 }
 
+/**
+ * Helper function to wait for set amount of time
+ * @param ms number of ms to wait
+ */
 async function delay(ms: number) {
   await new Promise((resolve) => {
     setTimeout(resolve, ms);
   });
 }
 
+/**
+ * Helper function to retry running a function
+ * @param func function to retry
+ * @param options object containing the number of attempts
+ * @returns generic promise
+ */
 async function retryAsync<T>(
   func: () => Promise<T>,
   options?: {
@@ -49,8 +60,8 @@ async function retryAsync<T>(
     beforeRetry?: () => Promise<void>;
   }
 ) {
-  let shouldRetry = options?.shouldRetry || (() => true);
-  let beforeRetry = options?.beforeRetry;
+  const shouldRetry = options?.shouldRetry || (() => true);
+  const beforeRetry = options?.beforeRetry;
 
   let remainingAttempts = options?.attempts ?? 3;
   let lastError: any = undefined;
@@ -63,6 +74,7 @@ async function retryAsync<T>(
 
       if (shouldRetry(err)) {
         remainingAttempts--;
+        // eslint-disable-next-line chai-friendly/no-unused-expressions
         beforeRetry && (await beforeRetry());
       } else {
         throw new UnretryableError(
@@ -75,11 +87,21 @@ async function retryAsync<T>(
   throw new RetryExhaustedError(lastError, "Retry exhausted");
 }
 
+/**
+ * Simple function for ID generation
+ * @returns random hex string
+ */
 function createUniqueId() {
   const uniqueId = randomBytes(4).toString("hex");
   return uniqueId;
 }
 
+/**
+ * Helper function used for workspace initialization
+ * @param template string representation of a template, e.g. workspaceRolePolicyTemplate
+ * @param dict replacement of template with actual values in dict such as PolicyParams
+ * @returns resulting modified template
+ */
 function replaceTemplateVars(template: string, dict: Record<string, string>) {
   let result = template;
   for (const key in dict) {

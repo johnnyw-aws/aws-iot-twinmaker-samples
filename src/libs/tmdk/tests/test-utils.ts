@@ -3,7 +3,11 @@
 
 import * as fs from "fs";
 
-export const mockExit = jest.spyOn(process, 'exit').mockImplementation((number) => { throw new Error('process.exit: ' + number); });
+export const mockExit = jest
+  .spyOn(process, "exit")
+  .mockImplementation((number) => {
+    throw new Error("process.exit: " + number);
+  });
 
 export function createDirectory(dir: string): void {
   if (!fs.existsSync(dir)) {
