@@ -5,6 +5,7 @@ import * as path from "path";
 import * as fsPromises from "fs/promises";
 
 import { getDefaultAwsClients as aws } from "./aws-clients";
+import { ListScenesCommandOutput } from "@aws-sdk/client-iottwinmaker";
 
 /**
  * Scene import function used for TMDK deployment
@@ -63,20 +64,25 @@ async function importScene(
  * @param workspaceId TM workspace
  */
 async function deleteScenes(workspaceId: string) {
-  const result = await aws().tm.listScenes({ workspaceId });
-
-  const sceneList = result["sceneSummaries"];
-  if (sceneList != undefined) {
-    for (const scene of sceneList) {
-      const sceneId = scene["sceneId"];
-      await aws().tm.deleteScene({
-        workspaceId: workspaceId,
-        sceneId: sceneId,
-      });
-      console.log(`deleted scene: ${sceneId}`);
+  let nextToken: string | undefined = "";
+  while (nextToken != undefined) {
+    const result: ListScenesCommandOutput = await aws().tm.listScenes({
+      workspaceId: workspaceId,
+      nextToken: nextToken,
+    });
+    nextToken = result["nextToken"];
+    const sceneList = result["sceneSummaries"];
+    if (sceneList != undefined) {
+      for (const scene of sceneList) {
+        const sceneId = scene["sceneId"];
+        await aws().tm.deleteScene({
+          workspaceId: workspaceId,
+          sceneId: sceneId,
+        });
+        console.log(`deleted scene: ${sceneId}`);
+      }
     }
   }
-  // FIXME handle pagination
 }
 
 export { importScene, deleteScenes };

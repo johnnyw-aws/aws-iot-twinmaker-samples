@@ -11,7 +11,6 @@ import { KinesisVideo } from "@aws-sdk/client-kinesis-video";
 // TODO cleanup pass
 class AwsClients {
   region: string;
-
   sts: STS;
   tm: IoTTwinMaker;
   iam: IAM;
