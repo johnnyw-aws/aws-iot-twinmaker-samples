@@ -1,9 +1,9 @@
 // Copyright 2022 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-const twinMakerPermissionPolicySuffix = "PermissionPolicy";
+export const twinMakerPermissionPolicySuffix = "PermissionPolicy";
 
-const twinMakerAssumeRolePolicy = {
+export const twinMakerAssumeRolePolicy = {
   Version: "2012-10-17",
   Statement: [
     {
@@ -16,7 +16,7 @@ const twinMakerAssumeRolePolicy = {
   ]
 };
 
-const twinMakerPermissionPolicy = {
+export const twinMakerPermissionPolicy = {
   "Version": "2012-10-17",
   "Statement": [
     {
@@ -69,6 +69,3 @@ const twinMakerPermissionPolicy = {
     }
   ]
 }
-
-// TODO be consistent with export form
-export { twinMakerPermissionPolicySuffix, twinMakerAssumeRolePolicy, twinMakerPermissionPolicy };
