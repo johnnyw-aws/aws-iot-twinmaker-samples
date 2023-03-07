@@ -187,5 +187,5 @@ export const handler = async (argv: Arguments<Options>) => {
   }
 
   console.log("=== Deployment Completed! ===");
-  process.exit(0);
+  return 0;
 };
