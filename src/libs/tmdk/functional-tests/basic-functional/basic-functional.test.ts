@@ -10,11 +10,11 @@ import * as deploy from "../../src/commands/deploy";
 import * as init from "../../src/commands/init";
 import * as nuke from "../../src/commands/nuke";
 import * as fs from "fs";
-import * as constants from "./basic-e2e-constants";
+import * as constants from "./basic-functional-constants";
 import {
   twinMakerAssumeRolePolicy,
   twinMakerPermissionPolicy,
-} from "./basic-e2e-iam";
+} from "./basic-functional-iam";
 import {
   ComponentTypeSummary,
   GetComponentTypeCommandOutput,
@@ -24,13 +24,16 @@ import * as path from "path";
 import { EntitySummary } from "@aws-sdk/client-iottwinmaker/dist-types/models/models_0";
 import { delay } from "../../src/lib/utils";
 import prompts = require("prompts");
-import { componentType1Input, expectedTmdk } from "./basic-e2e-constants";
+import {
+  componentType1Input,
+  expectedTmdk,
+} from "./basic-functional-constants";
 
 // Ensure nuke always operates
 prompts.inject(["Y", "Y"]);
 
-test("basic e2e test", async () => {
-  console.log("//////      BEGIN BASIC E2E TEST     //////");
+test("basic functional test", async () => {
+  console.log("//////      BEGIN BASIC FUNCTIONAL TEST     //////");
   let argv2;
 
   // 0. Get account info

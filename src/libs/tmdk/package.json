@@ -8,8 +8,7 @@
   },
   "scripts": {
     "test": "./node_modules/.bin/jest --silent",
-    "integ-test": "./node_modules/.bin/jest --silent -c jest.config.integration.js",
-    "e2e-test": "./node_modules/.bin/jest -c jest.config.e2e.js",
+    "functional-test": "./node_modules/.bin/jest -c jest.config.functional.js",
     "build": "./node_modules/typescript/bin/tsc && npm run package",
     "build-global": "npx tsc && npm run package && npm install -g",
     "package": "node build.js",

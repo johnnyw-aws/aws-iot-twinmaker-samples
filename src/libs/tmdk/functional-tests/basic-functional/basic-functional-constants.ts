@@ -4,11 +4,14 @@
 import * as path from "path";
 import * as os from "os";
 
-export const localResourcesDir = path.join(__dirname, "basic-e2e-resources");
+export const localResourcesDir = path.join(
+  __dirname,
+  "basic-functional-resources"
+);
 export const timestamp = Date.now() % 10000;
-export const workspaceId = `tmdk-e2e-test-workspace-${timestamp}`;
+export const workspaceId = `tmdk-functional-test-workspace-${timestamp}`;
 export const region = "us-east-1";
-export const tmdkDirectory = path.join(os.tmpdir(), "e2e-tmdk-test");
+export const tmdkDirectory = path.join(os.tmpdir(), "functional-tmdk-test");
 export const tmdkFile = "tmdk.json";
 export const entitiesFile = "entities.json";
 
