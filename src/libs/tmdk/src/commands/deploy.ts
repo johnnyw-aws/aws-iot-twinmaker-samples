@@ -108,13 +108,27 @@ export const handler = async (argv: Arguments<Options>) => {
     let stillComponentRemaining = true; // FIXME cleaner dependency creation process
     while (stillComponentRemaining) {
       stillComponentRemaining = false;
-
       for (const componentTypeFile of tmdk_config["component-types"]) {
         const componentTypeDefinitionStr = syncReadFile(
           `${dir}/${componentTypeFile}`
         );
         const componentTypeDefinition = JSON.parse(componentTypeDefinitionStr);
-
+        // remove inherited properties
+        const propertyDefinitions = componentTypeDefinition[
+          "propertyDefinitions"
+        ] as object;
+        if (propertyDefinitions != undefined) {
+          const filtered_property_definitions = Object.entries(
+            propertyDefinitions
+          ).reduce((acc, [key, value]) => {
+            if (!value["isInherited"]) {
+              acc[key] = value;
+            }
+            return acc;
+          }, {} as { [key: string]: object });
+          componentTypeDefinition["propertyDefinitions"] =
+            filtered_property_definitions;
+        }
         // create component type if not exists
         try {
           const alreadyExists = await createComponentTypeIfNotExists(
@@ -130,12 +144,15 @@ export const handler = async (argv: Arguments<Options>) => {
               `Created component-type: ${componentTypeDefinition["componentTypeId"]}`
             );
           }
-        } catch (error) {
-          if (error instanceof ValidationException) {
-            // TODO check message is due to something not existing in workspace
+        } catch (e) {
+          if (
+            // components are not gaurenteed to be in the correct order; retry
+            e instanceof ValidationException &&
+            e.message.includes("do not exist in workspace")
+          ) {
             stillComponentRemaining = true;
           } else {
-            throw error;
+            throw new Error(`Failed to create component type. ${e}`);
           }
         }
       }

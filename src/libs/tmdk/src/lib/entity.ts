@@ -7,6 +7,7 @@ import {
   ListEntitiesFilter,
   ComponentUpdateRequest,
   ParentEntityUpdateRequest,
+  ListEntitiesCommandOutput,
 } from "@aws-sdk/client-iottwinmaker";
 import { getDefaultAwsClients as aws } from "./aws-clients";
 import { delay } from "./utils";
@@ -113,7 +114,7 @@ async function deleteEntitiesWithServiceRecursion(workspaceId: string) {
   while (true) {
     const next_token: string | undefined = "";
     let nextToken: string | undefined = next_token;
-    const resp = await aws().tm.listEntities({
+    const resp: ListEntitiesCommandOutput = await aws().tm.listEntities({
       workspaceId,
       filters,
       maxResults,
@@ -145,15 +146,15 @@ async function deleteEntitiesWithServiceRecursion(workspaceId: string) {
     const next_token: string | undefined = "";
     let nextToken: string | undefined = next_token;
     while (true) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const listResp: any = await aws().tm.listEntities({
-        // TODO why does "any" need to be here but not above?
+      const listResp: ListEntitiesCommandOutput = await aws().tm.listEntities({
         workspaceId,
         maxResults,
         nextToken,
       });
       const entities_on_page = listResp["entitySummaries"];
-      total_entities_remaining += entities_on_page?.length;
+      if (entities_on_page != undefined) {
+        total_entities_remaining += entities_on_page?.length;
+      }
       nextToken = listResp["nextToken"];
       if (nextToken == undefined) {
         break;

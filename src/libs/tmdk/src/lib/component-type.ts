@@ -4,6 +4,7 @@
 
 import {
   CreateComponentTypeRequest,
+  ListComponentTypesCommandOutput,
   ResourceNotFoundException,
 } from "@aws-sdk/client-iottwinmaker";
 import { getDefaultAwsClients as aws } from "./aws-clients";
@@ -58,42 +59,44 @@ async function createComponentTypeIfNotExists(
  */
 async function deleteComponentTypes(workspaceId: string) {
   let retryNeeded = true;
-
+  let nextToken: string | undefined = "";
   while (retryNeeded) {
     retryNeeded = false;
-    const result = await aws().tm.listComponentTypes({
-      workspaceId,
-    });
-
-    const componentTypeList = result["componentTypeSummaries"];
-    if (componentTypeList != undefined) {
-      for (const componentType of componentTypeList) {
-        if (componentType != undefined) {
-          const componentTypeId = componentType["componentTypeId"];
-
-          try {
-            await aws().tm.deleteComponentType({
-              workspaceId,
-              componentTypeId: componentTypeId,
-            });
-            console.log(`deleted component-type: ${componentTypeId}`); // TODO make sure reporting aligned with other delete functions
-          } catch (e) {
-            const error = String(e);
-            if (
-              error.indexOf(
-                "Not allowed to modify component type in reserved namespace"
-              ) > -1
-            ) {
-              // ignore
-            } else {
-              retryNeeded = true;
+    while (nextToken != undefined) {
+      const result: ListComponentTypesCommandOutput =
+        await aws().tm.listComponentTypes({
+          workspaceId,
+          nextToken: nextToken,
+        });
+      nextToken = result["nextToken"];
+      const componentTypeList = result["componentTypeSummaries"];
+      if (componentTypeList != undefined) {
+        for (const componentType of componentTypeList) {
+          if (componentType != undefined) {
+            const componentTypeId = componentType["componentTypeId"];
+            try {
+              await aws().tm.deleteComponentType({
+                workspaceId,
+                componentTypeId: componentTypeId,
+              });
+              console.log(`deleted component-type: ${componentTypeId}`);
+            } catch (e) {
+              const error = String(e);
+              if (
+                error.indexOf(
+                  "Not allowed to modify component type in reserved namespace"
+                ) > -1
+              ) {
+                // ignore
+              } else {
+                retryNeeded = true;
+              }
             }
           }
         }
       }
     }
   }
-  // FIXME handle pagination
 }
 
 /**
@@ -106,8 +109,15 @@ async function waitForComponentTypeActive(
   workspaceId: string,
   componentTypeId: string
 ) {
+  let timeout = 50;
   while (true) {
-    // TODO timeout
+    if (timeout === 0) {
+      throw new Error(
+        `Timed out: too many attempts for componentId: ${componentTypeId}\n
+        Please check console for more information on component type and retry.`
+      );
+    }
+    timeout--;
     try {
       const result = await aws().tm.getComponentType({
         workspaceId,
