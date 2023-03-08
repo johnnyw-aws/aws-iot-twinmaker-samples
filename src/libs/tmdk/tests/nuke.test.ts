@@ -21,5 +21,31 @@ describe("testing nuke", () => {
     expect(mockExit).toHaveBeenCalledWith(1);
   });
 
-  // TODO fill in test cases
+  test("nuke_givenNoWorkspace_expectError", async () => {
+    // TODO
+  });
+
+  test("nuke_givenNotYInput_expectExit", async () => {
+    // TODO
+  });
+
+  test("nuke_givenNoResources_expectSuccess", async () => {
+    // TODO
+  });
+
+  test("nuke_givenEntities_expectSuccess", async () => {
+    // TODO
+  });
+
+  test("nuke_givenComponentTypes_expectSuccess", async () => {
+    // TODO
+  });
+
+  test("nuke_givenScenes_expectSuccess", async () => {
+    // TODO
+  });
+
+  test("nuke_givenAll_expectSuccess", async () => {
+    // TODO
+  });
 });
