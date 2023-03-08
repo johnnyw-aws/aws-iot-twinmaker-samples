@@ -1,8 +1,6 @@
 // Copyright 2022 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-export const twinMakerPermissionPolicySuffix = "PermissionPolicy";
-
 export const twinMakerAssumeRolePolicy = {
   Version: "2012-10-17",
   Statement: [
@@ -31,15 +29,15 @@ export const twinMakerPermissionPolicy = {
         "s3:GetBucketLocation",
       ],
       Resource: [
-        "s3ArnStar", // replaced with workspace bucket
-        "s3ArnStandard", // replaced with workspace bucket
+        "__S3_ARN_STAR__", // replaced with workspace bucket
+        "__S3_ARN_STANDARD__", // replaced with workspace bucket
       ],
     },
     {
       Effect: "Allow",
       Action: ["s3:DeleteObject"],
       Resource: [
-        "s3ArnDelete", // replaced with workspace bucket
+        "__S3_ARN_FOR_DELETE__", // replaced with workspace bucket
       ],
     },
     {

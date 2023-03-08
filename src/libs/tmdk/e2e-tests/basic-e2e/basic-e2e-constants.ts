@@ -2,11 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import * as path from "path";
+import * as os from "os";
 
 export const localResourcesDir = path.join(__dirname, "basic-e2e-resources");
-export const workspaceId = "tmdk-e2e-test-workspace";
+export const timestamp = Date.now() % 10000;
+export const workspaceId = `tmdk-e2e-test-workspace-${timestamp}`;
 export const region = "us-east-1";
-export const tmdkDirectory = "/tmp/e2e-tmdk-test";
+export const tmdkDirectory = path.join(os.tmpdir(), "e2e-tmdk-test");
 export const tmdkFile = "tmdk.json";
 export const entitiesFile = "entities.json";
 
@@ -47,3 +49,11 @@ export const model2FileName = "CookieFactoryWaterTank.glb";
 
 export const resourceActiveState = "ACTIVE";
 export const jsonEncoding = "utf-8";
+
+export const expectedTmdk = {
+  version: "0.0.2",
+  "component-types": ["testComponentType1.json"],
+  scenes: ["testScene1.json"],
+  models: ["CookieFactoryMixer.glb"],
+  entities: "entities.json",
+};

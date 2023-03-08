@@ -14,7 +14,6 @@ import * as constants from "./basic-e2e-constants";
 import {
   twinMakerAssumeRolePolicy,
   twinMakerPermissionPolicy,
-  twinMakerPermissionPolicySuffix,
 } from "./basic-e2e-iam";
 import {
   ComponentTypeSummary,
@@ -25,6 +24,7 @@ import * as path from "path";
 import { EntitySummary } from "@aws-sdk/client-iottwinmaker/dist-types/models/models_0";
 import { delay } from "../../src/lib/utils";
 import prompts = require("prompts");
+import { componentType1Input, expectedTmdk } from "./basic-e2e-constants";
 
 // Ensure nuke always operates
 prompts.inject(["Y", "Y"]);
@@ -35,21 +35,16 @@ test("basic e2e test", async () => {
 
   // 0. Get account info
   console.log("Initializing AWS client.");
-  initDefaultAwsClients({ region: `${constants.region}` });
+  initDefaultAwsClients({ region: constants.region });
   const accountId = (await aws().getCurrentIdentity())["accountId"];
-  const twinMakerRoleName = constants.workspaceId + "-" + accountId + "-role";
-  const twinMakerPolicyName =
-    twinMakerRoleName + twinMakerPermissionPolicySuffix;
-  const twinMakerRoleArn =
-    "arn:aws:iam::" + accountId + ":role/" + twinMakerRoleName;
-  const workspaceS3BucketName = constants.workspaceId + "-" + accountId;
-  const workspaceS3BucketArn = "arn:aws:s3:::" + workspaceS3BucketName;
-  const scene1S3Location =
-    "s3://" + workspaceS3BucketName + "/" + constants.scene1FileName;
-  const model1S3Location =
-    "s3://" + workspaceS3BucketName + "/" + constants.model1FileName;
-  const model2S3Location =
-    "s3://" + workspaceS3BucketName + "/" + constants.model2FileName;
+  const twinMakerRoleName = `${constants.workspaceId}-${accountId}-${constants.timestamp}-role`;
+  const twinMakerPolicyName = `${twinMakerRoleName}PermissionPolicy`;
+  const twinMakerRoleArn = `arn:aws:iam::${accountId}:role/${twinMakerRoleName}`;
+  const workspaceS3BucketName = `${constants.workspaceId}-${accountId}`;
+  const workspaceS3BucketArn = `arn:aws:s3:::${workspaceS3BucketName}`;
+  const scene1S3Location = `s3://${workspaceS3BucketName}/${constants.scene1FileName}`;
+  const model1S3Location = `s3://${workspaceS3BucketName}/${constants.model1FileName}`;
+  const model2S3Location = `s3://${workspaceS3BucketName}/${constants.model2FileName}`;
 
   // 1. Clean up pre-existing resources, if any
   console.log(
@@ -114,42 +109,42 @@ test("basic e2e test", async () => {
 
   // 2. Set up test resources
   try {
-    console.log("Creating IAM role: " + twinMakerRoleName);
+    console.log(`Creating IAM role: ${twinMakerRoleName}`);
     await aws().iam.createRole({
       RoleName: twinMakerRoleName,
       AssumeRolePolicyDocument: JSON.stringify(twinMakerAssumeRolePolicy),
     });
     let twinMakerPolicyString = JSON.stringify(twinMakerPermissionPolicy);
     twinMakerPolicyString = twinMakerPolicyString.replace(
-      "s3ArnStar",
-      workspaceS3BucketArn + "/*"
+      "__S3_ARN_STAR__",
+      `${workspaceS3BucketArn}/*`
     );
     twinMakerPolicyString = twinMakerPolicyString.replace(
-      "s3ArnStandard",
+      "__S3_ARN_STANDARD__",
       workspaceS3BucketArn
     );
     twinMakerPolicyString = twinMakerPolicyString.replace(
-      "s3ArnDelete",
-      workspaceS3BucketArn + "/DO_NOT_DELETE_WORKSPACE_*"
+      "__S3_ARN_FOR_DELETE__",
+      `${workspaceS3BucketArn}/DO_NOT_DELETE_WORKSPACE_*`
     );
     await aws().iam.putRolePolicy({
       RoleName: twinMakerRoleName,
       PolicyName: twinMakerPolicyName,
       PolicyDocument: twinMakerPolicyString,
     });
-    await delay(10000); // allow role to propagate
-    console.log("Creating workspace bucket: " + workspaceS3BucketName);
+    await delay(10000); // TODO replace with method to wait for role creation and propagation
+    console.log(`Creating workspace bucket: ${workspaceS3BucketName}`);
     await aws().s3.createBucket({
       Bucket: workspaceS3BucketName,
     });
-    console.log("Creating workspace: " + constants.workspaceId);
+    console.log(`Creating workspace: ${constants.workspaceId}`);
     await aws().tm.createWorkspace({
       workspaceId: constants.workspaceId,
       s3Location: workspaceS3BucketArn,
       role: twinMakerRoleArn,
     });
     console.log(
-      "Uploading scene 1 definition file to s3 bucket: " + workspaceS3BucketName
+      `Uploading scene 1 definition file to s3 bucket: ${workspaceS3BucketName}`
     );
     const scene1Definition = JSON.parse(
       fs.readFileSync(
@@ -166,7 +161,7 @@ test("basic e2e test", async () => {
     await aws().s3.send(new PutObjectCommand(scene1UploadParams));
     constants.scene1Input["contentLocation"] = scene1S3Location;
     console.log(
-      "Uploading model 1 glb file to s3 bucket: " + workspaceS3BucketName
+      `Uploading model 1 glb file to s3 bucket: ${workspaceS3BucketName}`
     );
     const model1UploadParams = {
       Bucket: workspaceS3BucketName,
@@ -202,7 +197,7 @@ test("basic e2e test", async () => {
 
   // 4. Init tmdk project
   console.log(
-    "Using init to initialize tmdk project in dir: " + constants.tmdkDirectory
+    `Using init to initialize tmdk project in dir: ${constants.tmdkDirectory}`
   );
   argv2 = {
     _: ["init"],
@@ -215,8 +210,7 @@ test("basic e2e test", async () => {
 
   // 5. Validate tmdk definition
   console.log(
-    "Init succeeded, validating tmdk definition in dir: " +
-      constants.tmdkDirectory
+    `Init succeeded, validating tmdk definition in dir: ${constants.tmdkDirectory}`
   );
   const tmdkDefinition1 = JSON.parse(
     fs.readFileSync(
@@ -224,17 +218,19 @@ test("basic e2e test", async () => {
       constants.jsonEncoding
     )
   );
-  expect(tmdkDefinition1["component-types"]).toStrictEqual([
-    "testComponentType1.json",
-  ]);
+  expect(tmdkDefinition1["component-types"]).toStrictEqual(
+    expectedTmdk["component-types"]
+  );
   const ct1Definition = JSON.parse(
     fs.readFileSync(
       path.join(constants.tmdkDirectory, "testComponentType1.json"),
       constants.jsonEncoding
     )
   );
-  expect(ct1Definition["componentTypeId"]).toStrictEqual("testComponentType1");
-  expect(tmdkDefinition1["scenes"]).toStrictEqual(["testScene1.json"]);
+  expect(ct1Definition["componentTypeId"]).toStrictEqual(
+    componentType1Input.componentTypeId
+  );
+  expect(tmdkDefinition1["scenes"]).toStrictEqual(expectedTmdk["scenes"]);
   const scene1Definition = JSON.parse(
     fs.readFileSync(
       path.join(constants.tmdkDirectory, "testScene1.json"),
@@ -244,8 +240,8 @@ test("basic e2e test", async () => {
   expect(scene1Definition["nodes"][0]["name"]).toStrictEqual(
     "CookieFactoryMixer"
   );
-  expect(tmdkDefinition1["models"]).toStrictEqual(["CookieFactoryMixer.glb"]);
-  expect(tmdkDefinition1["entities"]).toStrictEqual("entities.json");
+  expect(tmdkDefinition1["models"]).toStrictEqual(expectedTmdk["models"]);
+  expect(tmdkDefinition1["entities"]).toStrictEqual(expectedTmdk["entities"]);
   expect(
     fs.existsSync(path.join(constants.tmdkDirectory, "entities.json"))
   ).toBeTruthy();
@@ -260,13 +256,11 @@ test("basic e2e test", async () => {
 
   // 6. Update tmdk definition, add resources
   console.log(
-    "Updating tmdk definition in dir: " +
-      constants.tmdkDirectory +
-      " and adding resources"
+    `Updating tmdk definition in dir: ${constants.tmdkDirectory} and adding resources`
   );
   fs.copyFileSync(
     path.join(constants.localResourcesDir, constants.model2FileName),
-    path.join(constants.tmdkDirectory, "3d_models/" + constants.model2FileName)
+    path.join(constants.tmdkDirectory, `3d_models/${constants.model2FileName}`)
   );
   const scene2Definition = JSON.parse(
     fs.readFileSync(
@@ -281,7 +275,7 @@ test("basic e2e test", async () => {
     JSON.stringify(scene2Definition)
   );
   fs.writeFileSync(
-    path.join(constants.tmdkDirectory, constants.componentType2Name),
+    path.join(constants.tmdkDirectory, `${constants.componentType2Name}.json`),
     JSON.stringify(constants.componentType2)
   );
   const entities = JSON.parse(
@@ -302,7 +296,9 @@ test("basic e2e test", async () => {
       constants.jsonEncoding
     )
   );
-  tmdkDefinition["component-types"].push(constants.componentType2Name);
+  tmdkDefinition["component-types"].push(
+    `${constants.componentType2Name}.json`
+  );
   tmdkDefinition["scenes"].push(constants.scene2FileName);
   tmdkDefinition["models"].push(constants.model2FileName);
   fs.writeFileSync(
@@ -313,7 +309,7 @@ test("basic e2e test", async () => {
 
   // 7. Deploy to workspace
   console.log(
-    "Deploying updated tmdk project to workspace: " + constants.workspaceId
+    `Deploying updated tmdk project to workspace: ${constants.workspaceId}`
   );
   argv2 = {
     _: ["deploy"],
@@ -326,7 +322,7 @@ test("basic e2e test", async () => {
 
   // 8. Validate resources were created
   console.log(
-    "Verifying TwinMaker resource in dir: " + constants.tmdkDirectory
+    `Verifying TwinMaker resource in dir: ${constants.tmdkDirectory}`
   );
   // Verify Component Types
   const componentType1Result: GetComponentTypeCommandOutput =
@@ -423,7 +419,7 @@ test("basic e2e test", async () => {
   );
 
   // 9. Nuke workspace
-  console.log("Nuking workspace: " + constants.workspaceId);
+  console.log(`Nuking workspace: ${constants.workspaceId}`);
   argv2 = {
     _: ["nuke"],
     $0: "tmdk_local",
