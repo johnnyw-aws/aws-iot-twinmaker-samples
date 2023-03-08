@@ -7,7 +7,7 @@
     "tmdk": "./build/cli.js"
   },
   "scripts": {
-    "test": "./node_modules/.bin/jest --silent",
+    "test": "./node_modules/.bin/jest --silent --collectCoverage",
     "functional-test": "./node_modules/.bin/jest --silent -c jest.config.functional.js",
     "build": "./node_modules/typescript/bin/tsc && npm run package",
     "build-global": "npx tsc && npm run package && npm install -g",

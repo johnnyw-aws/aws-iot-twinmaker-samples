@@ -18,9 +18,50 @@ describe("testing deploy", () => {
       "workspace-id": "irrelevant",
       dir: "/tmp/deploy-unit-tests/i-do-not-exist",
     } as Arguments<Options>;
-    await expect(handler(argv2)).rejects.toThrow(Error);
-    expect(mockExit).toHaveBeenCalledWith(1);
+    await expect(handler(argv2)).rejects.toThrow(
+      Error(
+        "ENOENT: no such file or directory, open '/tmp/deploy-unit-tests/i-do-not-exist/tmdk.json'"
+      )
+    );
   });
 
-  // TODO fill in test cases
+  test("deploy_givenNoWorkspace_expectError", async () => {
+    // TODO
+  });
+
+  test("deploy_givenEmptyProject_expectSuccess", async () => {
+    // TODO
+  });
+
+  test("deploy_givenJustComponentTypes_expectSuccess", async () => {
+    // TODO
+  });
+
+  test("deploy_givenJustScenes_expectSuccess", async () => {
+    // TODO
+  });
+
+  test("deploy_givenJustEntities_expectSuccess", async () => {
+    // TODO
+  });
+
+  test("deploy_givenFullWorkspace_expectSuccess", async () => {
+    // TODO
+  });
+
+  test("deploy_givenPartiallyFilledComponentTypes_expectSuccess", async () => {
+    // TODO
+  });
+
+  test("deploy_givenPartiallyFilledScenes_expectSuccess", async () => {
+    // TODO
+  });
+
+  test("deploy_givenPartiallyFilledEntities_expectSuccess", async () => {
+    // TODO
+  });
+
+  test("deploy_givenPartiallyFilledWorkspace_expectSuccess", async () => {
+    // TODO
+  });
 });

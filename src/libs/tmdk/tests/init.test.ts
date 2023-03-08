@@ -27,5 +27,27 @@ describe("testing init", () => {
     await expect(handler(argv2)).rejects.toThrow(ResourceNotFoundException);
   });
 
-  // TODO fill in test cases
+  test("init_givenWorkspaceDoesNotExist_expectEmptyProject", async () => {
+    // TODO
+  });
+
+  test("init_givenNoResources_expectJustWorkspace", async () => {
+    // TODO
+  });
+
+  test("init_givenJustComponentTypes_expectSuccess", async () => {
+    // TODO
+  });
+
+  test("init_givenJustScenes_expectSuccess", async () => {
+    // TODO
+  });
+
+  test("init_givenJustEntities_expectSuccess", async () => {
+    // TODO
+  });
+
+  test("init_givenFullWorkspace_expectSuccess", async () => {
+    // TODO
+  });
 });
