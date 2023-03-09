@@ -13,26 +13,19 @@ import {
   ListScenesCommand,
   ResourceNotFoundException,
 } from "@aws-sdk/client-iottwinmaker";
+import { mockClient } from "aws-sdk-client-mock";
+import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { SdkStream } from "@aws-sdk/types";
+import * as path from 'path';
+import { basicWorkspaceId, createDirectory, localResourcesDir } from './test-utils';
 import {
-  createDirectory,
   emptyListComponentTypesResp,
   emptyListEntitiesResp,
-  basicWorkspaceId,
-  emptyListScenesResp,
-  oneCtListComponentTypesResp,
+  emptyListScenesResp, expectComponentType1, expectEntity1,
   getComponentType1Resp,
-  expectComponentType1,
-  oneEntityListEntitiesResp,
   getEntity1Resp,
-  expectEntity1,
-  oneSceneListScenesResp,
-  localResourcesDir, scene1,
-} from "./test-utils";
-import { mockClient } from "aws-sdk-client-mock";
-import { GetObjectCommand, GetObjectCommandOutput, S3Client } from "@aws-sdk/client-s3";
-import * as path from 'path';
-import { ReadStream } from 'fs';
-import { Readable } from 'stream';
+  oneCtListComponentTypesResp, oneEntityListEntitiesResp, oneSceneListScenesResp, scene1
+} from './test-constants';
 const fs = require("fs");
 
 const outDir = "/tmp/init-unit-tests";
@@ -248,7 +241,7 @@ describe("testing init", () => {
       .resolves({
         $metadata: {},
         Body: { transformToString: (encoding?: string) =>
-          {return Promise.resolve(fs.readFileSync(path.join(localResourcesDir, "model1.glb")));} } as any,
+          {return Promise.resolve(fs.readFileSync(path.join(localResourcesDir, "model1.glb")));} } as SdkStream<Blob>,
       });
 
     const argv2 = {
