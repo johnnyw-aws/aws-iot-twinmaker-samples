@@ -16,11 +16,11 @@ describe("testing deploy", () => {
       $0: "tmdk_local",
       region: "us-east-1",
       "workspace-id": "irrelevant",
-      dir: "/tmp/deploy-unit-tests/i-do-not-exist",
+      dir: "i-do-not-exist",
     } as Arguments<Options>;
     await expect(handler(argv2)).rejects.toThrow(
       Error(
-        "ENOENT: no such file or directory, open '/tmp/deploy-unit-tests/i-do-not-exist/tmdk.json'"
+        "ENOENT: no such file or directory, open 'i-do-not-exist/tmdk.json'"
       )
     );
   });
