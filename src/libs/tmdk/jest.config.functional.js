@@ -4,6 +4,7 @@
 module.exports = {
   transform: { "^.+\\.ts?$": "ts-jest" },
   testEnvironment: "node",
-  testRegex: "/integ-tests/.*\\.(test|spec)?\\.(ts|tsx)$",
+  testRegex: "/functional-tests/.*\\.(test|spec)?\\.(ts|tsx)$",
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
+  slowTestThreshold: 999999,
 };
