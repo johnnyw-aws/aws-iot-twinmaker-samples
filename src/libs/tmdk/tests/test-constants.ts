@@ -4,14 +4,14 @@ import {
   ListEntitiesCommandOutput,
   ListScenesCommandOutput
 } from '@aws-sdk/client-iottwinmaker';
-import { basicWorkspaceId } from './test-utils';
+import { workspaceId } from './test-utils';
 
 export const emptyListComponentTypesResp: ListComponentTypesCommandOutput = {
   $metadata: {},
   componentTypeSummaries: [],
   maxResults: 0,
   nextToken: undefined,
-  workspaceId: basicWorkspaceId,
+  workspaceId: workspaceId,
 };
 
 export const emptyListEntitiesResp: ListEntitiesCommandOutput = {
@@ -28,7 +28,7 @@ export const emptyListScenesResp: ListScenesCommandOutput = {
 
 export const getComponentType1Resp: GetComponentTypeCommandOutput = {
   $metadata: {},
-  workspaceId: basicWorkspaceId,
+  workspaceId: workspaceId,
   arn: "componentType1Arn",
   componentTypeId: "componentType1",
   componentTypeName: "componentType1Name",
@@ -65,23 +65,19 @@ export const oneCtListComponentTypesResp: ListComponentTypesCommandOutput = {
   ],
   maxResults: 0,
   nextToken: undefined,
-  workspaceId: basicWorkspaceId,
+  workspaceId: workspaceId,
 };
 
-export const expectComponentType1 = {
+export const componentType1Definition = {
   componentTypeId: getComponentType1Resp.componentTypeId,
   description: getComponentType1Resp.description,
-  extendsFrom: getComponentType1Resp.extendsFrom,
-  functions: getComponentType1Resp.functions,
-  isSingleton: getComponentType1Resp.isSingleton,
-  propertyDefinitions: getComponentType1Resp.propertyDefinitions,
 };
 
 export const getEntity1Resp: GetEntityCommandOutput = {
   $metadata: {},
   hasChildEntities: false,
   parentEntityId: "$ROOT",
-  workspaceId: basicWorkspaceId,
+  workspaceId: workspaceId,
   arn: "componentType1Arn",
   entityId: "entity1",
   entityName: "entity1Name",
@@ -119,7 +115,7 @@ export const oneEntityListEntitiesResp: ListEntitiesCommandOutput = {
   nextToken: undefined,
 };
 
-export const expectEntity1 = {
+export const entity1Definition = {
   components: [],
   description: getEntity1Resp.description,
   entityId: getEntity1Resp.entityId,
@@ -169,4 +165,12 @@ export const oneSceneListScenesResp: ListScenesCommandOutput = {
     },
   ],
   nextToken: undefined,
+};
+
+export const emptyTmdk = {
+  version: "0.0.2",
+  "component-types": [],
+  scenes: [],
+  models: [],
+  entities: "entities.json",
 };

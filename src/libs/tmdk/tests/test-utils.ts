@@ -9,7 +9,10 @@ export const localResourcesDir = path.join(
   "test-resources"
 );
 
-export const basicWorkspaceId = "workspaceId";
+export const workspaceId = "workspaceId";
+export const workspaceBucket = "workspaceBucket";
+export const s3BucketArn = `arn:aws:s3:::${workspaceBucket}`;
+export const s3ContentLocationBase = `s3://${workspaceBucket}/`;
 
 export const mockExit = jest
   .spyOn(process, "exit")
