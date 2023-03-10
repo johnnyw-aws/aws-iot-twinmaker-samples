@@ -91,7 +91,7 @@ export const handler = async (argv: Arguments<Options>) => {
       console.log(
         `Error: workspace '${workspaceIdStr}' not found in region '${region}'. Please create it first.`
       );
-      process.exit(1);
+      throw e;
     } else {
       throw new Error(`Failed to get workspace. ${e}`);
     }
