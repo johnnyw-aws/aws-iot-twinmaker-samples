@@ -1,7 +1,4 @@
-/* eslint-disable no-var */
-/* eslint-disable no-constant-condition */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable no-prototype-builtins */
 // Copyright 2022 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
@@ -13,64 +10,66 @@ import {
 } from "../lib/aws-clients";
 import * as fs from "fs";
 import { GetObjectCommand, ListObjectsV2Command } from "@aws-sdk/client-s3";
-import path from "path";
+import * as path from "path";
 import {
   ListComponentTypesCommandOutput,
   ListScenesCommandOutput,
+  ListEntitiesCommandOutput,
+  GetEntityCommandOutput,
 } from "@aws-sdk/client-iottwinmaker";
 
 export type Options = {
-  region: string | undefined;
-  "workspace-id": string | undefined;
-  out: string | undefined;
+  region: string;
+  "workspace-id": string;
+  out: string;
+};
+
+export type tmdk_config_file = {
+  version: string;
+  component_types: string[];
+  scenes: string[];
+  models: string[];
+  entities: string;
 };
 
 export const command = "init";
 export const desc = "Initializes a tmdk application";
 
-export const builder: CommandBuilder<Options, Options> = (yargs) =>
+export const builder: CommandBuilder<Options> = (yargs) =>
   yargs.options({
     region: {
       type: "string",
-      require: false,
+      require: true,
       description:
         "Specify the AWS region of the Workspace to bootstrap the project from.",
-      defaultDescription: "$AWS_DEFAULT_REGION",
-      default: process.env.AWS_DEFAULT_REGION,
     },
     "workspace-id": {
       type: "string",
-      require: false,
+      require: true,
       description:
         "Specify the ID of the Workspace to bootstrap the project from.",
-      defaultDescription: "$WORKSPACE_ID",
-      default: process.env.WORKSPACE_ID,
     },
     out: {
       type: "string",
-      require: false,
+      require: true,
       description: "Specify the directory to initialize a project in.",
     },
   });
 
-// TODO better modeling for tmdk_config
 async function import_component_types(
   workspaceIdStr: string,
-  tmdk_config: any,
+  tmdk_config: tmdk_config_file,
   outDir: string
 ) {
-  if (!tmdk_config.hasOwnProperty("component-types")) {
-    tmdk_config["component-types"] = [];
-  }
   let nextToken: string | undefined = "";
   while (nextToken != undefined) {
-    const resp: ListComponentTypesCommandOutput =
+    const listComponentsResp: ListComponentTypesCommandOutput =
       await aws().tm.listComponentTypes({
         workspaceId: workspaceIdStr,
         nextToken: nextToken,
       });
-    nextToken = resp["nextToken"];
-    const componentTypeSummaries = resp["componentTypeSummaries"];
+    nextToken = listComponentsResp["nextToken"];
+    const componentTypeSummaries = listComponentsResp["componentTypeSummaries"];
     if (componentTypeSummaries != undefined) {
       for (const componentTypeSummary of componentTypeSummaries) {
         if (!componentTypeSummary.arn?.includes("AmazonOwnedTypesWorkspace")) {
@@ -78,54 +77,55 @@ async function import_component_types(
             `saving component type: ${componentTypeSummary.componentTypeId} ...`
           );
 
-          const compResp = await aws().tm.getComponentType({
+          const getComponentResp = await aws().tm.getComponentType({
             workspaceId: workspaceIdStr,
             componentTypeId: componentTypeSummary.componentTypeId,
           });
 
           const componentDefinition = {
-            // TODO more idiomatic
-            componentTypeId: compResp["componentTypeId"],
-            description: compResp["description"],
-            extendsFrom: compResp["extendsFrom"],
-            functions: compResp["functions"], // FIXME remove inherited values
-            isSingleton: compResp["isSingleton"],
-            propertyDefinitions: compResp["propertyDefinitions"],
+            componentTypeId: getComponentResp["componentTypeId"],
+            description: getComponentResp["description"],
+            extendsFrom: getComponentResp["extendsFrom"],
+            functions: getComponentResp["functions"], // FIXME remove inherited values
+            isSingleton: getComponentResp["isSingleton"],
+            propertyDefinitions: getComponentResp["propertyDefinitions"],
             // 'tags': compResp['tags'] // FIXME type issue with tags?
           };
 
           // save to file
           fs.writeFileSync(
-            `${outDir}/${compResp["componentTypeId"]}.json`,
+            path.join(outDir, `${getComponentResp["componentTypeId"]}.json`),
             JSON.stringify(componentDefinition, null, 4)
           );
 
-          tmdk_config["component-types"].push(
-            `${compResp["componentTypeId"]}.json`
-          ); // TODO idiomatic
+          tmdk_config["component_types"].push(
+            `${getComponentResp["componentTypeId"]}.json`
+          );
         }
       }
     }
   }
   // save each non-pre-defined types into files
-  fs.writeFileSync(`${outDir}/tmdk.json`, JSON.stringify(tmdk_config, null, 4));
+  fs.writeFileSync(
+    path.join(outDir, "tmdk.json"),
+    JSON.stringify(tmdk_config, null, 4)
+  );
   return tmdk_config;
 }
 
-// TODO better modeling for tmdk_config
 async function import_scenes_and_models(
   workspaceIdStr: string,
-  tmdk_config: any,
+  tmdk_config: tmdk_config_file,
   outDir: string
 ) {
   let nextToken: string | undefined = "";
   while (nextToken != undefined) {
-    const resp: ListScenesCommandOutput = await aws().tm.listScenes({
+    const listScenesResp: ListScenesCommandOutput = await aws().tm.listScenes({
       workspaceId: workspaceIdStr,
       nextToken: nextToken,
     });
-    nextToken = resp["nextToken"];
-    const sceneSummaries = resp["sceneSummaries"];
+    nextToken = listScenesResp["nextToken"];
+    const sceneSummaries = listScenesResp["sceneSummaries"];
     let contentBucket = ""; // FIXME should be from workspace not scene files
     if (sceneSummaries != undefined) {
       const streamToString = (stream: any) =>
@@ -148,14 +148,7 @@ async function import_scenes_and_models(
 
       const modelFiles = new Set();
       for (const sceneSummary of sceneSummaries) {
-        if (!tmdk_config.hasOwnProperty("scenes")) {
-          tmdk_config["scenes"] = [];
-        }
-        if (!tmdk_config.hasOwnProperty("models")) {
-          // TODO consider putting models under scenes to support selective import
-          tmdk_config["models"] = [];
-        }
-
+        // TODO consider putting models under scenes to support selective import
         const s3ContentLocation = sceneSummary.contentLocation;
         if (s3ContentLocation != undefined) {
           contentBucket = s3ContentLocation.substring(5).split("/")[0];
@@ -166,7 +159,6 @@ async function import_scenes_and_models(
             .join("/");
           console.log(`saving scene file: ${contentKey}`);
 
-          // from https://github.com/awsdocs/aws-doc-sdk-examples/blob/main/javascriptv3/example_code/s3/src/s3_getobject.js
           const data = await aws().s3.send(
             new GetObjectCommand({ Bucket: contentBucket, Key: contentKey })
           );
@@ -186,12 +178,12 @@ async function import_scenes_and_models(
                   // Find URI of all models in JSON
                   // Obtain bucket name
                   let s3key = c["uri"] as string;
-
+                  let s3bucket: string;
                   if (s3key.startsWith("s3://")) {
-                    var s3bucket = s3key.split("/")[2];
+                    s3bucket = s3key.split("/")[2];
                     s3key = s3key.split("/").slice(3).join("/");
                   } else {
-                    var s3bucket = contentBucket;
+                    s3bucket = contentBucket;
                   }
                   // Obtain path of folder for JSON and download all files in that folder in the S3 bucket
                   const prefix = c["uri"].replace(path.basename(c["uri"]), "");
@@ -201,11 +193,11 @@ async function import_scenes_and_models(
                       Prefix: prefix,
                     })
                   );
-                  //console.log(objlist);
-                  if (objlist.hasOwnProperty("Contents")) {
-                    const contents = objlist["Contents"] as any[];
+                  if (objlist["Contents"] != undefined) {
+                    const contents = objlist["Contents"];
                     for (const [, value] of Object.entries(contents)) {
-                      if (value.hasOwnProperty("Key")) {
+                      if ("Key" in value) {
+                        // TODO consider path.join in all s3 URI for better cross platform support?
                         modelFiles.add(`s3://${s3bucket}/${value["Key"]}`);
                       }
                     }
@@ -217,30 +209,30 @@ async function import_scenes_and_models(
 
           // detect model files that absolute s3 path, update them to relative to support self-contained snapshot
           fs.writeFileSync(
-            `${outDir}/${contentKey}`,
+            path.join(outDir, contentKey),
             JSON.stringify(sceneJson, null, 4)
           ); // TODO handle non-root scene files?
-          (tmdk_config["scenes"] as string[]).push(`${contentKey}`); // TODO idiomatic
+          tmdk_config["scenes"].push(contentKey);
         }
       } // for each scene summary
 
       if (modelFiles.size > 0) {
-        if (!fs.existsSync(`${outDir}/3d_models`)) {
-          fs.mkdirSync(`${outDir}/3d_models`); // TODO idiomatic
+        if (!fs.existsSync(path.join(outDir, "3d_models"))) {
+          fs.mkdirSync(path.join(outDir, "3d_models"));
         }
       }
 
       for (const value of modelFiles) {
         console.log(`saving model file: ${value} ...`);
         let s3key = value as string;
-
+        let s3bucket: string;
         if (s3key.startsWith("s3://")) {
           // handle case where URI is like "s3://bucket/key.glb"
-          var s3bucket = s3key.split("/")[2];
+          s3bucket = s3key.split("/")[2];
           s3key = s3key.split("/").slice(3).join("/");
         } else {
           // handle case where URI is relative to workspace content root like "CookieFactoryEnvironment.glb"
-          var s3bucket = contentBucket;
+          s3bucket = contentBucket;
         }
 
         // FIXME - verify if need to handle the case where the scene file points to refs in other s3 buckets...should then modify the scene file during init?
@@ -250,12 +242,12 @@ async function import_scenes_and_models(
           const splitKey = s3key.split("/").slice(0, -1);
           console.log(`${s3key} -> ${splitKey}`);
 
-          const dir_path = `${outDir}/3d_models`;
+          const dir_path = path.join(outDir, "3d_models");
           for (let index = 0; index < splitKey.length; index++) {
             const subpath = `${splitKey.slice(0, index + 1).join("/")}`;
-            if (!fs.existsSync(`${dir_path}/${subpath}`)) {
+            if (!fs.existsSync(path.join(outDir, subpath))) {
               console.log(`making path: ${dir_path}/${subpath} ...`);
-              fs.mkdirSync(`${dir_path}/${subpath}`); // TODO idiomatic
+              fs.mkdirSync(path.join(outDir, subpath));
             }
           }
         }
@@ -264,8 +256,8 @@ async function import_scenes_and_models(
           new GetObjectCommand({ Bucket: s3bucket, Key: s3key })
         );
         const bodyContents = (await streamToBuffer(data.Body)) as Buffer;
-        fs.writeFileSync(`${outDir}/3d_models/${s3key}`, bodyContents);
-        (tmdk_config["models"] as string[]).push(`${s3key}`); // TODO idiomatic
+        fs.writeFileSync(path.join(outDir, "3d_models", s3key), bodyContents);
+        tmdk_config["models"].push(s3key);
 
         // handle binary data references in gltf files - https://www.khronos.org/files/gltf20-reference-guide.pdf
         if (s3key.endsWith(".gltf")) {
@@ -290,10 +282,10 @@ async function import_scenes_and_models(
                   binData.Body
                 )) as Buffer;
                 fs.writeFileSync(
-                  `${outDir}/3d_models/${binS3key}`,
+                  path.join(outDir, "3d_models", binS3key),
                   binBodyContents
                 );
-                (tmdk_config["models"] as string[]).push(`${binS3key}`); // TODO idiomatic
+                tmdk_config["models"].push(binS3key);
               }
             }
           }
@@ -318,10 +310,10 @@ async function import_scenes_and_models(
                   binData.Body
                 )) as Buffer;
                 fs.writeFileSync(
-                  `${outDir}/3d_models/${binS3key}`,
+                  path.join(outDir, "3d_models", binS3key),
                   binBodyContents
                 );
-                (tmdk_config["models"] as string[]).push(`${binS3key}`); // TODO idiomatic
+                tmdk_config["models"].push(binS3key);
               }
             }
           }
@@ -329,7 +321,7 @@ async function import_scenes_and_models(
       }
       // save each non-pre-defined types into files
       fs.writeFileSync(
-        `${outDir}/tmdk.json`,
+        path.join(outDir, "tmdk.json"),
         JSON.stringify(tmdk_config, null, 4)
       );
     }
@@ -337,87 +329,44 @@ async function import_scenes_and_models(
   return tmdk_config;
 }
 
-export const handler = async (argv: Arguments<Options>) => {
-  const workspaceId = argv["workspace-id"] as string;
-  const region = argv.region;
-  const out = argv.out;
-  const workspaceIdStr = workspaceId; //`${workspaceId}`; // TODO idiomatic
-  console.log(
-    `Bootstrapping project from workspace ${workspaceIdStr} in ${region} at project directory ${out}`
-  );
-
-  initDefaultAwsClients({ region: `${region}` }); // TODO idiomatic
-
-  // create directory if not exists
-  const outDir = `${out}`;
-  if (!fs.existsSync(outDir)) {
-    fs.mkdirSync(outDir); // TODO idiomatic
-  }
-
-  // create tmdk.json file
-  let tmdk_config: any = {
-    version: "0.0.2",
-  };
-  fs.writeFileSync(`${outDir}/tmdk.json`, JSON.stringify(tmdk_config, null, 4));
-
-  // TODO revisit: import workspace bucket/role (probably need role for specialized permissions)
-
-  // import component types
-  console.log("====== Component Types ======");
-  tmdk_config = await import_component_types(
-    workspaceIdStr,
-    tmdk_config,
-    outDir
-  );
-
-  // import scenes
-  console.log("====== Scenes / Models ======");
-  tmdk_config = await import_scenes_and_models(
-    workspaceIdStr,
-    tmdk_config,
-    outDir
-  );
-
-  // import entities
-  console.log("========== Entities =========");
+async function import_entities(
+  workspaceIdStr: string,
+  tmdk_config: tmdk_config_file,
+  outDir: string
+) {
   const entities = [];
   let nextToken: string | undefined = "";
-  let resp;
+  let listEntitiesResp: ListEntitiesCommandOutput;
   let entityCount = 0;
   while (nextToken != undefined) {
-    resp = await aws().tm.listEntities({
+    listEntitiesResp = await aws().tm.listEntities({
       workspaceId: workspaceIdStr,
       nextToken: nextToken,
     });
-    nextToken = resp["nextToken"];
-    const entitySummaries = resp["entitySummaries"];
+    nextToken = listEntitiesResp["nextToken"];
+    const entitySummaries = listEntitiesResp["entitySummaries"];
     if (entitySummaries != undefined) {
       for (const entitySummary of entitySummaries) {
         entityCount += 1;
         console.log(
           `Saving entity (${entityCount} saved so far): ${entitySummary.entityId} ... `
         );
-        const entityDetails = await aws().tm.getEntity({
+        const entityDetails: GetEntityCommandOutput = await aws().tm.getEntity({
           workspaceId: workspaceIdStr,
           entityId: entitySummary.entityId,
         });
 
-        // TODO idiomatic
-        const componentsDetails = entityDetails["components"] as object;
+        const componentsDetails = entityDetails["components"];
         let filteredComponentDetails;
         if (componentsDetails != undefined) {
           filteredComponentDetails = Object.entries(componentsDetails).reduce(
             (acc, [componentName, componentDetail]) => {
               const propertiesDetails = componentDetail["properties"] as object;
-
               // FIXME test case where property is added in component for entity but not in component type
               const filteredProperties = Object.entries(
                 propertiesDetails
               ).reduce((prop_acc, [propName, propDetail]) => {
-                if (
-                  propDetail.hasOwnProperty("value") &&
-                  propDetail["value"] != undefined
-                ) {
+                if (propDetail["value"] != undefined) {
                   prop_acc[propName] = {
                     definition: {
                       dataType: propDetail["definition"]["dataType"],
@@ -444,26 +393,80 @@ export const handler = async (argv: Arguments<Options>) => {
         }
 
         const entityDefinition = {
-          // TODO more idiomatic
           components: filteredComponentDetails,
           description: entityDetails["description"],
           entityId: entityDetails["entityId"],
-          entityName: entityDetails["entityName"], // FIXME remove inherited values
+          entityName: entityDetails["entityName"],
           parentEntityId: entityDetails["parentEntityId"],
-          // 'tags': compResp['tags'] // FIXME type issue with tags?
         };
-
         entities.push(entityDefinition); // FIXME inherited values?
       }
     }
   }
   fs.writeFileSync(
-    `${outDir}/entities.json`,
+    path.join(outDir, "entities.json"),
     JSON.stringify(entities, null, 4)
   ); // TODO handle entity file name collisions
   tmdk_config["entities"] = "entities.json";
 
-  fs.writeFileSync(`${outDir}/tmdk.json`, JSON.stringify(tmdk_config, null, 4));
+  fs.writeFileSync(
+    path.join(outDir, "tmdk.json"),
+    JSON.stringify(tmdk_config, null, 4)
+  );
+  return tmdk_config;
+}
+
+export const handler = async (argv: Arguments<Options>) => {
+  const workspaceIdStr: string = argv["workspace-id"];
+  const region: string = argv.region;
+  const outDir: string = argv.out;
+  console.log(
+    `Bootstrapping project from workspace ${workspaceIdStr} in ${region} at project directory ${outDir}`
+  );
+
+  initDefaultAwsClients({ region: region });
+
+  // create directory if not exists
+  if (!fs.existsSync(outDir)) {
+    fs.mkdirSync(outDir);
+    console.log(`Created directory: ${outDir}`);
+  }
+
+  // create tmdk.json file
+  let tmdk_config: tmdk_config_file = {
+    version: "0.0.2",
+    component_types: [],
+    scenes: [],
+    models: [],
+    entities: "",
+  };
+
+  fs.writeFileSync(
+    path.join(outDir, "tmdk.json"),
+    JSON.stringify(tmdk_config, null, 4)
+  );
+
+  // TODO revisit: import workspace bucket/role (probably need role for specialized permissions)
+
+  // import component types
+  console.log("====== Component Types ======");
+  tmdk_config = await import_component_types(
+    workspaceIdStr,
+    tmdk_config,
+    outDir
+  );
+
+  // import scenes
+  console.log("====== Scenes / Models ======");
+  tmdk_config = await import_scenes_and_models(
+    workspaceIdStr,
+    tmdk_config,
+    outDir
+  );
+
+  // import entities
+  console.log("========== Entities =========");
+  tmdk_config = await import_entities(workspaceIdStr, tmdk_config, outDir);
 
   console.log("== Finishing bootstrap ... ==");
 

@@ -1,4 +1,3 @@
-/* eslint-disable no-constant-condition */
 // Copyright 2022 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
@@ -109,14 +108,8 @@ async function waitForComponentTypeActive(
   workspaceId: string,
   componentTypeId: string
 ) {
-  let timeout = 50;
-  while (true) {
-    if (timeout === 0) {
-      throw new Error(
-        `Timed out: too many attempts for componentId: ${componentTypeId}\n
-        Please check console for more information on component type and retry.`
-      );
-    }
+  let timeout = 20;
+  while (timeout != 0) {
     timeout--;
     try {
       const result = await aws().tm.getComponentType({
@@ -131,6 +124,10 @@ async function waitForComponentTypeActive(
       console.log(`${componentTypeId} still not found...`);
     }
   }
+  throw new Error(
+    `Timed out: too many attempts of getComponentType for componentId: ${componentTypeId}\n
+    Please check console for more information on component type and retry.`
+  );
 }
 
 export {

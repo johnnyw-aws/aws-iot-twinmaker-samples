@@ -55,7 +55,7 @@ export const jsonEncoding = "utf-8";
 
 export const expectedTmdk = {
   version: "0.0.2",
-  "component-types": ["testComponentType1.json"],
+  component_types: ["testComponentType1.json"],
   scenes: ["testScene1.json"],
   models: ["CookieFactoryMixer.glb"],
   entities: "entities.json",

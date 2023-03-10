@@ -3,42 +3,37 @@
 
 import type { Arguments, CommandBuilder } from "yargs";
 import prompts from "prompts";
-
 import { initDefaultAwsClients } from "../lib/aws-clients";
 import { deleteComponentTypes } from "../lib/component-type";
 import { deleteScenes } from "../lib/scene";
 import { deleteEntitiesWithServiceRecursion } from "../lib/entity";
-import { workspaceExists } from "../lib/workspace";
+import { workspaceExists } from "../lib/utils";
 
 export type Options = {
-  "workspace-id": string | undefined;
-  region: string | undefined;
+  "workspace-id": string;
+  region: string;
 };
 
 export const command = "nuke";
 export const desc = "Deletes an IoT TwinMaker workspace and all its resources";
 
-export const builder: CommandBuilder<Options, Options> = (yargs) =>
+export const builder: CommandBuilder<Options> = (yargs) =>
   yargs.options({
     region: {
       type: "string",
       require: true,
       description: "Specify the AWS region of the workspace to delete.",
-      defaultDescription: "$AWS_DEFAULT_REGION",
-      default: process.env.AWS_DEFAULT_REGION,
     },
     "workspace-id": {
       type: "string",
       require: true,
       description: "Specify the ID of the Workspace to delete.",
-      defaultDescription: "$WORKSPACE_ID",
-      default: process.env.WORKSPACE_ID,
     },
   });
 
 export const handler = async (argv: Arguments<Options>) => {
-  const workspaceId = `${argv["workspace-id"]}`;
-  const region = `${argv.region}`;
+  const workspaceId: string = argv["workspace-id"];
+  const region: string = argv.region;
 
   initDefaultAwsClients({ region: region });
 

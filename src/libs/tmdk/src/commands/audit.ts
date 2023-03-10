@@ -19,14 +19,12 @@ export const command = "audit";
 export const desc =
   "Scans IoT TwinMaker resources for issues (missing permissions, outdated plugin version, unused resources, etc). Explanation analysis for entity/component properties (e.g. inheritance path, isAbstract causes).";
 
-export const builder: CommandBuilder<Options, Options> = (yargs) =>
+export const builder: CommandBuilder<Options> = (yargs) =>
   yargs.options({
     region: {
       type: "string",
       require: true,
       description: "Specify the AWS region of the workspace.",
-      defaultDescription: "$AWS_DEFAULT_REGION",
-      default: process.env.AWS_DEFAULT_REGION,
     },
     "workspace-id": {
       type: "string",
