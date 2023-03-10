@@ -22,6 +22,7 @@ import { importScene } from "../lib/scene";
 import { importResource } from "../lib/resource";
 import { syncEntities } from "../lib/sync";
 import { tmdk_config_file } from "./init";
+import * as path from "path";
 
 export type Options = {
   region: string;
@@ -38,28 +39,18 @@ export const builder: CommandBuilder<Options> = (yargs) =>
       type: "string",
       require: true,
       description: "Specify the AWS region to deploy to.",
-      defaultDescription: "$AWS_DEFAULT_REGION",
-      default: process.env.AWS_DEFAULT_REGION,
     },
     "workspace-id": {
       type: "string",
       require: true,
       description: "Specify the ID of the Workspace to deploy to.",
-      defaultDescription: "$WORKSPACE_ID",
-      default: process.env.WORKSPACE_ID,
     },
     dir: {
       type: "string",
       require: true,
       description: "Specify the project location, directory for tmdk.json file",
-      // defaultDescription: "$WORKSPACE_ID",
-      // default: process.env.WORKSPACE_ID,
     },
   });
-
-function syncReadFile(path: string) {
-  return fs.readFileSync(path, "utf-8");
-}
 
 export const handler = async (argv: Arguments<Options>) => {
   const workspaceIdStr: string = argv["workspace-id"]; // TODO allow it to be optional (i.e. option to autogenerate workspace for them)
@@ -70,8 +61,14 @@ export const handler = async (argv: Arguments<Options>) => {
   );
 
   initDefaultAwsClients({ region: region });
+  if (!fs.existsSync(path.join(dir, "tmdk.json"))) {
+    throw new Error("TDMK.json does not exist. Please run tmdk init first.");
+  }
   // read tmdk json file
-  const tmdk_config_buffer = fs.readFileSync(`${dir}/tmdk.json`, "utf-8"); // TODO encodings
+  const tmdk_config_buffer = fs.readFileSync(
+    path.join(dir, "tmdk.json"),
+    "utf-8"
+  ); // TODO encodings
   const tmdk_config: tmdk_config_file = JSON.parse(tmdk_config_buffer);
   console.log("========= tmdk.json =========");
   console.log(tmdk_config);
@@ -107,8 +104,9 @@ export const handler = async (argv: Arguments<Options>) => {
   while (stillComponentRemaining) {
     stillComponentRemaining = false;
     for (const componentTypeFile of tmdk_config["component_types"]) {
-      const componentTypeDefinitionStr = syncReadFile(
-        `${dir}/${componentTypeFile}`
+      const componentTypeDefinitionStr = fs.readFileSync(
+        path.join(dir, componentTypeFile),
+        "utf-8"
       );
       const componentTypeDefinition = JSON.parse(componentTypeDefinitionStr);
       // remove inherited properties
@@ -150,7 +148,8 @@ export const handler = async (argv: Arguments<Options>) => {
         ) {
           stillComponentRemaining = true;
         } else {
-          throw new Error(`Failed to create component type. ${e}`);
+          console.error(`Failed to create component type, ${e}`);
+          throw e;
         }
       }
     }
@@ -163,7 +162,7 @@ export const handler = async (argv: Arguments<Options>) => {
     try {
       await importScene(
         workspaceIdStr,
-        `${dir}/${sceneFile}`,
+        path.join(dir, sceneFile),
         workspaceContentBucket
       );
     } catch (error) {
@@ -183,8 +182,8 @@ export const handler = async (argv: Arguments<Options>) => {
     console.log(`Importing model: ${modelFile} ...`);
     await importResource(
       workspaceIdStr,
-      `${dir}/3d_models/${modelFile}`,
-      `${modelFile}`
+      path.join(dir, "3d_models", modelFile),
+      modelFile
     );
   }
 
@@ -192,7 +191,7 @@ export const handler = async (argv: Arguments<Options>) => {
   console.log("========== Entities =========");
   const entityFileName = tmdk_config["entities"];
   const entityFileJson = JSON.parse(
-    syncReadFile(`${dir}/${entityFileName}`).toString()
+    fs.readFileSync(path.join(dir, entityFileName), "utf-8")
   );
   await syncEntities(workspaceIdStr, entityFileJson);
 

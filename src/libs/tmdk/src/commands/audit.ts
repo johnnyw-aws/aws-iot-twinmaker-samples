@@ -25,8 +25,6 @@ export const builder: CommandBuilder<Options> = (yargs) =>
       type: "string",
       require: true,
       description: "Specify the AWS region of the workspace.",
-      defaultDescription: "$AWS_DEFAULT_REGION",
-      default: process.env.AWS_DEFAULT_REGION,
     },
     "workspace-id": {
       type: "string",

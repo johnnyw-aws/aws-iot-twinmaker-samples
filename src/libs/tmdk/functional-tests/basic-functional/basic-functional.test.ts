@@ -221,8 +221,8 @@ test("basic functional test", async () => {
       constants.jsonEncoding
     )
   );
-  expect(tmdkDefinition1["component-types"]).toStrictEqual(
-    expectedTmdk["component-types"]
+  expect(tmdkDefinition1["component_types"]).toStrictEqual(
+    expectedTmdk["component_types"]
   );
   const ct1Definition = JSON.parse(
     fs.readFileSync(
@@ -299,7 +299,7 @@ test("basic functional test", async () => {
       constants.jsonEncoding
     )
   );
-  tmdkDefinition["component-types"].push(
+  tmdkDefinition["component_types"].push(
     `${constants.componentType2Name}.json`
   );
   tmdkDefinition["scenes"].push(constants.scene2FileName);

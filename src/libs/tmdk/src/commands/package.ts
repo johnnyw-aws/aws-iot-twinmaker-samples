@@ -19,8 +19,6 @@ export const builder: CommandBuilder<Options> = (yargs) =>
       type: "string",
       require: true,
       description: "Specify the project location, directory for tmdk.json file",
-      // defaultDescription: "$WORKSPACE_ID",
-      // default: process.env.WORKSPACE_ID,
     },
   });
 

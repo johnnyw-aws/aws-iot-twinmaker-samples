@@ -3,15 +3,11 @@
 
 import type { Arguments, CommandBuilder } from "yargs";
 import prompts from "prompts";
-
-import {
-  getDefaultAwsClients as aws,
-  initDefaultAwsClients,
-} from "../lib/aws-clients";
+import { initDefaultAwsClients } from "../lib/aws-clients";
 import { deleteComponentTypes } from "../lib/component-type";
 import { deleteScenes } from "../lib/scene";
 import { deleteEntitiesWithServiceRecursion } from "../lib/entity";
-import { ResourceNotFoundException } from "@aws-sdk/client-iottwinmaker";
+import { workspaceExists } from "../lib/utils";
 
 export type Options = {
   "workspace-id": string;
@@ -27,35 +23,13 @@ export const builder: CommandBuilder<Options> = (yargs) =>
       type: "string",
       require: true,
       description: "Specify the AWS region of the workspace to delete.",
-      defaultDescription: "$AWS_DEFAULT_REGION",
-      default: process.env.AWS_DEFAULT_REGION,
     },
     "workspace-id": {
       type: "string",
       require: true,
       description: "Specify the ID of the Workspace to delete.",
-      defaultDescription: "$WORKSPACE_ID",
-      default: process.env.WORKSPACE_ID,
     },
   });
-
-/**
- * Helper function during workspace nuke for determining existance of workspace
- * @param workspaceId TM workspace
- * @returns promise boolean
- */
-async function workspaceExists(workspaceId: string) {
-  try {
-    await aws().tm.getWorkspace({ workspaceId: workspaceId as string });
-    return true;
-  } catch (e) {
-    if (e instanceof ResourceNotFoundException) {
-      return false;
-    } else {
-      throw new Error(`Failed to get workspace. ${e}`);
-    }
-  }
-}
 
 export const handler = async (argv: Arguments<Options>) => {
   const workspaceId: string = argv["workspace-id"];

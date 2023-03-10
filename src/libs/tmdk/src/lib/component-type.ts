@@ -125,7 +125,7 @@ async function waitForComponentTypeActive(
     }
   }
   throw new Error(
-    `Timed out: too many attempts for componentId: ${componentTypeId}\n
+    `Timed out: too many attempts of getComponentType for componentId: ${componentTypeId}\n
     Please check console for more information on component type and retry.`
   );
 }
