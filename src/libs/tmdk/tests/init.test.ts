@@ -74,7 +74,7 @@ describe("testing init", () => {
       out: outDir,
     } as Arguments<Options>;
     expect(await handler(argv2)).toBe(0);
-    const expectedTmdk: any = {
+    const expectedTmdk = {
       version: "0.0.2",
       "component-types": [],
       scenes: [],
@@ -142,14 +142,14 @@ describe("testing init", () => {
       .resolves({
         $metadata: {},
         Body: { transformToString: (encoding?: string) =>
-          {return Promise.resolve(JSON.stringify(scene1, null, 4));} } as any,
+          { return Promise.resolve(JSON.stringify(scene1, null, 4)); } } as SdkStream<Blob>,
       });
     s3Mock
       .on(GetObjectCommand, { Bucket: "workspace-bucket", Key: "model1.glb" })
       .resolves({
         $metadata: {},
         Body: { transformToString: (encoding?: string) =>
-          {return Promise.resolve(fs.readFileSync(path.join(localResourcesDir, "model1.glb")));} } as any,
+          {return Promise.resolve(fs.readFileSync(path.join(localResourcesDir, "model1.glb")));} } as SdkStream<Blob>,
       });
 
     const argv2 = {
@@ -186,7 +186,7 @@ describe("testing init", () => {
     );
   });
 
-  test("init_givenJustEntities_expectSuccess", async () => {
+  test("init_given1Entity_expectSuccess", async () => {
     twinmakerMock.on(GetWorkspaceCommand).resolves({});
     twinmakerMock
       .on(ListComponentTypesCommand)
@@ -234,7 +234,7 @@ describe("testing init", () => {
       .resolves({
         $metadata: {},
         Body: { transformToString: (encoding?: string) =>
-          {return Promise.resolve(JSON.stringify(scene1, null, 4));} } as any,
+          {return Promise.resolve(JSON.stringify(scene1, null, 4));} } as SdkStream<Blob>,
       });
     s3Mock
       .on(GetObjectCommand, { Bucket: "workspace-bucket", Key: "model1.glb" })
