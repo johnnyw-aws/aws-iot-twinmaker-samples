@@ -4,21 +4,24 @@
 import type { Arguments, CommandBuilder } from "yargs";
 import prompts from "prompts";
 
-import { initDefaultAwsClients } from "../lib/aws-clients";
+import {
+  getDefaultAwsClients as aws,
+  initDefaultAwsClients,
+} from "../lib/aws-clients";
 import { deleteComponentTypes } from "../lib/component-type";
 import { deleteScenes } from "../lib/scene";
 import { deleteEntitiesWithServiceRecursion } from "../lib/entity";
-import { workspaceExists } from "../lib/workspace";
+import { ResourceNotFoundException } from "@aws-sdk/client-iottwinmaker";
 
 export type Options = {
-  "workspace-id": string | undefined;
-  region: string | undefined;
+  "workspace-id": string;
+  region: string;
 };
 
 export const command = "nuke";
 export const desc = "Deletes an IoT TwinMaker workspace and all its resources";
 
-export const builder: CommandBuilder<Options, Options> = (yargs) =>
+export const builder: CommandBuilder<Options> = (yargs) =>
   yargs.options({
     region: {
       type: "string",
@@ -36,9 +39,27 @@ export const builder: CommandBuilder<Options, Options> = (yargs) =>
     },
   });
 
+/**
+ * Helper function during workspace nuke for determining existance of workspace
+ * @param workspaceId TM workspace
+ * @returns promise boolean
+ */
+async function workspaceExists(workspaceId: string) {
+  try {
+    await aws().tm.getWorkspace({ workspaceId: workspaceId as string });
+    return true;
+  } catch (e) {
+    if (e instanceof ResourceNotFoundException) {
+      return false;
+    } else {
+      throw new Error(`Failed to get workspace. ${e}`);
+    }
+  }
+}
+
 export const handler = async (argv: Arguments<Options>) => {
-  const workspaceId = `${argv["workspace-id"]}`;
-  const region = `${argv.region}`;
+  const workspaceId: string = argv["workspace-id"];
+  const region: string = argv.region;
 
   initDefaultAwsClients({ region: region });
 

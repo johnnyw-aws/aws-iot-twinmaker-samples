@@ -1,4 +1,3 @@
-/* eslint-disable no-constant-condition */
 // Copyright 2022 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
@@ -10,9 +9,18 @@ import {
   ListEntitiesCommandOutput,
 } from "@aws-sdk/client-iottwinmaker";
 import { getDefaultAwsClients as aws } from "./aws-clients";
-import { delay } from "./utils";
 
 type EntityDefinition = Omit<CreateEntityRequest, "workspaceId">;
+
+/**
+ * Helper function to wait for set amount of time
+ * @param ms number of ms to wait
+ */
+async function delay(ms: number) {
+  await new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
 
 /**
  * Function deletes all child entities, including the selected parent
@@ -24,10 +32,9 @@ async function recursiveDeleteEntities(workspaceId: string, entityId: string) {
   const maxResults = 200;
   const isRecursive: boolean | undefined = true;
   // first we do a depth first recursive delete to get down to leaf nodes
-  while (true) {
-    const next_token: string | undefined = "";
-    let nextToken: string | undefined = next_token;
-    const resp = await aws().tm.listEntities({
+  let nextToken: string | undefined = "";
+  while (nextToken != undefined) {
+    const resp: ListEntitiesCommandOutput = await aws().tm.listEntities({
       workspaceId,
       filters,
       maxResults,
@@ -42,13 +49,11 @@ async function recursiveDeleteEntities(workspaceId: string, entityId: string) {
       }
     }
     nextToken = resp["nextToken"];
-    if (nextToken == undefined) {
-      break;
-    }
   }
+
   // at this point we have called recursive delete on all of children
   // and will wait for our immediate children to finish deleting
-  let resp = await aws().tm.listEntities({
+  let resp: ListEntitiesCommandOutput = await aws().tm.listEntities({
     workspaceId,
     filters,
   });
@@ -111,9 +116,8 @@ async function deleteEntitiesWithServiceRecursion(workspaceId: string) {
 
   // for each child of $ROOT call delete with service-side recursive deletion flag set to true
   const maxResults = 200;
-  while (true) {
-    const next_token: string | undefined = "";
-    let nextToken: string | undefined = next_token;
+  let nextToken: string | undefined = "";
+  while (nextToken != undefined) {
     const resp: ListEntitiesCommandOutput = await aws().tm.listEntities({
       workspaceId,
       filters,
@@ -134,18 +138,14 @@ async function deleteEntitiesWithServiceRecursion(workspaceId: string) {
       }
     }
     nextToken = resp["nextToken"];
-    if (nextToken == undefined) {
-      break;
-    }
   }
 
   // wait for all entities to be deleted
   let total_entities_remaining = 1;
   while (total_entities_remaining > 0) {
     total_entities_remaining = 0;
-    const next_token: string | undefined = "";
-    let nextToken: string | undefined = next_token;
-    while (true) {
+    let nextToken: string | undefined = "";
+    while (nextToken != undefined) {
       const listResp: ListEntitiesCommandOutput = await aws().tm.listEntities({
         workspaceId,
         maxResults,
@@ -156,9 +156,6 @@ async function deleteEntitiesWithServiceRecursion(workspaceId: string) {
         total_entities_remaining += entities_on_page?.length;
       }
       nextToken = listResp["nextToken"];
-      if (nextToken == undefined) {
-        break;
-      }
     }
 
     if (total_entities_remaining > 0) {
