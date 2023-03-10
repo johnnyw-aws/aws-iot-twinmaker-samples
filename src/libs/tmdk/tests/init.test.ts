@@ -17,11 +17,13 @@ import { mockClient } from "aws-sdk-client-mock";
 import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { SdkStream } from "@aws-sdk/types";
 import * as path from 'path';
-import { basicWorkspaceId, createDirectory, localResourcesDir } from './test-utils';
+import { workspaceId, createDirectory, localResourcesDir } from './test-utils';
 import {
   emptyListComponentTypesResp,
   emptyListEntitiesResp,
-  emptyListScenesResp, expectComponentType1, expectEntity1,
+  emptyListScenesResp,
+  componentType1Definition,
+  entity1Definition,
   getComponentType1Resp,
   getEntity1Resp,
   oneCtListComponentTypesResp, oneEntityListEntitiesResp, oneSceneListScenesResp, scene1
@@ -70,7 +72,7 @@ describe("testing init", () => {
       _: ["init"],
       $0: "tmdk_local",
       region: "us-east-1",
-      "workspace-id": basicWorkspaceId,
+      "workspace-id": workspaceId,
       out: outDir,
     } as Arguments<Options>;
     expect(await handler(argv2)).toBe(0);
@@ -104,7 +106,7 @@ describe("testing init", () => {
       _: ["init"],
       $0: "tmdk_local",
       region: "us-east-1",
-      "workspace-id": basicWorkspaceId,
+      "workspace-id": workspaceId,
       out: outDir,
     } as Arguments<Options>;
     expect(await handler(argv2)).toBe(0);
@@ -126,7 +128,7 @@ describe("testing init", () => {
     );
     expect(fs.writeFileSync).toHaveBeenCalledWith(
       `${outDir}/${getComponentType1Resp["componentTypeId"]}.json`,
-      JSON.stringify(expectComponentType1, null, 4)
+      JSON.stringify(componentType1Definition, null, 4)
     );
   });
 
@@ -156,7 +158,7 @@ describe("testing init", () => {
       _: ["init"],
       $0: "tmdk_local",
       region: "us-east-1",
-      "workspace-id": basicWorkspaceId,
+      "workspace-id": workspaceId,
       out: outDir,
     } as Arguments<Options>;
     expect(await handler(argv2)).toBe(0);
@@ -199,7 +201,7 @@ describe("testing init", () => {
       _: ["init"],
       $0: "tmdk_local",
       region: "us-east-1",
-      "workspace-id": basicWorkspaceId,
+      "workspace-id": workspaceId,
       out: outDir,
     } as Arguments<Options>;
     expect(await handler(argv2)).toBe(0);
@@ -216,7 +218,7 @@ describe("testing init", () => {
     );
     expect(fs.writeFileSync).toHaveBeenCalledWith(
       `${outDir}/entities.json`,
-      JSON.stringify([expectEntity1], null, 4)
+      JSON.stringify([entity1Definition], null, 4)
     );
   });
 
@@ -248,7 +250,7 @@ describe("testing init", () => {
       _: ["init"],
       $0: "tmdk_local",
       region: "us-east-1",
-      "workspace-id": basicWorkspaceId,
+      "workspace-id": workspaceId,
       out: outDir,
     } as Arguments<Options>;
     expect(await handler(argv2)).toBe(0);
@@ -266,11 +268,11 @@ describe("testing init", () => {
     );
     expect(fs.writeFileSync).toHaveBeenCalledWith(
       `${outDir}/entities.json`,
-      JSON.stringify([expectEntity1], null, 4)
+      JSON.stringify([entity1Definition], null, 4)
     );
     expect(fs.writeFileSync).toHaveBeenCalledWith(
       `${outDir}/${getComponentType1Resp["componentTypeId"]}.json`,
-      JSON.stringify(expectComponentType1, null, 4)
+      JSON.stringify(componentType1Definition, null, 4)
     );
     expect(fs.writeFileSync).toHaveBeenCalledWith(
       `${outDir}/scene1.json`,
