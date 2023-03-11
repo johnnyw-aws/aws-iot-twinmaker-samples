@@ -4,7 +4,7 @@
 import { handler, Options } from "../src/commands/nuke";
 import { Arguments } from "yargs";
 import { mockExit } from "./test-utils";
-import { mockClient } from 'aws-sdk-client-mock';
+import { mockClient } from "aws-sdk-client-mock";
 import prompts = require("prompts");
 import {
   DeleteComponentTypeCommand,
@@ -16,7 +16,7 @@ import {
   ListEntitiesCommand,
   ListScenesCommand,
   ResourceNotFoundException,
-} from '@aws-sdk/client-iottwinmaker';
+} from "@aws-sdk/client-iottwinmaker";
 import {
   emptyListComponentTypesResp,
   emptyListEntitiesResp,
@@ -26,15 +26,15 @@ import {
   oneCtListComponentTypesResp,
   oneEntityListEntitiesResp,
   oneSceneListScenesResp,
-} from './test-constants';
-import { workspaceId } from '../functional-tests/basic-functional/basic-functional-constants';
+} from "./test-constants";
+import { workspaceId } from "../functional-tests/basic-functional/basic-functional-constants";
 
 const twinmakerMock = mockClient(IoTTwinMakerClient);
 
 describe("testing nuke", () => {
   beforeEach(() => {
     twinmakerMock.reset();
-    mockExit.mockClear()
+    mockExit.mockClear();
   });
 
   test("audit_givenWorkspaceDoesNotExist_expectError", async () => {
@@ -63,7 +63,9 @@ describe("testing nuke", () => {
     } as Arguments<Options>;
     expect(await handler(argv2)).toBe(0);
     expect(twinmakerMock.commandCalls(DeleteEntityCommand).length).toBe(0);
-    expect(twinmakerMock.commandCalls(DeleteComponentTypeCommand).length).toBe(0);
+    expect(twinmakerMock.commandCalls(DeleteComponentTypeCommand).length).toBe(
+      0
+    );
     expect(twinmakerMock.commandCalls(DeleteSceneCommand).length).toBe(0);
   });
 
@@ -84,7 +86,9 @@ describe("testing nuke", () => {
     } as Arguments<Options>;
     expect(await handler(argv2)).toBe(0);
     expect(twinmakerMock.commandCalls(DeleteEntityCommand).length).toBe(0);
-    expect(twinmakerMock.commandCalls(DeleteComponentTypeCommand).length).toBe(0);
+    expect(twinmakerMock.commandCalls(DeleteComponentTypeCommand).length).toBe(
+      0
+    );
     expect(twinmakerMock.commandCalls(DeleteSceneCommand).length).toBe(0);
   });
 
@@ -94,7 +98,8 @@ describe("testing nuke", () => {
     twinmakerMock
       .on(ListComponentTypesCommand)
       .resolves(emptyListComponentTypesResp);
-    twinmakerMock.on(ListEntitiesCommand)
+    twinmakerMock
+      .on(ListEntitiesCommand)
       .resolvesOnce(oneEntityListEntitiesResp)
       .resolves(emptyListEntitiesResp);
     twinmakerMock.on(ListScenesCommand).resolves(emptyListScenesResp);
@@ -107,12 +112,16 @@ describe("testing nuke", () => {
     } as Arguments<Options>;
     expect(await handler(argv2)).toBe(0);
     expect(twinmakerMock.commandCalls(DeleteEntityCommand).length).toBe(1);
-    expect((twinmakerMock.commandCalls(DeleteEntityCommand)[0].args[0].input)).toStrictEqual({
+    expect(
+      twinmakerMock.commandCalls(DeleteEntityCommand)[0].args[0].input
+    ).toStrictEqual({
       workspaceId: workspaceId,
       entityId: getEntity1Resp.entityId,
       isRecursive: true,
     });
-    expect(twinmakerMock.commandCalls(DeleteComponentTypeCommand).length).toBe(0);
+    expect(twinmakerMock.commandCalls(DeleteComponentTypeCommand).length).toBe(
+      0
+    );
     expect(twinmakerMock.commandCalls(DeleteSceneCommand).length).toBe(0);
   });
 
@@ -134,8 +143,12 @@ describe("testing nuke", () => {
     } as Arguments<Options>;
     expect(await handler(argv2)).toBe(0);
     expect(twinmakerMock.commandCalls(DeleteEntityCommand).length).toBe(0);
-    expect(twinmakerMock.commandCalls(DeleteComponentTypeCommand).length).toBe(1);
-    expect((twinmakerMock.commandCalls(DeleteComponentTypeCommand)[0].args[0].input)).toStrictEqual({
+    expect(twinmakerMock.commandCalls(DeleteComponentTypeCommand).length).toBe(
+      1
+    );
+    expect(
+      twinmakerMock.commandCalls(DeleteComponentTypeCommand)[0].args[0].input
+    ).toStrictEqual({
       workspaceId: workspaceId,
       componentTypeId: getComponentType1Resp.componentTypeId,
     });
@@ -149,7 +162,8 @@ describe("testing nuke", () => {
       .on(ListComponentTypesCommand)
       .resolves(emptyListComponentTypesResp);
     twinmakerMock.on(ListEntitiesCommand).resolves(emptyListEntitiesResp);
-    twinmakerMock.on(ListScenesCommand)
+    twinmakerMock
+      .on(ListScenesCommand)
       .resolvesOnce(oneSceneListScenesResp)
       .resolves(emptyListScenesResp);
 
@@ -161,11 +175,15 @@ describe("testing nuke", () => {
     } as Arguments<Options>;
     expect(await handler(argv2)).toBe(0);
     expect(twinmakerMock.commandCalls(DeleteEntityCommand).length).toBe(0);
-    expect(twinmakerMock.commandCalls(DeleteComponentTypeCommand).length).toBe(0);
+    expect(twinmakerMock.commandCalls(DeleteComponentTypeCommand).length).toBe(
+      0
+    );
     expect(twinmakerMock.commandCalls(DeleteSceneCommand).length).toBe(1);
-    expect((twinmakerMock.commandCalls(DeleteSceneCommand)[0].args[0].input)).toStrictEqual({
+    expect(
+      twinmakerMock.commandCalls(DeleteSceneCommand)[0].args[0].input
+    ).toStrictEqual({
       workspaceId: workspaceId,
-      sceneId: oneSceneListScenesResp.sceneSummaries![0].sceneId
+      sceneId: oneSceneListScenesResp.sceneSummaries![0].sceneId,
     });
   });
 
@@ -176,10 +194,12 @@ describe("testing nuke", () => {
       .on(ListComponentTypesCommand)
       .resolvesOnce(oneCtListComponentTypesResp)
       .resolves(emptyListComponentTypesResp);
-    twinmakerMock.on(ListEntitiesCommand)
+    twinmakerMock
+      .on(ListEntitiesCommand)
       .resolvesOnce(oneEntityListEntitiesResp)
       .resolves(emptyListEntitiesResp);
-    twinmakerMock.on(ListScenesCommand)
+    twinmakerMock
+      .on(ListScenesCommand)
       .resolvesOnce(oneSceneListScenesResp)
       .resolves(emptyListScenesResp);
 
@@ -191,20 +211,28 @@ describe("testing nuke", () => {
     } as Arguments<Options>;
     expect(await handler(argv2)).toBe(0);
     expect(twinmakerMock.commandCalls(DeleteEntityCommand).length).toBe(1);
-    expect((twinmakerMock.commandCalls(DeleteEntityCommand)[0].args[0].input)).toStrictEqual({
+    expect(
+      twinmakerMock.commandCalls(DeleteEntityCommand)[0].args[0].input
+    ).toStrictEqual({
       workspaceId: workspaceId,
       entityId: getEntity1Resp.entityId,
       isRecursive: true,
     });
-    expect(twinmakerMock.commandCalls(DeleteComponentTypeCommand).length).toBe(1);
-    expect((twinmakerMock.commandCalls(DeleteComponentTypeCommand)[0].args[0].input)).toStrictEqual({
+    expect(twinmakerMock.commandCalls(DeleteComponentTypeCommand).length).toBe(
+      1
+    );
+    expect(
+      twinmakerMock.commandCalls(DeleteComponentTypeCommand)[0].args[0].input
+    ).toStrictEqual({
       workspaceId: workspaceId,
       componentTypeId: getComponentType1Resp.componentTypeId,
     });
     expect(twinmakerMock.commandCalls(DeleteSceneCommand).length).toBe(1);
-    expect((twinmakerMock.commandCalls(DeleteSceneCommand)[0].args[0].input)).toStrictEqual({
+    expect(
+      twinmakerMock.commandCalls(DeleteSceneCommand)[0].args[0].input
+    ).toStrictEqual({
       workspaceId: workspaceId,
-      sceneId: oneSceneListScenesResp.sceneSummaries![0].sceneId
+      sceneId: oneSceneListScenesResp.sceneSummaries![0].sceneId,
     });
   });
 });

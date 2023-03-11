@@ -1,10 +1,11 @@
 import {
-  GetComponentTypeCommandOutput, GetEntityCommandOutput,
+  GetComponentTypeCommandOutput,
+  GetEntityCommandOutput,
   ListComponentTypesCommandOutput,
   ListEntitiesCommandOutput,
-  ListScenesCommandOutput
-} from '@aws-sdk/client-iottwinmaker';
-import { workspaceId } from './test-utils';
+  ListScenesCommandOutput,
+} from "@aws-sdk/client-iottwinmaker";
+import { workspaceId } from "./test-utils";
 
 export const emptyListComponentTypesResp: ListComponentTypesCommandOutput = {
   $metadata: {},
@@ -169,7 +170,7 @@ export const oneSceneListScenesResp: ListScenesCommandOutput = {
 
 export const emptyTmdk = {
   version: "0.0.2",
-  "component_types": [],
+  component_types: [],
   scenes: [],
   models: [],
   entities: "entities.json",
