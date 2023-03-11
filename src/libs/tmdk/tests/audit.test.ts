@@ -13,14 +13,14 @@ describe("testing audit", () => {
   // TODO add tests after implementation
 
   test("audit_givenNoWorkspace_expectError", async () => {
-    // const argv2 = {
-    //   _: ["audit"],
-    //   $0: "tmdk_local",
-    //   region: "us-east-1",
-    //   "workspace-id": "non-existent",
-    // } as Arguments<Options>;
-    // await expect(handler(argv2)).rejects.toThrow(Error);
-    // expect(mockExit).toHaveBeenCalledWith(1);
+    const argv2 = {
+      _: ["audit"],
+      $0: "tmdk_local",
+      region: "us-east-1",
+      "workspace-id": "non-existent",
+    } as Arguments<Options>;
+    await expect(handler(argv2)).rejects.toThrow(Error);
+    expect(mockExit).toHaveBeenCalledWith(1);
   });
 
   // TODO fill in test cases

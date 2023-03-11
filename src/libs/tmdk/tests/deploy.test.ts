@@ -1,25 +1,40 @@
+/* eslint @typescript-eslint/no-var-requires: "off" */
 // Copyright 2022 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import { handler, Options } from "../src/commands/deploy";
 import { Arguments } from "yargs";
-import { workspaceId, mockExit, s3BucketArn, s3ContentLocationBase, workspaceBucket } from "./test-utils";
-import { mockClient } from 'aws-sdk-client-mock';
+import {
+  workspaceId,
+  mockExit,
+  s3BucketArn,
+  s3ContentLocationBase,
+  workspaceBucket,
+} from "./test-utils";
+import { mockClient } from "aws-sdk-client-mock";
 import {
   CreateComponentTypeCommand,
   CreateEntityCommand,
   CreateSceneCommand,
-  GetComponentTypeCommand, GetEntityCommand,
+  GetComponentTypeCommand,
+  GetEntityCommand,
   GetWorkspaceCommand,
   IoTTwinMakerClient,
-  ResourceNotFoundException
-} from '@aws-sdk/client-iottwinmaker';
-import { emptyTmdk, componentType1Definition, scene1, entity1Definition } from './test-constants';
-import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
+  ResourceNotFoundException,
+} from "@aws-sdk/client-iottwinmaker";
+import {
+  emptyTmdk,
+  componentType1Definition,
+  scene1,
+  entity1Definition,
+} from "./test-constants";
+import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import * as fsPromises from "fs/promises";
-const fs = require('fs');
+const fs = require("fs");
 
-jest.mock('fs/promises', () => {return {readFile: jest.fn(),};});
+jest.mock("fs/promises", () => {
+  return { readFile: jest.fn() };
+});
 const twinmakerMock = mockClient(IoTTwinMakerClient);
 const s3Mock = mockClient(S3Client);
 const fakeTmdkDir = "/tmp/deploy-unit-tests";
@@ -40,11 +55,15 @@ describe("testing deploy", () => {
       "workspace-id": "irrelevant",
       dir: "i-do-not-exist",
     } as Arguments<Options>;
-    await expect(handler(argv2)).rejects.toThrow(Error("TDMK.json does not exist. Please run tmdk init first."));
+    await expect(handler(argv2)).rejects.toThrow(
+      Error("TDMK.json does not exist. Please run tmdk init first.")
+    );
   });
 
   test("deploy_givenNoWorkspace_expectError", async () => {
-    fs.existsSync = jest.fn(()=> {return true;});
+    fs.existsSync = jest.fn(() => {
+      return true;
+    });
     jest.spyOn(fs, "readFileSync").mockReturnValue(JSON.stringify({}, null, 4));
     twinmakerMock
       .on(GetWorkspaceCommand)
@@ -55,13 +74,15 @@ describe("testing deploy", () => {
       $0: "tmdk_local",
       region: "us-east-1",
       "workspace-id": "non-existent",
-      dir: fakeTmdkDir
+      dir: fakeTmdkDir,
     } as Arguments<Options>;
     await expect(handler(argv2)).rejects.toThrow(ResourceNotFoundException);
   });
 
   test("deploy_givenEmptyProject_expectSuccess", async () => {
-    fs.existsSync = jest.fn(()=> {return true;});
+    fs.existsSync = jest.fn(() => {
+      return true;
+    });
     fs.readFileSync = jest.fn((path: [string]) => {
       if (path.includes("tmdk")) {
         return JSON.stringify(emptyTmdk, null, 4);
@@ -77,30 +98,38 @@ describe("testing deploy", () => {
       $0: "tmdk_local",
       region: "us-east-1",
       "workspace-id": workspaceId,
-      dir: fakeTmdkDir
+      dir: fakeTmdkDir,
     } as Arguments<Options>;
     expect(await handler(argv2)).toBe(0);
-    expect(twinmakerMock.commandCalls(CreateComponentTypeCommand).length).toBe(0);
+    expect(twinmakerMock.commandCalls(CreateComponentTypeCommand).length).toBe(
+      0
+    );
     expect(twinmakerMock.commandCalls(CreateEntityCommand).length).toBe(0);
     expect(twinmakerMock.commandCalls(CreateSceneCommand).length).toBe(0);
   });
 
   test("deploy_given1ComponentType_expectSuccess", async () => {
-    fs.existsSync = jest.fn(()=> {return true;});
+    fs.existsSync = jest.fn(() => {
+      return true;
+    });
     fs.readFileSync = jest.fn((path: [string]) => {
       if (path.includes("tmdk")) {
-        let tmdk1Ct = JSON.parse(JSON.stringify(emptyTmdk));
+        const tmdk1Ct = JSON.parse(JSON.stringify(emptyTmdk));
         tmdk1Ct["component_types"] = ["componentType1.json"];
         return JSON.stringify(tmdk1Ct, null, 4);
       } else if (path.includes("componentType1.json")) {
         return JSON.stringify(componentType1Definition, null, 4);
-      } else { // covers entities.json
+      } else {
+        // covers entities.json
         return JSON.stringify([], null, 4);
       }
     });
     twinmakerMock.on(GetWorkspaceCommand).resolves({});
-    twinmakerMock.on(GetComponentTypeCommand)
-      .rejectsOnce(new ResourceNotFoundException({ $metadata: {}, message: "" }))
+    twinmakerMock
+      .on(GetComponentTypeCommand)
+      .rejectsOnce(
+        new ResourceNotFoundException({ $metadata: {}, message: "" })
+      )
       .resolves({});
 
     const argv2 = {
@@ -108,27 +137,34 @@ describe("testing deploy", () => {
       $0: "tmdk_local",
       region: "us-east-1",
       "workspace-id": workspaceId,
-      dir: fakeTmdkDir
+      dir: fakeTmdkDir,
     } as Arguments<Options>;
     expect(await handler(argv2)).toBe(0);
-    expect(twinmakerMock.commandCalls(CreateComponentTypeCommand).length).toBe(1);
-    expect((twinmakerMock.commandCalls(CreateComponentTypeCommand)[0].args[0].input)).toStrictEqual({
+    expect(twinmakerMock.commandCalls(CreateComponentTypeCommand).length).toBe(
+      1
+    );
+    expect(
+      twinmakerMock.commandCalls(CreateComponentTypeCommand)[0].args[0].input
+    ).toStrictEqual({
       workspaceId: workspaceId,
-      ... componentType1Definition,
+      ...componentType1Definition,
     });
     expect(twinmakerMock.commandCalls(CreateEntityCommand).length).toBe(0);
     expect(twinmakerMock.commandCalls(CreateSceneCommand).length).toBe(0);
   });
 
   test("deploy_given1SceneAnd1Model_expectSuccess", async () => {
-    fs.existsSync = jest.fn(()=> {return true;});
+    fs.existsSync = jest.fn(() => {
+      return true;
+    });
     fs.readFileSync = jest.fn((path: [string]) => {
       if (path.includes("tmdk")) {
-        let tmdk1SceneAndModel = JSON.parse(JSON.stringify(emptyTmdk));
+        const tmdk1SceneAndModel = JSON.parse(JSON.stringify(emptyTmdk));
         tmdk1SceneAndModel["scenes"] = ["scene1.json"];
         tmdk1SceneAndModel["models"] = ["model1.glb"];
         return JSON.stringify(tmdk1SceneAndModel, null, 4);
-      } else { // covers entities.json
+      } else {
+        // covers entities.json
         return JSON.stringify([], null, 4);
       }
     });
@@ -148,25 +184,33 @@ describe("testing deploy", () => {
       $0: "tmdk_local",
       region: "us-east-1",
       "workspace-id": workspaceId,
-      dir: fakeTmdkDir
+      dir: fakeTmdkDir,
     } as Arguments<Options>;
     expect(await handler(argv2)).toBe(0);
-    expect(twinmakerMock.commandCalls(CreateComponentTypeCommand).length).toBe(0);
+    expect(twinmakerMock.commandCalls(CreateComponentTypeCommand).length).toBe(
+      0
+    );
     expect(twinmakerMock.commandCalls(CreateEntityCommand).length).toBe(0);
     expect(twinmakerMock.commandCalls(CreateSceneCommand).length).toBe(1);
-    expect((twinmakerMock.commandCalls(CreateSceneCommand)[0].args[0].input)).toStrictEqual({
+    expect(
+      twinmakerMock.commandCalls(CreateSceneCommand)[0].args[0].input
+    ).toStrictEqual({
       workspaceId: workspaceId,
       sceneId: "scene1",
       contentLocation: `${s3ContentLocationBase}scene1.json`,
-      });
+    });
     expect(s3Mock.commandCalls(PutObjectCommand).length).toBe(2);
-    expect(s3Mock.commandCalls(PutObjectCommand)[0].args[0].input).toStrictEqual({
+    expect(
+      s3Mock.commandCalls(PutObjectCommand)[0].args[0].input
+    ).toStrictEqual({
       Bucket: workspaceBucket,
       Key: "scene1.json",
       ContentType: "application/json",
       Body: expect.anything(),
     });
-    expect(s3Mock.commandCalls(PutObjectCommand)[1].args[0].input).toStrictEqual({
+    expect(
+      s3Mock.commandCalls(PutObjectCommand)[1].args[0].input
+    ).toStrictEqual({
       Bucket: workspaceBucket,
       Key: "model1.glb",
       Body: expect.anything(),
@@ -174,21 +218,27 @@ describe("testing deploy", () => {
   });
 
   test("deploy_given1Entity_expectSuccess", async () => {
-    fs.existsSync = jest.fn(()=> {return true;});
+    fs.existsSync = jest.fn(() => {
+      return true;
+    });
     fs.readFileSync = jest.fn((path: [string]) => {
       if (path.includes("tmdk")) {
-        let tmdk1Ct = JSON.parse(JSON.stringify(emptyTmdk));
+        const tmdk1Ct = JSON.parse(JSON.stringify(emptyTmdk));
         tmdk1Ct["entities"] = "entities.json";
         return JSON.stringify(tmdk1Ct, null, 4);
       } else if (path.includes("entities.json")) {
         return JSON.stringify([entity1Definition], null, 4);
-      } else { // covers entities.json
+      } else {
+        // covers entities.json
         return JSON.stringify([], null, 4);
       }
     });
     twinmakerMock.on(GetWorkspaceCommand).resolves({});
-    twinmakerMock.on(GetEntityCommand)
-      .rejectsOnce(new ResourceNotFoundException({ $metadata: {}, message: "" }))
+    twinmakerMock
+      .on(GetEntityCommand)
+      .rejectsOnce(
+        new ResourceNotFoundException({ $metadata: {}, message: "" })
+      )
       .resolves({});
 
     const argv2 = {
@@ -196,15 +246,19 @@ describe("testing deploy", () => {
       $0: "tmdk_local",
       region: "us-east-1",
       "workspace-id": workspaceId,
-      dir: fakeTmdkDir
+      dir: fakeTmdkDir,
     } as Arguments<Options>;
     expect(await handler(argv2)).toBe(0);
-    expect(twinmakerMock.commandCalls(CreateComponentTypeCommand).length).toBe(0);
+    expect(twinmakerMock.commandCalls(CreateComponentTypeCommand).length).toBe(
+      0
+    );
     expect(twinmakerMock.commandCalls(CreateEntityCommand).length).toBe(1);
-    expect((twinmakerMock.commandCalls(CreateEntityCommand)[0].args[0].input)).toStrictEqual({
+    expect(
+      twinmakerMock.commandCalls(CreateEntityCommand)[0].args[0].input
+    ).toStrictEqual({
       workspaceId: workspaceId,
       isProcessed: true,
-      ... entity1Definition,
+      ...entity1Definition,
     });
     expect(twinmakerMock.commandCalls(CreateSceneCommand).length).toBe(0);
   });

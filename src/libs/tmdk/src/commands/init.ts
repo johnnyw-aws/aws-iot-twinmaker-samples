@@ -9,7 +9,6 @@ import {
   initDefaultAwsClients,
 } from "../lib/aws-clients";
 import * as fs from "fs";
-import { GetObjectCommand, ListObjectsV2Command } from "@aws-sdk/client-s3";
 import * as path from "path";
 import {
   ListComponentTypesCommandOutput,
@@ -17,7 +16,7 @@ import {
   ListEntitiesCommandOutput,
   GetEntityCommandOutput,
 } from "@aws-sdk/client-iottwinmaker";
-import { verifyWorkspaceExists } from '../lib/utils';
+import { verifyWorkspaceExists } from "../lib/utils";
 
 export type Options = {
   region: string;
@@ -143,8 +142,13 @@ async function import_scenes_and_models(
           console.log(`saving scene file: ${contentKey}`);
 
           // from https://github.com/awsdocs/aws-doc-sdk-examples/blob/main/javascriptv3/example_code/s3/src/s3_getobject.js
-          const data = await aws().s3.getObject({ Bucket: contentBucket, Key: contentKey });
-          const sceneJson = JSON.parse(await data.Body!.transformToString("utf-8"));
+          const data = await aws().s3.getObject({
+            Bucket: contentBucket,
+            Key: contentKey,
+          });
+          const sceneJson = JSON.parse(
+            await data.Body!.transformToString("utf-8")
+          );
           for (const n of sceneJson["nodes"]) {
             for (const c of n["components"]) {
               if (c["type"] == "ModelRef") {
@@ -168,9 +172,9 @@ async function import_scenes_and_models(
                   // Obtain path of folder for JSON and download all files in that folder in the S3 bucket
                   const prefix = c["uri"].replace(path.basename(c["uri"]), "");
                   const objlist = await aws().s3.listObjectsV2({
-                      Bucket: s3bucket,
-                      Prefix: prefix,
-                    });
+                    Bucket: s3bucket,
+                    Prefix: prefix,
+                  });
                   if (objlist["Contents"] != undefined) {
                     const contents = objlist["Contents"];
                     for (const [, value] of Object.entries(contents)) {
@@ -230,10 +234,10 @@ async function import_scenes_and_models(
           }
         }
 
-        const data = await aws().s3.send(
-          new GetObjectCommand({ Bucket: s3bucket, Key: s3key })
-        );
-        const bodyContents = await data.Body?.transformToString('utf-8') as string;
+        const data = await aws().s3.getObject({ Bucket: s3bucket, Key: s3key });
+        const bodyContents = (await data.Body?.transformToString(
+          "utf-8"
+        )) as string;
         fs.writeFileSync(path.join(outDir, "3d_models", s3key), bodyContents);
         tmdk_config["models"].push(s3key);
 
@@ -253,8 +257,13 @@ async function import_scenes_and_models(
                 );
                 const binS3bucket = binRelativePath.split("/")[2];
                 const binS3key = binRelativePath.split("/").slice(3).join("/");
-                const binData = await aws().s3.getObject({ Bucket: binS3bucket, Key: binS3key });
-                const binBodyContents = await binData.Body?.transformToString('utf-8') as string;
+                const binData = await aws().s3.getObject({
+                  Bucket: binS3bucket,
+                  Key: binS3key,
+                });
+                const binBodyContents = (await binData.Body?.transformToString(
+                  "utf-8"
+                )) as string;
                 fs.writeFileSync(
                   path.join(outDir, "3d_models", binS3key),
                   binBodyContents
@@ -277,8 +286,13 @@ async function import_scenes_and_models(
                 );
                 const binS3bucket = binRelativePath.split("/")[2];
                 const binS3key = binRelativePath.split("/").slice(3).join("/");
-                const binData = await aws().s3.getObject({ Bucket: binS3bucket, Key: binS3key });
-                const binBodyContents = await binData.Body?.transformToString('utf-8') as string;
+                const binData = await aws().s3.getObject({
+                  Bucket: binS3bucket,
+                  Key: binS3key,
+                });
+                const binBodyContents = (await binData.Body?.transformToString(
+                  "utf-8"
+                )) as string;
                 fs.writeFileSync(
                   path.join(outDir, "3d_models", binS3key),
                   binBodyContents
@@ -390,7 +404,9 @@ export const handler = async (argv: Arguments<Options>) => {
   const workspaceId: string = argv["workspace-id"];
   const region: string = argv.region;
   const outDir: string = argv.out;
-  console.log(`Bootstrapping project from workspace ${workspaceId} in ${region} at project directory ${outDir}`);
+  console.log(
+    `Bootstrapping project from workspace ${workspaceId} in ${region} at project directory ${outDir}`
+  );
 
   initDefaultAwsClients({ region: region });
 
@@ -420,11 +436,7 @@ export const handler = async (argv: Arguments<Options>) => {
 
   // import component types
   console.log("====== Component Types ======");
-  tmdk_config = await import_component_types(
-    workspaceId,
-    tmdk_config,
-    outDir
-  );
+  tmdk_config = await import_component_types(workspaceId, tmdk_config, outDir);
 
   // import scenes
   console.log("====== Scenes / Models ======");

@@ -1,3 +1,4 @@
+/* eslint @typescript-eslint/no-var-requires: "off" */
 // Copyright 2022 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
@@ -16,8 +17,8 @@ import {
 import { mockClient } from "aws-sdk-client-mock";
 import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { SdkStream } from "@aws-sdk/types";
-import * as path from 'path';
-import { workspaceId, createDirectory, localResourcesDir } from './test-utils';
+import * as path from "path";
+import { workspaceId, createDirectory, localResourcesDir } from "./test-utils";
 import {
   emptyListComponentTypesResp,
   emptyListEntitiesResp,
@@ -26,8 +27,11 @@ import {
   entity1Definition,
   getComponentType1Resp,
   getEntity1Resp,
-  oneCtListComponentTypesResp, oneEntityListEntitiesResp, oneSceneListScenesResp, scene1
-} from './test-constants';
+  oneCtListComponentTypesResp,
+  oneEntityListEntitiesResp,
+  oneSceneListScenesResp,
+  scene1,
+} from "./test-constants";
 const fs = require("fs");
 
 const outDir = "/tmp/init-unit-tests";
@@ -78,7 +82,7 @@ describe("testing init", () => {
     expect(await handler(argv2)).toBe(0);
     const expectedTmdk = {
       version: "0.0.2",
-      "component_types": [],
+      component_types: [],
       scenes: [],
       models: [],
       entities: "entities.json",
@@ -112,7 +116,7 @@ describe("testing init", () => {
     expect(await handler(argv2)).toBe(0);
     const expectedTmdk = {
       version: "0.0.2",
-      "component_types": [`${getComponentType1Resp["componentTypeId"]}.json`],
+      component_types: [`${getComponentType1Resp["componentTypeId"]}.json`],
       scenes: [],
       models: [],
       entities: "entities.json",
@@ -143,15 +147,23 @@ describe("testing init", () => {
       .on(GetObjectCommand, { Bucket: "workspace-bucket", Key: "scene1.json" })
       .resolves({
         $metadata: {},
-        Body: { transformToString: (encoding?: string) =>
-          { return Promise.resolve(JSON.stringify(scene1, null, 4)); } } as SdkStream<Blob>,
+        Body: {
+          transformToString: () => {
+            return Promise.resolve(JSON.stringify(scene1, null, 4));
+          },
+        } as SdkStream<Blob>,
       });
     s3Mock
       .on(GetObjectCommand, { Bucket: "workspace-bucket", Key: "model1.glb" })
       .resolves({
         $metadata: {},
-        Body: { transformToString: (encoding?: string) =>
-          {return Promise.resolve(fs.readFileSync(path.join(localResourcesDir, "model1.glb")));} } as SdkStream<Blob>,
+        Body: {
+          transformToString: () => {
+            return Promise.resolve(
+              fs.readFileSync(path.join(localResourcesDir, "model1.glb"))
+            );
+          },
+        } as SdkStream<Blob>,
       });
 
     const argv2 = {
@@ -164,7 +176,7 @@ describe("testing init", () => {
     expect(await handler(argv2)).toBe(0);
     const expectedTmdk = {
       version: "0.0.2",
-      "component_types": [],
+      component_types: [],
       scenes: ["scene1.json"],
       models: ["model1.glb"],
       entities: "entities.json",
@@ -184,7 +196,7 @@ describe("testing init", () => {
     );
     expect(fs.writeFileSync).toHaveBeenCalledWith(
       `${outDir}/3d_models/model1.glb`,
-      fs.readFileSync(path.join(localResourcesDir, "model1.glb")),
+      fs.readFileSync(path.join(localResourcesDir, "model1.glb"))
     );
   });
 
@@ -207,7 +219,7 @@ describe("testing init", () => {
     expect(await handler(argv2)).toBe(0);
     const expectedTmdk = {
       version: "0.0.2",
-      "component_types": [],
+      component_types: [],
       scenes: [],
       models: [],
       entities: "entities.json",
@@ -235,15 +247,23 @@ describe("testing init", () => {
       .on(GetObjectCommand, { Bucket: "workspace-bucket", Key: "scene1.json" })
       .resolves({
         $metadata: {},
-        Body: { transformToString: (encoding?: string) =>
-          {return Promise.resolve(JSON.stringify(scene1, null, 4));} } as SdkStream<Blob>,
+        Body: {
+          transformToString: () => {
+            return Promise.resolve(JSON.stringify(scene1, null, 4));
+          },
+        } as SdkStream<Blob>,
       });
     s3Mock
       .on(GetObjectCommand, { Bucket: "workspace-bucket", Key: "model1.glb" })
       .resolves({
         $metadata: {},
-        Body: { transformToString: (encoding?: string) =>
-          {return Promise.resolve(fs.readFileSync(path.join(localResourcesDir, "model1.glb")));} } as SdkStream<Blob>,
+        Body: {
+          transformToString: () => {
+            return Promise.resolve(
+              fs.readFileSync(path.join(localResourcesDir, "model1.glb"))
+            );
+          },
+        } as SdkStream<Blob>,
       });
 
     const argv2 = {
@@ -256,7 +276,7 @@ describe("testing init", () => {
     expect(await handler(argv2)).toBe(0);
     const expectedTmdk = {
       version: "0.0.2",
-      "component_types": [`${getComponentType1Resp["componentTypeId"]}.json`],
+      component_types: [`${getComponentType1Resp["componentTypeId"]}.json`],
       scenes: ["scene1.json"],
       models: ["model1.glb"],
       entities: "entities.json",
@@ -280,7 +300,7 @@ describe("testing init", () => {
     );
     expect(fs.writeFileSync).toHaveBeenCalledWith(
       `${outDir}/3d_models/model1.glb`,
-      fs.readFileSync(path.join(localResourcesDir, "model1.glb")),
+      fs.readFileSync(path.join(localResourcesDir, "model1.glb"))
     );
   });
 });

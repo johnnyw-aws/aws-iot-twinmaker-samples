@@ -6,7 +6,6 @@ import type { Arguments, CommandBuilder } from "yargs";
 import {
   ConflictException,
   GetWorkspaceCommandOutput,
-  ResourceNotFoundException,
   ValidationException,
 } from "@aws-sdk/client-iottwinmaker";
 import {
@@ -23,7 +22,7 @@ import { importResource } from "../lib/resource";
 import { syncEntities } from "../lib/sync";
 import { tmdk_config_file } from "./init";
 import * as path from "path";
-import { verifyWorkspaceExists } from '../lib/utils';
+import { verifyWorkspaceExists } from "../lib/utils";
 
 export type Options = {
   region: string;
@@ -79,7 +78,8 @@ export const handler = async (argv: Arguments<Options>) => {
   // get workspace bucket
   let workspaceContentBucket = "";
   try {
-    const workspaceDesc: GetWorkspaceCommandOutput = await aws().tm.getWorkspace({workspaceId: workspaceId,});
+    const workspaceDesc: GetWorkspaceCommandOutput =
+      await aws().tm.getWorkspace({ workspaceId: workspaceId });
     if (workspaceDesc["s3Location"]) {
       workspaceContentBucket = workspaceDesc["s3Location"]
         .split(":")

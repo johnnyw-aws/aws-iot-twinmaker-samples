@@ -2,12 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import * as fs from "fs";
-import * as path from 'path';
+import * as path from "path";
 
-export const localResourcesDir = path.join(
-  __dirname,
-  "test-resources"
-);
+export const localResourcesDir = path.join(__dirname, "test-resources");
 
 export const workspaceId = "workspaceId";
 export const workspaceBucket = "workspaceBucket";
