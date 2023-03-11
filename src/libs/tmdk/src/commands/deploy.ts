@@ -23,6 +23,7 @@ import { importResource } from "../lib/resource";
 import { syncEntities } from "../lib/sync";
 import { tmdk_config_file } from "./init";
 import * as path from "path";
+import { verifyWorkspaceExists } from '../lib/utils';
 
 export type Options = {
   region: string;
@@ -53,11 +54,11 @@ export const builder: CommandBuilder<Options> = (yargs) =>
   });
 
 export const handler = async (argv: Arguments<Options>) => {
-  const workspaceIdStr: string = argv["workspace-id"]; // TODO allow it to be optional (i.e. option to autogenerate workspace for them)
+  const workspaceId: string = argv["workspace-id"]; // TODO allow it to be optional (i.e. option to autogenerate workspace for them)
   const region: string = argv.region;
   const dir: string = argv.dir;
   console.log(
-    `Deploying project from directory ${dir} into workspace ${workspaceIdStr} in ${region}`
+    `Deploying project from directory ${dir} into workspace ${workspaceId} in ${region}`
   );
 
   initDefaultAwsClients({ region: region });
@@ -73,28 +74,20 @@ export const handler = async (argv: Arguments<Options>) => {
   console.log("========= tmdk.json =========");
   console.log(tmdk_config);
 
-  // verify workspace exists
+  await verifyWorkspaceExists(workspaceId);
+
+  // get workspace bucket
   let workspaceContentBucket = "";
   try {
-    const workspaceDesc: GetWorkspaceCommandOutput =
-      await aws().tm.getWorkspace({
-        workspaceId: workspaceIdStr,
-      });
+    const workspaceDesc: GetWorkspaceCommandOutput = await aws().tm.getWorkspace({workspaceId: workspaceId,});
     if (workspaceDesc["s3Location"]) {
       workspaceContentBucket = workspaceDesc["s3Location"]
         .split(":")
         .slice(-1)[0];
     }
-    console.log(`Verified workspace exists.`);
   } catch (e) {
-    if (e instanceof ResourceNotFoundException) {
-      console.log(
-        `Error: workspace '${workspaceIdStr}' not found in region '${region}'. Please create it first.`
-      );
-      throw e;
-    } else {
-      throw new Error(`Failed to get workspace. ${e}`);
-    }
+    console.error("Error while getting the workspace bucket.\n", e);
+    throw e;
   }
 
   // TODO revisit: import workspace bucket/role (probably need role for specialized permissions)
@@ -128,11 +121,11 @@ export const handler = async (argv: Arguments<Options>) => {
       // create component type if not exists
       try {
         const alreadyExists: boolean = await createComponentTypeIfNotExists(
-          workspaceIdStr,
+          workspaceId,
           componentTypeDefinition
         );
         await waitForComponentTypeActive(
-          workspaceIdStr,
+          workspaceId,
           componentTypeDefinition["componentTypeId"]
         );
         if (!alreadyExists) {
@@ -161,7 +154,7 @@ export const handler = async (argv: Arguments<Options>) => {
     console.log(`Importing scene: ${sceneFile} ...`);
     try {
       await importScene(
-        workspaceIdStr,
+        workspaceId,
         path.join(dir, sceneFile),
         workspaceContentBucket
       );
@@ -181,7 +174,7 @@ export const handler = async (argv: Arguments<Options>) => {
   for (const modelFile of tmdk_config["models"]) {
     console.log(`Importing model: ${modelFile} ...`);
     await importResource(
-      workspaceIdStr,
+      workspaceId,
       path.join(dir, "3d_models", modelFile),
       modelFile
     );
@@ -193,7 +186,7 @@ export const handler = async (argv: Arguments<Options>) => {
   const entityFileJson = JSON.parse(
     fs.readFileSync(path.join(dir, entityFileName), "utf-8")
   );
-  await syncEntities(workspaceIdStr, entityFileJson);
+  await syncEntities(workspaceId, entityFileJson);
 
   console.log("=== Deployment Completed! ===");
   return 0;
