@@ -78,7 +78,7 @@ describe("testing init", () => {
     expect(await handler(argv2)).toBe(0);
     const expectedTmdk = {
       version: "0.0.2",
-      "component-types": [],
+      "component_types": [],
       scenes: [],
       models: [],
       entities: "entities.json",
@@ -112,7 +112,7 @@ describe("testing init", () => {
     expect(await handler(argv2)).toBe(0);
     const expectedTmdk = {
       version: "0.0.2",
-      "component-types": [`${getComponentType1Resp["componentTypeId"]}.json`],
+      "component_types": [`${getComponentType1Resp["componentTypeId"]}.json`],
       scenes: [],
       models: [],
       entities: "entities.json",
@@ -164,7 +164,7 @@ describe("testing init", () => {
     expect(await handler(argv2)).toBe(0);
     const expectedTmdk = {
       version: "0.0.2",
-      "component-types": [],
+      "component_types": [],
       scenes: ["scene1.json"],
       models: ["model1.glb"],
       entities: "entities.json",
@@ -207,7 +207,7 @@ describe("testing init", () => {
     expect(await handler(argv2)).toBe(0);
     const expectedTmdk = {
       version: "0.0.2",
-      "component-types": [],
+      "component_types": [],
       scenes: [],
       models: [],
       entities: "entities.json",
@@ -256,7 +256,7 @@ describe("testing init", () => {
     expect(await handler(argv2)).toBe(0);
     const expectedTmdk = {
       version: "0.0.2",
-      "component-types": [`${getComponentType1Resp["componentTypeId"]}.json`],
+      "component_types": [`${getComponentType1Resp["componentTypeId"]}.json`],
       scenes: ["scene1.json"],
       models: ["model1.glb"],
       entities: "entities.json",

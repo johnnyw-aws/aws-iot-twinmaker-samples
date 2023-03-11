@@ -169,7 +169,7 @@ export const oneSceneListScenesResp: ListScenesCommandOutput = {
 
 export const emptyTmdk = {
   version: "0.0.2",
-  "component-types": [],
+  "component_types": [],
   scenes: [],
   models: [],
   entities: "entities.json",

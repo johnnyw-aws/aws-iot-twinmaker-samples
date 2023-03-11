@@ -40,14 +40,11 @@ describe("testing deploy", () => {
       "workspace-id": "irrelevant",
       dir: "i-do-not-exist",
     } as Arguments<Options>;
-    await expect(handler(argv2)).rejects.toThrow(
-      Error(
-        "ENOENT: no such file or directory, open 'i-do-not-exist/tmdk.json'"
-      )
-    );
+    await expect(handler(argv2)).rejects.toThrow(Error("TDMK.json does not exist. Please run tmdk init first."));
   });
 
   test("deploy_givenNoWorkspace_expectError", async () => {
+    fs.existsSync = jest.fn(()=> {return true;});
     jest.spyOn(fs, "readFileSync").mockReturnValue(JSON.stringify({}, null, 4));
     twinmakerMock
       .on(GetWorkspaceCommand)
@@ -60,10 +57,11 @@ describe("testing deploy", () => {
       "workspace-id": "non-existent",
       dir: fakeTmdkDir
     } as Arguments<Options>;
-    await expect(handler(argv2)).rejects.toThrow();
+    await expect(handler(argv2)).rejects.toThrow(ResourceNotFoundException);
   });
 
   test("deploy_givenEmptyProject_expectSuccess", async () => {
+    fs.existsSync = jest.fn(()=> {return true;});
     fs.readFileSync = jest.fn((path: [string]) => {
       if (path.includes("tmdk")) {
         return JSON.stringify(emptyTmdk, null, 4);
@@ -88,10 +86,11 @@ describe("testing deploy", () => {
   });
 
   test("deploy_given1ComponentType_expectSuccess", async () => {
+    fs.existsSync = jest.fn(()=> {return true;});
     fs.readFileSync = jest.fn((path: [string]) => {
       if (path.includes("tmdk")) {
         let tmdk1Ct = JSON.parse(JSON.stringify(emptyTmdk));
-        tmdk1Ct["component-types"] = ["componentType1.json"];
+        tmdk1Ct["component_types"] = ["componentType1.json"];
         return JSON.stringify(tmdk1Ct, null, 4);
       } else if (path.includes("componentType1.json")) {
         return JSON.stringify(componentType1Definition, null, 4);
@@ -122,6 +121,7 @@ describe("testing deploy", () => {
   });
 
   test("deploy_given1SceneAnd1Model_expectSuccess", async () => {
+    fs.existsSync = jest.fn(()=> {return true;});
     fs.readFileSync = jest.fn((path: [string]) => {
       if (path.includes("tmdk")) {
         let tmdk1SceneAndModel = JSON.parse(JSON.stringify(emptyTmdk));
@@ -173,15 +173,16 @@ describe("testing deploy", () => {
     });
   });
 
-  test("deploy_givenJustEntities_expectSuccess", async () => {
+  test("deploy_given1Entity_expectSuccess", async () => {
+    fs.existsSync = jest.fn(()=> {return true;});
     fs.readFileSync = jest.fn((path: [string]) => {
       if (path.includes("tmdk")) {
         let tmdk1Ct = JSON.parse(JSON.stringify(emptyTmdk));
-        tmdk1Ct["entities"] = ["entity1.json"];
+        tmdk1Ct["entities"] = "entities.json";
         return JSON.stringify(tmdk1Ct, null, 4);
-      } else if (path.includes("entity1.json")) {
+      } else if (path.includes("entities.json")) {
         return JSON.stringify([entity1Definition], null, 4);
-      }else { // covers entities.json
+      } else { // covers entities.json
         return JSON.stringify([], null, 4);
       }
     });
