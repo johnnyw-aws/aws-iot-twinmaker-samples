@@ -17,6 +17,7 @@ import {
   ListEntitiesCommandOutput,
   GetEntityCommandOutput,
 } from "@aws-sdk/client-iottwinmaker";
+import { verifyWorkspaceExists } from '../lib/utils';
 
 export type Options = {
   region: string;
@@ -229,14 +230,10 @@ async function import_scenes_and_models(
           }
         }
 
-        const data = await aws().s3.getObject({ Bucket: s3bucket, Key: s3key });
-        const bodyContents = await data.Body?.transformToString('utf-8') as string;
-        fs.writeFileSync(`${outDir}/3d_models/${s3key}`, bodyContents);
-        (tmdk_config["models"] as string[]).push(`${s3key}`); // TODO idiomatic
         const data = await aws().s3.send(
           new GetObjectCommand({ Bucket: s3bucket, Key: s3key })
         );
-        const bodyContents = (await streamToBuffer(data.Body)) as Buffer;
+        const bodyContents = await data.Body?.transformToString('utf-8') as string;
         fs.writeFileSync(path.join(outDir, "3d_models", s3key), bodyContents);
         tmdk_config["models"].push(s3key);
 
@@ -390,14 +387,14 @@ async function import_entities(
 }
 
 export const handler = async (argv: Arguments<Options>) => {
-  const workspaceIdStr: string = argv["workspace-id"];
+  const workspaceId: string = argv["workspace-id"];
   const region: string = argv.region;
   const outDir: string = argv.out;
-  console.log(
-    `Bootstrapping project from workspace ${workspaceIdStr} in ${region} at project directory ${outDir}`
-  );
+  console.log(`Bootstrapping project from workspace ${workspaceId} in ${region} at project directory ${outDir}`);
 
   initDefaultAwsClients({ region: region });
+
+  await verifyWorkspaceExists(workspaceId);
 
   // create directory if not exists
   if (!fs.existsSync(outDir)) {
@@ -424,7 +421,7 @@ export const handler = async (argv: Arguments<Options>) => {
   // import component types
   console.log("====== Component Types ======");
   tmdk_config = await import_component_types(
-    workspaceIdStr,
+    workspaceId,
     tmdk_config,
     outDir
   );
@@ -432,14 +429,14 @@ export const handler = async (argv: Arguments<Options>) => {
   // import scenes
   console.log("====== Scenes / Models ======");
   tmdk_config = await import_scenes_and_models(
-    workspaceIdStr,
+    workspaceId,
     tmdk_config,
     outDir
   );
 
   // import entities
   console.log("========== Entities =========");
-  tmdk_config = await import_entities(workspaceIdStr, tmdk_config, outDir);
+  tmdk_config = await import_entities(workspaceId, tmdk_config, outDir);
 
   console.log("== Finishing bootstrap ... ==");
 
