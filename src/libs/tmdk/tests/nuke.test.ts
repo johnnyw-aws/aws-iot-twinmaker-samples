@@ -48,8 +48,7 @@ describe("testing nuke", () => {
       region: "us-east-1",
       "workspace-id": "non-existent",
     } as Arguments<Options>;
-    await expect(handler(argv2)).rejects.toThrow(Error);
-    expect(mockExit).toHaveBeenCalledWith(1);
+    await expect(handler(argv2)).rejects.toThrow(ResourceNotFoundException);
   });
 
   test("nuke_givenNotYInput_expectExit", async () => {
