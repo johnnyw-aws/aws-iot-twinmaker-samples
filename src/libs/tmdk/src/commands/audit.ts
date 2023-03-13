@@ -8,10 +8,11 @@ import {
   getDefaultAwsClients as aws,
   initDefaultAwsClients,
 } from "../lib/aws-clients";
+import { verifyWorkspaceExists } from '../lib/utils';
 
 export type Options = {
-  region: string | undefined;
-  "workspace-id": string | undefined;
+  region: string;
+  "workspace-id": string;
   "grafana-workspace-id": string | undefined;
 };
 
@@ -28,10 +29,8 @@ export const builder: CommandBuilder<Options> = (yargs) =>
     },
     "workspace-id": {
       type: "string",
-      require: false,
+      require: true,
       description: "Specify the ID of the Workspace to audit.",
-      defaultDescription: "$WORKSPACE_ID",
-      default: process.env.WORKSPACE_ID,
     },
     "grafana-workspace-id": {
       type: "string",
@@ -51,29 +50,11 @@ export const handler = async (argv: Arguments<Options>) => {
   console.log(region);
   console.log(workspaceId);
 
+  initDefaultAwsClients({ region: region });
+
+  await verifyWorkspaceExists(workspaceId);
+
   console.log("Not yet implemented");
-
-  // verify workspace exists
-  if (region) {
-    initDefaultAwsClients({ region: region as string });
-
-    if (workspaceId) {
-      try {
-        console.log("verifying workspace...");
-        await aws().tm.getWorkspace({ workspaceId: workspaceId as string });
-        console.log(`Verified workspace exists.`);
-      } catch (e) {
-        if (e instanceof ResourceNotFoundException) {
-          console.log(
-            `Error: workspace '${workspaceId}' not found in region '${region}'. Please create it first.`
-          );
-          process.exit(1);
-        } else {
-          throw new Error(`Failed to get workspace. ${e}`);
-        }
-      }
-    }
-  }
 
   return 0;
 };
