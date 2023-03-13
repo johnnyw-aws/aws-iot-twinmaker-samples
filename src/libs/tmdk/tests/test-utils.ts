@@ -11,12 +11,6 @@ export const workspaceBucket = "workspaceBucket";
 export const s3BucketArn = `arn:aws:s3:::${workspaceBucket}`;
 export const s3ContentLocationBase = `s3://${workspaceBucket}/`;
 
-export const mockExit = jest
-  .spyOn(process, "exit")
-  .mockImplementation((number) => {
-    throw new Error("process.exit: " + number);
-  });
-
 export function createDirectory(dir: string): void {
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir);

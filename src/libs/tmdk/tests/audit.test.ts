@@ -3,25 +3,23 @@
 
 import { handler, Options } from "../src/commands/audit";
 import { Arguments } from "yargs";
-import { mockExit } from "./test-utils";
+import { GetWorkspaceCommand, IoTTwinMakerClient, ResourceNotFoundException } from '@aws-sdk/client-iottwinmaker';
+import { mockClient } from 'aws-sdk-client-mock';
 
-jest.mock("../src/lib/aws-clients");
+const twinmakerMock = mockClient(IoTTwinMakerClient);
 
-describe("testing audit", () => {
-  beforeEach(mockExit.mockClear);
+// TODO add tests after implementation
 
-  // TODO add tests after implementation
+test("throws error when given workspace that does not exist", async () => {
+  twinmakerMock
+    .on(GetWorkspaceCommand)
+    .rejects(new ResourceNotFoundException({ $metadata: {}, message: "" }));
 
-  test("audit_givenNoWorkspace_expectError", async () => {
-    const argv2 = {
-      _: ["audit"],
-      $0: "tmdk_local",
-      region: "us-east-1",
-      "workspace-id": "non-existent",
-    } as Arguments<Options>;
-    await expect(handler(argv2)).rejects.toThrow(Error);
-    expect(mockExit).toHaveBeenCalledWith(1);
-  });
-
-  // TODO fill in test cases
+  const argv2 = {
+    _: ["audit"],
+    $0: "tmdk_local",
+    region: "us-east-1",
+    "workspace-id": "non-existent",
+  } as Arguments<Options>;
+  await expect(handler(argv2)).rejects.toThrow(ResourceNotFoundException);
 });

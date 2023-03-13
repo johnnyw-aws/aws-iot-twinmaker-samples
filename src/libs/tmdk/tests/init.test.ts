@@ -1,4 +1,3 @@
-/* eslint @typescript-eslint/no-var-requires: "off" */
 // Copyright 2022 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
@@ -42,265 +41,263 @@ beforeAll(() => {
 const twinmakerMock = mockClient(IoTTwinMakerClient);
 const s3Mock = mockClient(S3Client);
 
-describe("testing init", () => {
-  beforeEach(() => {
-    s3Mock.reset();
-    twinmakerMock.reset();
-    jest.spyOn(fs, "writeFileSync");
-  });
+beforeEach(() => {
+  s3Mock.reset();
+  twinmakerMock.reset();
+  jest.spyOn(fs, "writeFileSync");
+});
 
-  test("init_givenWorkspaceDoesNotExist_expectError", async () => {
-    twinmakerMock
-      .on(GetWorkspaceCommand)
-      .rejects(new ResourceNotFoundException({ $metadata: {}, message: "" }));
+test("throws error when given tmdk project that does not exist", async () => {
+  twinmakerMock
+    .on(GetWorkspaceCommand)
+    .rejects(new ResourceNotFoundException({ $metadata: {}, message: "" }));
 
-    const argv2 = {
-      _: ["init"],
-      $0: "tmdk_local",
-      region: "us-east-1",
-      "workspace-id": "non-existent",
-      out: outDir,
-    } as Arguments<Options>;
-    await expect(handler(argv2)).rejects.toThrow(ResourceNotFoundException);
-  });
+  const argv2 = {
+    _: ["init"],
+    $0: "tmdk_local",
+    region: "us-east-1",
+    "workspace-id": "non-existent",
+    out: outDir,
+  } as Arguments<Options>;
+  await expect(handler(argv2)).rejects.toThrow(ResourceNotFoundException);
+});
 
-  test("init_givenNoResources_expectEmptyTmdk", async () => {
-    twinmakerMock.on(GetWorkspaceCommand).resolves({});
-    twinmakerMock
-      .on(ListComponentTypesCommand)
-      .resolves(emptyListComponentTypesResp);
-    twinmakerMock.on(ListEntitiesCommand).resolves(emptyListEntitiesResp);
-    twinmakerMock.on(ListScenesCommand).resolves(emptyListScenesResp);
+test("creates an empty tmdk project when given no twinmaker resources", async () => {
+  twinmakerMock.on(GetWorkspaceCommand).resolves({});
+  twinmakerMock
+    .on(ListComponentTypesCommand)
+    .resolves(emptyListComponentTypesResp);
+  twinmakerMock.on(ListEntitiesCommand).resolves(emptyListEntitiesResp);
+  twinmakerMock.on(ListScenesCommand).resolves(emptyListScenesResp);
 
-    const argv2 = {
-      _: ["init"],
-      $0: "tmdk_local",
-      region: "us-east-1",
-      "workspace-id": workspaceId,
-      out: outDir,
-    } as Arguments<Options>;
-    expect(await handler(argv2)).toBe(0);
-    const expectedTmdk = {
-      version: "0.0.2",
-      component_types: [],
-      scenes: [],
-      models: [],
-      entities: "entities.json",
-    };
-    expect(fs.writeFileSync).toHaveBeenCalledWith(
-      `${outDir}/tmdk.json`,
-      JSON.stringify(expectedTmdk, null, 4)
-    );
-    expect(fs.writeFileSync).toHaveBeenCalledWith(
-      `${outDir}/entities.json`,
-      JSON.stringify([], null, 4)
-    );
-  });
+  const argv2 = {
+    _: ["init"],
+    $0: "tmdk_local",
+    region: "us-east-1",
+    "workspace-id": workspaceId,
+    out: outDir,
+  } as Arguments<Options>;
+  expect(await handler(argv2)).toBe(0);
+  const expectedTmdk = {
+    version: "0.0.2",
+    component_types: [],
+    scenes: [],
+    models: [],
+    entities: "entities.json",
+  };
+  expect(fs.writeFileSync).toHaveBeenCalledWith(
+    `${outDir}/tmdk.json`,
+    JSON.stringify(expectedTmdk, null, 4)
+  );
+  expect(fs.writeFileSync).toHaveBeenCalledWith(
+    `${outDir}/entities.json`,
+    JSON.stringify([], null, 4)
+  );
+});
 
-  test("init_given1ComponentType_expectSuccess", async () => {
-    twinmakerMock.on(GetWorkspaceCommand).resolves({});
-    twinmakerMock
-      .on(ListComponentTypesCommand)
-      .resolves(oneCtListComponentTypesResp);
-    twinmakerMock.on(GetComponentTypeCommand).resolves(getComponentType1Resp);
-    twinmakerMock.on(ListEntitiesCommand).resolves(emptyListEntitiesResp);
-    twinmakerMock.on(ListScenesCommand).resolves(emptyListScenesResp);
+test("creates a tmdk project with one component type when given one component type", async () => {
+  twinmakerMock.on(GetWorkspaceCommand).resolves({});
+  twinmakerMock
+    .on(ListComponentTypesCommand)
+    .resolves(oneCtListComponentTypesResp);
+  twinmakerMock.on(GetComponentTypeCommand).resolves(getComponentType1Resp);
+  twinmakerMock.on(ListEntitiesCommand).resolves(emptyListEntitiesResp);
+  twinmakerMock.on(ListScenesCommand).resolves(emptyListScenesResp);
 
-    const argv2 = {
-      _: ["init"],
-      $0: "tmdk_local",
-      region: "us-east-1",
-      "workspace-id": workspaceId,
-      out: outDir,
-    } as Arguments<Options>;
-    expect(await handler(argv2)).toBe(0);
-    const expectedTmdk = {
-      version: "0.0.2",
-      component_types: [`${getComponentType1Resp["componentTypeId"]}.json`],
-      scenes: [],
-      models: [],
-      entities: "entities.json",
-    };
+  const argv2 = {
+    _: ["init"],
+    $0: "tmdk_local",
+    region: "us-east-1",
+    "workspace-id": workspaceId,
+    out: outDir,
+  } as Arguments<Options>;
+  expect(await handler(argv2)).toBe(0);
+  const expectedTmdk = {
+    version: "0.0.2",
+    component_types: [`${getComponentType1Resp["componentTypeId"]}.json`],
+    scenes: [],
+    models: [],
+    entities: "entities.json",
+  };
 
-    expect(fs.writeFileSync).toHaveBeenCalledWith(
-      `${outDir}/tmdk.json`,
-      JSON.stringify(expectedTmdk, null, 4)
-    );
-    expect(fs.writeFileSync).toHaveBeenCalledWith(
-      `${outDir}/entities.json`,
-      JSON.stringify([], null, 4)
-    );
-    expect(fs.writeFileSync).toHaveBeenCalledWith(
-      `${outDir}/${getComponentType1Resp["componentTypeId"]}.json`,
-      JSON.stringify(componentType1Definition, null, 4)
-    );
-  });
+  expect(fs.writeFileSync).toHaveBeenCalledWith(
+    `${outDir}/tmdk.json`,
+    JSON.stringify(expectedTmdk, null, 4)
+  );
+  expect(fs.writeFileSync).toHaveBeenCalledWith(
+    `${outDir}/entities.json`,
+    JSON.stringify([], null, 4)
+  );
+  expect(fs.writeFileSync).toHaveBeenCalledWith(
+    `${outDir}/${getComponentType1Resp["componentTypeId"]}.json`,
+    JSON.stringify(componentType1Definition, null, 4)
+  );
+});
 
-  test("init_given1SceneAnd1Model_expectSuccess", async () => {
-    twinmakerMock.on(GetWorkspaceCommand).resolves({});
-    twinmakerMock
-      .on(ListComponentTypesCommand)
-      .resolves(emptyListComponentTypesResp);
-    twinmakerMock.on(ListEntitiesCommand).resolves(emptyListEntitiesResp);
-    twinmakerMock.on(ListScenesCommand).resolves(oneSceneListScenesResp);
-    s3Mock
-      .on(GetObjectCommand, { Bucket: "workspace-bucket", Key: "scene1.json" })
-      .resolves({
-        $metadata: {},
-        Body: {
-          transformToString: () => {
-            return Promise.resolve(JSON.stringify(scene1, null, 4));
-          },
-        } as SdkStream<Blob>,
-      });
-    s3Mock
-      .on(GetObjectCommand, { Bucket: "workspace-bucket", Key: "model1.glb" })
-      .resolves({
-        $metadata: {},
-        Body: {
-          transformToString: () => {
-            return Promise.resolve(
-              fs.readFileSync(path.join(localResourcesDir, "model1.glb"))
-            );
-          },
-        } as SdkStream<Blob>,
-      });
+test("creates a tmdk project with one model and one scene when given one scene and model", async () => {
+  twinmakerMock.on(GetWorkspaceCommand).resolves({});
+  twinmakerMock
+    .on(ListComponentTypesCommand)
+    .resolves(emptyListComponentTypesResp);
+  twinmakerMock.on(ListEntitiesCommand).resolves(emptyListEntitiesResp);
+  twinmakerMock.on(ListScenesCommand).resolves(oneSceneListScenesResp);
+  s3Mock
+    .on(GetObjectCommand, { Bucket: "workspace-bucket", Key: "scene1.json" })
+    .resolves({
+      $metadata: {},
+      Body: {
+        transformToString: () => {
+          return Promise.resolve(JSON.stringify(scene1, null, 4));
+        },
+      } as SdkStream<Blob>,
+    });
+  s3Mock
+    .on(GetObjectCommand, { Bucket: "workspace-bucket", Key: "model1.glb" })
+    .resolves({
+      $metadata: {},
+      Body: {
+        transformToString: () => {
+          return Promise.resolve(
+            fs.readFileSync(path.join(localResourcesDir, "model1.glb"))
+          );
+        },
+      } as SdkStream<Blob>,
+    });
 
-    const argv2 = {
-      _: ["init"],
-      $0: "tmdk_local",
-      region: "us-east-1",
-      "workspace-id": workspaceId,
-      out: outDir,
-    } as Arguments<Options>;
-    expect(await handler(argv2)).toBe(0);
-    const expectedTmdk = {
-      version: "0.0.2",
-      component_types: [],
-      scenes: ["scene1.json"],
-      models: ["model1.glb"],
-      entities: "entities.json",
-    };
+  const argv2 = {
+    _: ["init"],
+    $0: "tmdk_local",
+    region: "us-east-1",
+    "workspace-id": workspaceId,
+    out: outDir,
+  } as Arguments<Options>;
+  expect(await handler(argv2)).toBe(0);
+  const expectedTmdk = {
+    version: "0.0.2",
+    component_types: [],
+    scenes: ["scene1.json"],
+    models: ["model1.glb"],
+    entities: "entities.json",
+  };
 
-    expect(fs.writeFileSync).toHaveBeenCalledWith(
-      `${outDir}/tmdk.json`,
-      JSON.stringify(expectedTmdk, null, 4)
-    );
-    expect(fs.writeFileSync).toHaveBeenCalledWith(
-      `${outDir}/entities.json`,
-      JSON.stringify([], null, 4)
-    );
-    expect(fs.writeFileSync).toHaveBeenCalledWith(
-      `${outDir}/scene1.json`,
-      JSON.stringify(scene1, null, 4)
-    );
-    expect(fs.writeFileSync).toHaveBeenCalledWith(
-      `${outDir}/3d_models/model1.glb`,
-      fs.readFileSync(path.join(localResourcesDir, "model1.glb"))
-    );
-  });
+  expect(fs.writeFileSync).toHaveBeenCalledWith(
+    `${outDir}/tmdk.json`,
+    JSON.stringify(expectedTmdk, null, 4)
+  );
+  expect(fs.writeFileSync).toHaveBeenCalledWith(
+    `${outDir}/entities.json`,
+    JSON.stringify([], null, 4)
+  );
+  expect(fs.writeFileSync).toHaveBeenCalledWith(
+    `${outDir}/scene1.json`,
+    JSON.stringify(scene1, null, 4)
+  );
+  expect(fs.writeFileSync).toHaveBeenCalledWith(
+    `${outDir}/3d_models/model1.glb`,
+    fs.readFileSync(path.join(localResourcesDir, "model1.glb"))
+  );
+});
 
-  test("init_given1Entity_expectSuccess", async () => {
-    twinmakerMock.on(GetWorkspaceCommand).resolves({});
-    twinmakerMock
-      .on(ListComponentTypesCommand)
-      .resolves(emptyListComponentTypesResp);
-    twinmakerMock.on(ListEntitiesCommand).resolves(oneEntityListEntitiesResp);
-    twinmakerMock.on(GetEntityCommand).resolves(getEntity1Resp);
-    twinmakerMock.on(ListScenesCommand).resolves(emptyListScenesResp);
+test("creates a tmdk project with one entity when given one entity", async () => {
+  twinmakerMock.on(GetWorkspaceCommand).resolves({});
+  twinmakerMock
+    .on(ListComponentTypesCommand)
+    .resolves(emptyListComponentTypesResp);
+  twinmakerMock.on(ListEntitiesCommand).resolves(oneEntityListEntitiesResp);
+  twinmakerMock.on(GetEntityCommand).resolves(getEntity1Resp);
+  twinmakerMock.on(ListScenesCommand).resolves(emptyListScenesResp);
 
-    const argv2 = {
-      _: ["init"],
-      $0: "tmdk_local",
-      region: "us-east-1",
-      "workspace-id": workspaceId,
-      out: outDir,
-    } as Arguments<Options>;
-    expect(await handler(argv2)).toBe(0);
-    const expectedTmdk = {
-      version: "0.0.2",
-      component_types: [],
-      scenes: [],
-      models: [],
-      entities: "entities.json",
-    };
-    expect(fs.writeFileSync).toHaveBeenCalledWith(
-      `${outDir}/tmdk.json`,
-      JSON.stringify(expectedTmdk, null, 4)
-    );
-    expect(fs.writeFileSync).toHaveBeenCalledWith(
-      `${outDir}/entities.json`,
-      JSON.stringify([entity1Definition], null, 4)
-    );
-  });
+  const argv2 = {
+    _: ["init"],
+    $0: "tmdk_local",
+    region: "us-east-1",
+    "workspace-id": workspaceId,
+    out: outDir,
+  } as Arguments<Options>;
+  expect(await handler(argv2)).toBe(0);
+  const expectedTmdk = {
+    version: "0.0.2",
+    component_types: [],
+    scenes: [],
+    models: [],
+    entities: "entities.json",
+  };
+  expect(fs.writeFileSync).toHaveBeenCalledWith(
+    `${outDir}/tmdk.json`,
+    JSON.stringify(expectedTmdk, null, 4)
+  );
+  expect(fs.writeFileSync).toHaveBeenCalledWith(
+    `${outDir}/entities.json`,
+    JSON.stringify([entity1Definition], null, 4)
+  );
+});
 
-  test("init_givenFullWorkspace_expectSuccess", async () => {
-    twinmakerMock.on(GetWorkspaceCommand).resolves({});
-    twinmakerMock
-      .on(ListComponentTypesCommand)
-      .resolves(oneCtListComponentTypesResp);
-    twinmakerMock.on(GetComponentTypeCommand).resolves(getComponentType1Resp);
-    twinmakerMock.on(ListEntitiesCommand).resolves(oneEntityListEntitiesResp);
-    twinmakerMock.on(GetEntityCommand).resolves(getEntity1Resp);
-    twinmakerMock.on(ListScenesCommand).resolves(oneSceneListScenesResp);
-    s3Mock
-      .on(GetObjectCommand, { Bucket: "workspace-bucket", Key: "scene1.json" })
-      .resolves({
-        $metadata: {},
-        Body: {
-          transformToString: () => {
-            return Promise.resolve(JSON.stringify(scene1, null, 4));
-          },
-        } as SdkStream<Blob>,
-      });
-    s3Mock
-      .on(GetObjectCommand, { Bucket: "workspace-bucket", Key: "model1.glb" })
-      .resolves({
-        $metadata: {},
-        Body: {
-          transformToString: () => {
-            return Promise.resolve(
-              fs.readFileSync(path.join(localResourcesDir, "model1.glb"))
-            );
-          },
-        } as SdkStream<Blob>,
-      });
+test("creates a fully populated tmdk project when given a full workspace", async () => {
+  twinmakerMock.on(GetWorkspaceCommand).resolves({});
+  twinmakerMock
+    .on(ListComponentTypesCommand)
+    .resolves(oneCtListComponentTypesResp);
+  twinmakerMock.on(GetComponentTypeCommand).resolves(getComponentType1Resp);
+  twinmakerMock.on(ListEntitiesCommand).resolves(oneEntityListEntitiesResp);
+  twinmakerMock.on(GetEntityCommand).resolves(getEntity1Resp);
+  twinmakerMock.on(ListScenesCommand).resolves(oneSceneListScenesResp);
+  s3Mock
+    .on(GetObjectCommand, { Bucket: "workspace-bucket", Key: "scene1.json" })
+    .resolves({
+      $metadata: {},
+      Body: {
+        transformToString: () => {
+          return Promise.resolve(JSON.stringify(scene1, null, 4));
+        },
+      } as SdkStream<Blob>,
+    });
+  s3Mock
+    .on(GetObjectCommand, { Bucket: "workspace-bucket", Key: "model1.glb" })
+    .resolves({
+      $metadata: {},
+      Body: {
+        transformToString: () => {
+          return Promise.resolve(
+            fs.readFileSync(path.join(localResourcesDir, "model1.glb"))
+          );
+        },
+      } as SdkStream<Blob>,
+    });
 
-    const argv2 = {
-      _: ["init"],
-      $0: "tmdk_local",
-      region: "us-east-1",
-      "workspace-id": workspaceId,
-      out: outDir,
-    } as Arguments<Options>;
-    expect(await handler(argv2)).toBe(0);
-    const expectedTmdk = {
-      version: "0.0.2",
-      component_types: [`${getComponentType1Resp["componentTypeId"]}.json`],
-      scenes: ["scene1.json"],
-      models: ["model1.glb"],
-      entities: "entities.json",
-    };
+  const argv2 = {
+    _: ["init"],
+    $0: "tmdk_local",
+    region: "us-east-1",
+    "workspace-id": workspaceId,
+    out: outDir,
+  } as Arguments<Options>;
+  expect(await handler(argv2)).toBe(0);
+  const expectedTmdk = {
+    version: "0.0.2",
+    component_types: [`${getComponentType1Resp["componentTypeId"]}.json`],
+    scenes: ["scene1.json"],
+    models: ["model1.glb"],
+    entities: "entities.json",
+  };
 
-    expect(fs.writeFileSync).toHaveBeenCalledWith(
-      `${outDir}/tmdk.json`,
-      JSON.stringify(expectedTmdk, null, 4)
-    );
-    expect(fs.writeFileSync).toHaveBeenCalledWith(
-      `${outDir}/entities.json`,
-      JSON.stringify([entity1Definition], null, 4)
-    );
-    expect(fs.writeFileSync).toHaveBeenCalledWith(
-      `${outDir}/${getComponentType1Resp["componentTypeId"]}.json`,
-      JSON.stringify(componentType1Definition, null, 4)
-    );
-    expect(fs.writeFileSync).toHaveBeenCalledWith(
-      `${outDir}/scene1.json`,
-      JSON.stringify(scene1, null, 4)
-    );
-    expect(fs.writeFileSync).toHaveBeenCalledWith(
-      `${outDir}/3d_models/model1.glb`,
-      fs.readFileSync(path.join(localResourcesDir, "model1.glb"))
-    );
-  });
+  expect(fs.writeFileSync).toHaveBeenCalledWith(
+    `${outDir}/tmdk.json`,
+    JSON.stringify(expectedTmdk, null, 4)
+  );
+  expect(fs.writeFileSync).toHaveBeenCalledWith(
+    `${outDir}/entities.json`,
+    JSON.stringify([entity1Definition], null, 4)
+  );
+  expect(fs.writeFileSync).toHaveBeenCalledWith(
+    `${outDir}/${getComponentType1Resp["componentTypeId"]}.json`,
+    JSON.stringify(componentType1Definition, null, 4)
+  );
+  expect(fs.writeFileSync).toHaveBeenCalledWith(
+    `${outDir}/scene1.json`,
+    JSON.stringify(scene1, null, 4)
+  );
+  expect(fs.writeFileSync).toHaveBeenCalledWith(
+    `${outDir}/3d_models/model1.glb`,
+    fs.readFileSync(path.join(localResourcesDir, "model1.glb"))
+  );
 });
