@@ -131,10 +131,13 @@ async function waitForComponentTypeActive(
 }
 
 export {
-  ComponentTypeDefinition,
-  ComponentTypeProvider,
   fromComponentTypeDefinition,
   createComponentTypeIfNotExists,
   waitForComponentTypeActive,
   deleteComponentTypes,
 };
+export type {
+  ComponentTypeDefinition,
+  ComponentTypeProvider,
+};
+

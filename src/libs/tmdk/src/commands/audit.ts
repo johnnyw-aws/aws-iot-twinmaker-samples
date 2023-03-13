@@ -3,9 +3,7 @@
 
 import type { Arguments, CommandBuilder } from "yargs";
 
-import { ResourceNotFoundException } from "@aws-sdk/client-iottwinmaker";
 import {
-  getDefaultAwsClients as aws,
   initDefaultAwsClients,
 } from "../lib/aws-clients";
 import { verifyWorkspaceExists } from '../lib/utils';
