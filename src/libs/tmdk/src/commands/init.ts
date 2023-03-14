@@ -9,7 +9,6 @@ import {
   initDefaultAwsClients,
 } from "../lib/aws-clients";
 import * as fs from "fs";
-import { GetObjectCommand, ListObjectsV2Command } from "@aws-sdk/client-s3";
 import * as path from "path";
 import {
   ListComponentTypesCommandOutput,
@@ -17,6 +16,7 @@ import {
   ListEntitiesCommandOutput,
   GetEntityCommandOutput,
 } from "@aws-sdk/client-iottwinmaker";
+import { verifyWorkspaceExists } from "../lib/utils";
 
 export type Options = {
   region: string;
@@ -128,24 +128,6 @@ async function import_scenes_and_models(
     const sceneSummaries = listScenesResp["sceneSummaries"];
     let contentBucket = ""; // FIXME should be from workspace not scene files
     if (sceneSummaries != undefined) {
-      const streamToString = (stream: any) =>
-        new Promise((resolve, reject) => {
-          const chunks: any[] = [];
-          stream.on("data", (chunk: any) => chunks.push(chunk));
-          stream.on("error", reject);
-          stream.on("end", () =>
-            resolve(Buffer.concat(chunks).toString("utf8"))
-          );
-        });
-
-      const streamToBuffer = (stream: any) =>
-        new Promise((resolve, reject) => {
-          const chunks: any[] = [];
-          stream.on("data", (chunk: any) => chunks.push(chunk));
-          stream.on("error", reject);
-          stream.on("end", () => resolve(Buffer.concat(chunks)));
-        });
-
       const modelFiles = new Set();
       for (const sceneSummary of sceneSummaries) {
         // TODO consider putting models under scenes to support selective import
@@ -159,12 +141,14 @@ async function import_scenes_and_models(
             .join("/");
           console.log(`saving scene file: ${contentKey}`);
 
-          const data = await aws().s3.send(
-            new GetObjectCommand({ Bucket: contentBucket, Key: contentKey })
+          // from https://github.com/awsdocs/aws-doc-sdk-examples/blob/main/javascriptv3/example_code/s3/src/s3_getobject.js
+          const data = await aws().s3.getObject({
+            Bucket: contentBucket,
+            Key: contentKey,
+          });
+          const sceneJson = JSON.parse(
+            await data.Body!.transformToString("utf-8")
           );
-          const bodyContents = await streamToString(data.Body);
-
-          const sceneJson = JSON.parse(`${bodyContents}`);
           for (const n of sceneJson["nodes"]) {
             for (const c of n["components"]) {
               if (c["type"] == "ModelRef") {
@@ -187,12 +171,10 @@ async function import_scenes_and_models(
                   }
                   // Obtain path of folder for JSON and download all files in that folder in the S3 bucket
                   const prefix = c["uri"].replace(path.basename(c["uri"]), "");
-                  const objlist = await aws().s3.send(
-                    new ListObjectsV2Command({
-                      Bucket: s3bucket,
-                      Prefix: prefix,
-                    })
-                  );
+                  const objlist = await aws().s3.listObjectsV2({
+                    Bucket: s3bucket,
+                    Prefix: prefix,
+                  });
                   if (objlist["Contents"] != undefined) {
                     const contents = objlist["Contents"];
                     for (const [, value] of Object.entries(contents)) {
@@ -252,16 +234,16 @@ async function import_scenes_and_models(
           }
         }
 
-        const data = await aws().s3.send(
-          new GetObjectCommand({ Bucket: s3bucket, Key: s3key })
-        );
-        const bodyContents = (await streamToBuffer(data.Body)) as Buffer;
+        const data = await aws().s3.getObject({ Bucket: s3bucket, Key: s3key });
+        const bodyContents = (await data.Body?.transformToString(
+          "utf-8"
+        )) as string;
         fs.writeFileSync(path.join(outDir, "3d_models", s3key), bodyContents);
         tmdk_config["models"].push(s3key);
 
         // handle binary data references in gltf files - https://www.khronos.org/files/gltf20-reference-guide.pdf
         if (s3key.endsWith(".gltf")) {
-          const gltfData = JSON.parse(bodyContents.toString("utf8"));
+          const gltfData = JSON.parse(bodyContents);
           if (gltfData["buffers"]) {
             for (const buffer of gltfData["buffers"]) {
               if (!(buffer["uri"] as string).startsWith("data:")) {
@@ -275,12 +257,13 @@ async function import_scenes_and_models(
                 );
                 const binS3bucket = binRelativePath.split("/")[2];
                 const binS3key = binRelativePath.split("/").slice(3).join("/");
-                const binData = await aws().s3.send(
-                  new GetObjectCommand({ Bucket: binS3bucket, Key: binS3key })
-                );
-                const binBodyContents = (await streamToBuffer(
-                  binData.Body
-                )) as Buffer;
+                const binData = await aws().s3.getObject({
+                  Bucket: binS3bucket,
+                  Key: binS3key,
+                });
+                const binBodyContents = (await binData.Body?.transformToString(
+                  "utf-8"
+                )) as string;
                 fs.writeFileSync(
                   path.join(outDir, "3d_models", binS3key),
                   binBodyContents
@@ -303,12 +286,13 @@ async function import_scenes_and_models(
                 );
                 const binS3bucket = binRelativePath.split("/")[2];
                 const binS3key = binRelativePath.split("/").slice(3).join("/");
-                const binData = await aws().s3.send(
-                  new GetObjectCommand({ Bucket: binS3bucket, Key: binS3key })
-                );
-                const binBodyContents = (await streamToBuffer(
-                  binData.Body
-                )) as Buffer;
+                const binData = await aws().s3.getObject({
+                  Bucket: binS3bucket,
+                  Key: binS3key,
+                });
+                const binBodyContents = (await binData.Body?.transformToString(
+                  "utf-8"
+                )) as string;
                 fs.writeFileSync(
                   path.join(outDir, "3d_models", binS3key),
                   binBodyContents
@@ -330,7 +314,7 @@ async function import_scenes_and_models(
 }
 
 async function import_entities(
-  workspaceIdStr: string,
+  workspaceId: string,
   tmdk_config: tmdk_config_file,
   outDir: string
 ) {
@@ -340,7 +324,7 @@ async function import_entities(
   let entityCount = 0;
   while (nextToken != undefined) {
     listEntitiesResp = await aws().tm.listEntities({
-      workspaceId: workspaceIdStr,
+      workspaceId,
       nextToken: nextToken,
     });
     nextToken = listEntitiesResp["nextToken"];
@@ -352,7 +336,7 @@ async function import_entities(
           `Saving entity (${entityCount} saved so far): ${entitySummary.entityId} ... `
         );
         const entityDetails: GetEntityCommandOutput = await aws().tm.getEntity({
-          workspaceId: workspaceIdStr,
+          workspaceId: workspaceId,
           entityId: entitySummary.entityId,
         });
 
@@ -417,14 +401,16 @@ async function import_entities(
 }
 
 export const handler = async (argv: Arguments<Options>) => {
-  const workspaceIdStr: string = argv["workspace-id"];
+  const workspaceId: string = argv["workspace-id"];
   const region: string = argv.region;
   const outDir: string = argv.out;
   console.log(
-    `Bootstrapping project from workspace ${workspaceIdStr} in ${region} at project directory ${outDir}`
+    `Bootstrapping project from workspace ${workspaceId} in ${region} at project directory ${outDir}`
   );
 
   initDefaultAwsClients({ region: region });
+
+  await verifyWorkspaceExists(workspaceId);
 
   // create directory if not exists
   if (!fs.existsSync(outDir)) {
@@ -450,23 +436,19 @@ export const handler = async (argv: Arguments<Options>) => {
 
   // import component types
   console.log("====== Component Types ======");
-  tmdk_config = await import_component_types(
-    workspaceIdStr,
-    tmdk_config,
-    outDir
-  );
+  tmdk_config = await import_component_types(workspaceId, tmdk_config, outDir);
 
   // import scenes
   console.log("====== Scenes / Models ======");
   tmdk_config = await import_scenes_and_models(
-    workspaceIdStr,
+    workspaceId,
     tmdk_config,
     outDir
   );
 
   // import entities
   console.log("========== Entities =========");
-  tmdk_config = await import_entities(workspaceIdStr, tmdk_config, outDir);
+  tmdk_config = await import_entities(workspaceId, tmdk_config, outDir);
 
   console.log("== Finishing bootstrap ... ==");
 

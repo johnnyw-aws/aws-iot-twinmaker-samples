@@ -240,6 +240,7 @@ async function updateEntity(
 export {
   deleteEntities,
   updateEntity,
-  EntityDefinition,
   deleteEntitiesWithServiceRecursion,
 };
+export type { EntityDefinition };
+

@@ -29,17 +29,21 @@ function createUniqueId() {
  * @param workspaceId TM workspace
  * @returns promise boolean
  */
-async function workspaceExists(workspaceId: string) {
+async function verifyWorkspaceExists(workspaceId: string) {
   try {
     await aws().tm.getWorkspace({ workspaceId: workspaceId });
-    return true;
   } catch (e) {
     if (e instanceof ResourceNotFoundException) {
-      return false;
+      console.error(
+        `Error: workspace '${workspaceId}' not found. Please create it first.`
+      );
+      throw e;
     } else {
-      throw new Error(`Failed to get workspace. ${e}`);
+      console.error(`Failed to get workspace.`, e);
+      throw e;
     }
   }
+  console.log(`Verified workspace ${workspaceId} exists.`);
 }
 
-export { delay, createUniqueId, workspaceExists };
+export { delay, createUniqueId, verifyWorkspaceExists };

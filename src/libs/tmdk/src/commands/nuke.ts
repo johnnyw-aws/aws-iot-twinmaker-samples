@@ -7,7 +7,7 @@ import { initDefaultAwsClients } from "../lib/aws-clients";
 import { deleteComponentTypes } from "../lib/component-type";
 import { deleteScenes } from "../lib/scene";
 import { deleteEntitiesWithServiceRecursion } from "../lib/entity";
-import { workspaceExists } from "../lib/utils";
+import { verifyWorkspaceExists } from "../lib/utils";
 
 export type Options = {
   "workspace-id": string;
@@ -37,12 +37,7 @@ export const handler = async (argv: Arguments<Options>) => {
 
   initDefaultAwsClients({ region: region });
 
-  if (!(await workspaceExists(workspaceId))) {
-    console.log(
-      `Error: workspace '${workspaceId}' not found in region '${region}'. Exiting.`
-    );
-    process.exit(1);
-  }
+  await verifyWorkspaceExists(workspaceId);
 
   // TODO also determine the current account
   await (async () => {
