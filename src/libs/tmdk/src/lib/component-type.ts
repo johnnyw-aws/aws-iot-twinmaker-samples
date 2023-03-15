@@ -58,8 +58,8 @@ async function createComponentTypeIfNotExists(
  */
 async function deleteComponentTypes(workspaceId: string) {
   let retryNeeded = true;
-  let nextToken: string | undefined = "";
   while (retryNeeded) {
+    let nextToken: string | undefined = "";
     retryNeeded = false;
     while (nextToken != undefined) {
       const result: ListComponentTypesCommandOutput =
@@ -136,8 +136,4 @@ export {
   waitForComponentTypeActive,
   deleteComponentTypes,
 };
-export type {
-  ComponentTypeDefinition,
-  ComponentTypeProvider,
-};
-
+export type { ComponentTypeDefinition, ComponentTypeProvider };

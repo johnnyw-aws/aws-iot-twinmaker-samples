@@ -1,7 +1,7 @@
 // Copyright 2022 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import type { Arguments, CommandBuilder } from "yargs";
+import type { CommandBuilder } from "yargs";
 
 export type Options = {
   region: string;
@@ -24,7 +24,7 @@ export const builder: CommandBuilder<Options> = (yargs) =>
 
 // temporarily disable eslint while not implemented
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const handler = async (argv: Arguments<Options>) => {
+export const handler = async () => {
   console.log("Not yet implemented");
   return 0;
 };

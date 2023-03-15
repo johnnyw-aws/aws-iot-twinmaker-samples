@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 // Copyright 2022 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
@@ -146,55 +145,59 @@ async function import_scenes_and_models(
             Bucket: contentBucket,
             Key: contentKey,
           });
-          const sceneJson = JSON.parse(
-            await data.Body!.transformToString("utf-8")
-          );
-          for (const n of sceneJson["nodes"]) {
-            for (const c of n["components"]) {
-              if (c["type"] == "ModelRef") {
-                modelFiles.add(c["uri"]);
+          if (data.Body != undefined) {
+            const sceneJson = JSON.parse(
+              await data.Body.transformToString("utf-8")
+            );
+            for (const n of sceneJson["nodes"]) {
+              for (const c of n["components"]) {
+                if (c["type"] == "ModelRef") {
+                  modelFiles.add(c["uri"]);
 
-                if (c["uri"].startsWith("s3://")) {
-                  // handle case where URI is like "s3://bucket/key.glb"
-                  c["uri"] = c["uri"].split("/").slice(3).join("/"); // change to relative s3 uri path
-                }
-                if (path.extname(c["uri"]) == ".json") {
-                  // Find URI of all models in JSON
-                  // Obtain bucket name
-                  let s3key = c["uri"] as string;
-                  let s3bucket: string;
-                  if (s3key.startsWith("s3://")) {
-                    s3bucket = s3key.split("/")[2];
-                    s3key = s3key.split("/").slice(3).join("/");
-                  } else {
-                    s3bucket = contentBucket;
+                  if (c["uri"].startsWith("s3://")) {
+                    // handle case where URI is like "s3://bucket/key.glb"
+                    c["uri"] = c["uri"].split("/").slice(3).join("/"); // change to relative s3 uri path
                   }
-                  // Obtain path of folder for JSON and download all files in that folder in the S3 bucket
-                  const prefix = c["uri"].replace(path.basename(c["uri"]), "");
-                  const objlist = await aws().s3.listObjectsV2({
-                    Bucket: s3bucket,
-                    Prefix: prefix,
-                  });
-                  if (objlist["Contents"] != undefined) {
-                    const contents = objlist["Contents"];
-                    for (const [, value] of Object.entries(contents)) {
-                      if ("Key" in value) {
-                        // TODO consider path.join in all s3 URI for better cross platform support?
-                        modelFiles.add(`s3://${s3bucket}/${value["Key"]}`);
+                  if (path.extname(c["uri"]) == ".json") {
+                    // Find URI of all models in JSON
+                    // Obtain bucket name
+                    let s3key = c["uri"] as string;
+                    let s3bucket: string;
+                    if (s3key.startsWith("s3://")) {
+                      s3bucket = s3key.split("/")[2];
+                      s3key = s3key.split("/").slice(3).join("/");
+                    } else {
+                      s3bucket = contentBucket;
+                    }
+                    // Obtain path of folder for JSON and download all files in that folder in the S3 bucket
+                    const prefix = c["uri"].replace(
+                      path.basename(c["uri"]),
+                      ""
+                    );
+                    const objlist = await aws().s3.listObjectsV2({
+                      Bucket: s3bucket,
+                      Prefix: prefix,
+                    });
+                    if (objlist["Contents"] != undefined) {
+                      const contents = objlist["Contents"];
+                      for (const [, value] of Object.entries(contents)) {
+                        if ("Key" in value) {
+                          modelFiles.add(`s3://${s3bucket}/${value["Key"]}`);
+                        }
                       }
                     }
                   }
                 }
               }
             }
-          }
 
-          // detect model files that absolute s3 path, update them to relative to support self-contained snapshot
-          fs.writeFileSync(
-            path.join(outDir, contentKey),
-            JSON.stringify(sceneJson, null, 4)
-          ); // TODO handle non-root scene files?
-          tmdk_config["scenes"].push(contentKey);
+            // detect model files that absolute s3 path, update them to relative to support self-contained snapshot
+            fs.writeFileSync(
+              path.join(outDir, contentKey),
+              JSON.stringify(sceneJson, null, 4)
+            ); // TODO handle non-root scene files?
+            tmdk_config["scenes"].push(contentKey);
+          }
         }
       } // for each scene summary
 
@@ -227,9 +230,9 @@ async function import_scenes_and_models(
           const dir_path = path.join(outDir, "3d_models");
           for (let index = 0; index < splitKey.length; index++) {
             const subpath = `${splitKey.slice(0, index + 1).join("/")}`;
-            if (!fs.existsSync(path.join(outDir, subpath))) {
+            if (!fs.existsSync(path.join(dir_path, subpath))) {
               console.log(`making path: ${dir_path}/${subpath} ...`);
-              fs.mkdirSync(path.join(outDir, subpath));
+              fs.mkdirSync(path.join(dir_path, subpath));
             }
           }
         }

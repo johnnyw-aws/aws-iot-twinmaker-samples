@@ -112,11 +112,28 @@ export const handler = async (argv: Arguments<Options>) => {
         ).reduce((acc, [key, value]) => {
           if (!value["isInherited"]) {
             acc[key] = value;
+          } else if ("defaultValue" in value) {
+            acc[key] = { defaultValue: value["defaultValue"] };
           }
           return acc;
         }, {} as { [key: string]: object });
         componentTypeDefinition["propertyDefinitions"] =
           filtered_property_definitions;
+      }
+      // remove inherited functions
+      const componentTypeFunctions = componentTypeDefinition[
+        "functions"
+      ] as object;
+      if (componentTypeFunctions != undefined) {
+        const filtered_functions = Object.entries(
+          componentTypeFunctions
+        ).reduce((acc, [key, value]) => {
+          if (!value["isInherited"]) {
+            acc[key] = value;
+          }
+          return acc;
+        }, {} as { [key: string]: object });
+        componentTypeDefinition["functions"] = filtered_functions;
       }
       // create component type if not exists
       try {

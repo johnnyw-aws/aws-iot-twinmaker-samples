@@ -237,10 +237,5 @@ async function updateEntity(
   console.log(`updated entity: ${entityId}`);
 }
 
-export {
-  deleteEntities,
-  updateEntity,
-  deleteEntitiesWithServiceRecursion,
-};
+export { deleteEntities, updateEntity, deleteEntitiesWithServiceRecursion };
 export type { EntityDefinition };
-
