@@ -112,7 +112,7 @@ export const handler = async (argv: Arguments<Options>) => {
         ).reduce((acc, [key, value]) => {
           if (!value["isInherited"]) {
             acc[key] = value;
-          } else if (value["defaultValue"] != undefined) {
+          } else if ("defaultValue" in value) {
             acc[key] = { defaultValue: value["defaultValue"] };
           }
           return acc;
