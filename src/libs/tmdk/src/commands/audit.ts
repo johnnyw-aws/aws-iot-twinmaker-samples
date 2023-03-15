@@ -3,10 +3,8 @@
 
 import type { Arguments, CommandBuilder } from "yargs";
 
-import {
-  initDefaultAwsClients,
-} from "../lib/aws-clients";
-import { verifyWorkspaceExists } from '../lib/utils';
+import { initDefaultAwsClients } from "../lib/aws-clients";
+import { verifyWorkspaceExists } from "../lib/utils";
 
 export type Options = {
   region: string;
