@@ -19,6 +19,8 @@ TODO fill-in
 1. {setup + testing steps that showcase functionality}
     - sub instruction
       ```
+      cd cdk
+      
       npm install
       
       aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws
