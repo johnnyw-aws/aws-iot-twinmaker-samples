@@ -1,0 +1,13 @@
+{
+  "componentTypeId": "com.example.cookiefactory.processstep",
+  "propertyDefinitions": {
+    "flowTo": {
+      "dataType": {
+        "nestedType": {
+          "type": "RELATIONSHIP"
+        },
+        "type": "LIST"
+      }
+    }
+  }
+}

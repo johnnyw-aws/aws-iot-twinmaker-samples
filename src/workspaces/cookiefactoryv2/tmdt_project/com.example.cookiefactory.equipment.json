@@ -1,0 +1,21 @@
+{
+  "componentTypeId": "com.example.cookiefactory.equipment",
+  "propertyDefinitions": {
+    "feed": {
+      "dataType": {
+        "nestedType": {
+          "type": "RELATIONSHIP"
+        },
+        "type": "LIST"
+      }
+    },
+    "belongTo": {
+      "dataType": {
+        "nestedType": {
+          "type": "RELATIONSHIP"
+        },
+        "type": "LIST"
+      }
+    }
+  }
+}

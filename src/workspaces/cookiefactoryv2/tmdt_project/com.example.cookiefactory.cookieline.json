@@ -1,0 +1,64 @@
+{
+    "componentTypeId": "com.example.cookiefactory.cookieline",
+    "extendsFrom": [
+        "com.example.synthetic-telemetry",
+        "com.amazon.iottwinmaker.alarm.basic"
+    ],
+    "isSingleton": false,
+    "propertyDefinitions": {
+        "telemetryAssetType": {
+            "defaultValue": {
+                "stringValue": "CookieLine"
+            }
+        },
+        "Speed": {
+            "dataType": {
+                "type": "DOUBLE"
+            },
+            "isExternalId": false,
+            "isFinal": false,
+            "isImported": false,
+            "isInherited": false,
+            "isRequiredInEntity": false,
+            "isStoredExternally": true,
+            "isTimeSeries": true
+        },
+        "Temperature": {
+            "dataType": {
+                "type": "DOUBLE"
+            },
+            "isExternalId": false,
+            "isFinal": false,
+            "isImported": false,
+            "isInherited": false,
+            "isRequiredInEntity": false,
+            "isStoredExternally": true,
+            "isTimeSeries": true
+        },
+        "AlarmMessage": {
+            "dataType": {
+                "type": "STRING"
+            },
+            "isExternalId": false,
+            "isFinal": false,
+            "isImported": false,
+            "isInherited": false,
+            "isRequiredInEntity": false,
+            "isStoredExternally": true,
+            "isTimeSeries": true
+        },
+        "Resources": {
+            "dataType": {
+                "type": "MAP",
+                "nestedType": {"type": "DOUBLE"}
+            },
+            "isExternalId": false,
+            "isFinal": false,
+            "isImported": false,
+            "isInherited": false,
+            "isRequiredInEntity": false,
+            "isStoredExternally": true,
+            "isTimeSeries": true
+        }
+    }
+}
