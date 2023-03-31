@@ -22,6 +22,7 @@ class VideoUtils:
         print(f"   uploading {os.path.split(file_name)[1]} to {stream_name} @ {start_tmstp} ({datetime.datetime.fromtimestamp(float(start_tmstp), datetime.timezone.utc).strftime('%Y-%m-%d %H:%M:%S %Z')})")
         try:
             response = self.kinesisvideo.create_stream(StreamName=stream_name, DataRetentionInHours=retention_in_hours)
+            print(f"   created stream for {stream_name}")
         except Exception as e:
             if f"The stream {stream_name} already exists" in str(e):
                 print(f"   using prexisting stream for {stream_name}")

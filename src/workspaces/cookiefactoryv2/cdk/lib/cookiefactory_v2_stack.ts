@@ -5,6 +5,7 @@ import * as cdk from 'aws-cdk-lib';
 import {CustomResource} from 'aws-cdk-lib';
 import * as lambdapython from "@aws-cdk/aws-lambda-python-alpha";
 import * as iam from "aws-cdk-lib/aws-iam";
+import {Effect, PolicyStatement} from "aws-cdk-lib/aws-iam";
 import * as lambda from "aws-cdk-lib/aws-lambda";
 import * as logs from 'aws-cdk-lib/aws-logs';
 import * as path from 'path';
@@ -24,6 +25,9 @@ export interface TmdtAppProps {
     workspaceBucket: string;
     tmdtRoot: string;
     replacements?: { [key: string]: string };
+    account: string;
+    region: string;
+    additionalDataPolicies?: PolicyStatement[];
 }
 
 // verbose logger for debugging
@@ -192,6 +196,7 @@ export class TmdtApplication extends Construct {
         }
 
         var assetMap : any = {};
+        var assetsBucket : string | undefined;
 
         // create scenes
         // note: CustomResource lifecycle lambda currently handles ModelRef workspace bucket replacement
@@ -208,61 +213,9 @@ export class TmdtApplication extends Construct {
             var sceneAsset = new assets.Asset(this, `${sceneName}-asset`, {
                 path: sceneFilePath,
             });
+            assetsBucket = sceneAsset.s3BucketName;
             assetMap[scene] = sceneAsset.s3ObjectUrl;
         }
-
-        const iottwinmakerDataCustomResourceLifecycleExecutionRole = new iam.CfnRole(this, "iottwinmakerCustomResourceLifecycleFunctionRole", {
-            assumeRolePolicyDocument: {
-                "Version": "2012-10-17",
-                "Statement": [{
-                    "Sid": "",
-                    "Effect": "Allow",
-                    "Principal": {
-                        "Service": "lambda.amazonaws.com"
-                    },
-                    "Action": "sts:AssumeRole"
-                }]
-            },
-            policies: [
-                {
-                    policyName: "IoTTwinMakerData-CustomResource-LifecycleRolePolicy",
-                    policyDocument: {
-                        "Version": "2012-10-17",
-                        "Statement": [
-                            {
-                                "Effect": "Allow",
-                                "Resource": ["*"], // FIXME scope-down permissions
-                                "Action": [
-                                    "logs:*", // to allow lambda function to write to cloudwatch logs
-                                    "iottwinmaker:*",
-                                    'timestream:*',
-                                    "s3:*",
-                                    'kinesisvideo:*',
-                                ]
-                            }
-                        ]
-                    }
-                }
-            ]
-        });
-        const iottwinmakerDataCustomResourceLifecycleExecutionRoleRef = iam.Role.fromRoleArn(this,
-          'iottwinmakerDataCustomResourceLifecycleExecutionRole',
-          iottwinmakerDataCustomResourceLifecycleExecutionRole.attrArn);
-        const iottwinmakerDataCustomResourceHandler = new lambdapython.PythonFunction(this, 'iottwinmakerDataCustomResourceHandler', {
-            entry: path.join(__dirname, '..', 'iottwinmaker_data_custom_resource_handler'),
-            layers: [
-                new lambdapython.PythonLayerVersion(this, 'opencv_lambda_layer', {
-                    entry: path.join(sample_libs_root, 'opencv_utils'),
-                }),
-            ],
-            handler: "handler",
-            index: 'data_resource_handler.py',
-            memorySize: 256,
-            role: iottwinmakerDataCustomResourceLifecycleExecutionRoleRef,
-            runtime: lambda.Runtime.PYTHON_3_7,
-            timeout: cdk.Duration.minutes(15),
-            logRetention: logs.RetentionDays.ONE_DAY,
-        });
 
         for (var model of tmdtConfig['models']) {
             verbose.log(`model: ${model}`);
@@ -273,6 +226,7 @@ export class TmdtApplication extends Construct {
             var modelAsset = new assets.Asset(this, `${modelName}-asset`, {
                 path: modelFilePath,
             });
+            assetsBucket = modelAsset.s3BucketName;
             assetMap[model] = modelAsset.s3ObjectUrl;
         }
 
@@ -285,9 +239,75 @@ export class TmdtApplication extends Construct {
             var dataAsset = new assets.Asset(this, `${dataName}-asset`, {
                 path: dataFilePath,
             });
+            assetsBucket = dataAsset.s3BucketName;
             assetMap[data['source']] = dataAsset.s3ObjectUrl;
         }
         verbose.log(`assetMap: ${assetMap}`);
+
+        const iottwinmakerDataCustomResourceLifecycleExecutionRole = new iam.Role(this, 'iottwinmakerCustomResourceLifecycleFunctionRole', {
+            assumedBy: new iam.ServicePrincipal('lambda.amazonaws.com'),
+        });
+        iottwinmakerDataCustomResourceLifecycleExecutionRole.addManagedPolicy(iam.ManagedPolicy.fromManagedPolicyArn(this, "lambdaExecRole", "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"))
+
+        // permissions to determine workspace bucket from workspace
+        iottwinmakerDataCustomResourceLifecycleExecutionRole.addToPolicy(new PolicyStatement({
+            effect: Effect.ALLOW,
+            resources: [
+                `arn:aws:iottwinmaker:${props.region}:${props.account}:workspace/${props.workspace_id}`
+            ],
+            actions: [
+                "iottwinmaker:GetWorkspace"
+            ]
+        }));
+
+        // permissions to copy project assets (GLB files, scene file, etc.) to IoT TwinMaker workspace bucket
+        iottwinmakerDataCustomResourceLifecycleExecutionRole.addToPolicy(new PolicyStatement({
+            effect: Effect.ALLOW,
+            resources: [
+                `arn:aws:s3:::${props.workspaceBucket}/*`
+            ],
+            actions: [
+                "s3:PutObject"
+            ]
+        }));
+
+        // permissions to copy project assets (GLB files, scene file, etc.) from CFN assets bucket
+        if (assetsBucket) {
+            iottwinmakerDataCustomResourceLifecycleExecutionRole.addToPolicy(new PolicyStatement({
+                effect: Effect.ALLOW,
+                resources: [
+                    `arn:aws:s3:::${assetsBucket}`,
+                    `arn:aws:s3:::${assetsBucket}/*`,
+                ],
+                actions: [
+                    "s3:GetObject",
+                    "s3:ListBucket",
+                ]
+            }));
+        }
+
+        // add custom permissions for managing sample data assets (e.g. writing to Timestream, KVS, etc.
+        if (props.additionalDataPolicies) {
+            for (var policy of props.additionalDataPolicies) {
+                iottwinmakerDataCustomResourceLifecycleExecutionRole.addToPolicy(policy);
+            }
+        }
+
+        const iottwinmakerDataCustomResourceHandler = new lambdapython.PythonFunction(this, 'iottwinmakerDataCustomResourceHandler', {
+            entry: path.join(__dirname, '..', 'iottwinmaker_data_custom_resource_handler'),
+            layers: [
+                new lambdapython.PythonLayerVersion(this, 'opencv_lambda_layer', {
+                    entry: path.join(sample_libs_root, 'opencv_utils'),
+                }),
+            ],
+            handler: "handler",
+            index: 'data_resource_handler.py',
+            memorySize: 256,
+            role: iottwinmakerDataCustomResourceLifecycleExecutionRole,
+            runtime: lambda.Runtime.PYTHON_3_7,
+            timeout: cdk.Duration.minutes(15),
+            logRetention: logs.RetentionDays.ONE_DAY,
+        });
 
         // custom resource to move assets into IoT TwinMaker application
         const iottwinmakerWorkspaceData = new CustomResource(this, "iottwinmakerWorkspaceData", {
@@ -392,7 +412,37 @@ export class CookieFactoryV2Stack extends cdk.Stack {
                 "__FILL_IN_TS_DB__": `${timestreamDB.databaseName}`,
                 "__TO_FILL_IN_TIMESTREAM_LAMBDA_ARN__": `${timestreamReaderUDQ.functionArn}`,
                 "__TO_FILL_IN_SYNTHETIC_DATA_ARN__": `${syntheticDataUDQ.functionArn}`
-            }
+            },
+            account: this.account,
+            region: this.region,
+
+            // supply additional policies to the application lifecycle function to manage access for sample data assets
+            additionalDataPolicies: [
+                // permissions to write sample timestream data
+                new PolicyStatement({
+                    effect: Effect.ALLOW,
+                    resources: [`arn:aws:timestream:${this.region}:${this.account}:database/${timestreamDB.databaseName}/table/${timestreamTable.tableName}`],
+                    actions: ["timestream:WriteRecords"]
+                }),
+                new PolicyStatement({
+                    effect: Effect.ALLOW,
+                    resources: ["*"], // describe endpoints isn't resource-specific
+                    actions: ["timestream:DescribeEndpoints",]
+                }),
+                // permissions to allow setting up sample video data in KVS
+                new PolicyStatement({
+                    effect: Effect.ALLOW,
+                    resources: [
+                        `arn:aws:kinesisvideo:${this.region}:${this.account}:stream/cookiefactory_mixerroom_camera_01/*`,
+                        `arn:aws:kinesisvideo:${this.region}:${this.account}:stream/cookiefactory_mixerroom_camera_02/*`,
+                    ],
+                    actions: [
+                        "kinesisvideo:PutMedia",
+                        "kinesisvideo:GetDataEndpoint",
+                        "kinesisvideo:CreateStream",
+                    ]
+                })
+            ]
         });
         tmdtApp.node.addDependency(timestreamTable);
     }
