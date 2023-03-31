@@ -348,7 +348,51 @@
         "parentEntityId": "COOKIE_LINE_5ce9f1d5-61b0-433f-a850-53fa7ca27aa1"
     },
     {
-        "components": {},
+        "components": {
+            "EquipmentComponent": {
+                "componentTypeId": "com.example.cookiefactory.equipment",
+                "properties": {
+                    "feed": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "PALLET_c790c4f2-85f0-4cf4-9c08-846ec49e3f4a"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "belongTo": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "BoxLabeling_30376e8b-f316-455a-945a-4928bc1b5bd1"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "description": "",
         "entityId": "LABELING_BELT_917ad457-dcb5-4781-a735-df1c7a48ab94",
         "entityName": "LABELING_BELT",
@@ -465,7 +509,7 @@
                             "listValue": [
                                 {
                                     "relationshipValue": {
-                                        "TargetEntityId": "VERTICAL_CONVEYOR_d5423f7f-379c-4a97-aae0-3a5c0bcc9116"
+                                        "TargetEntityId": "CONVEYOR_RIGHT_TURN_c4f2df3d-26a2-45c5-a6c9-02ca00eb4af6"
                                     }
                                 }
                             ]
@@ -506,7 +550,51 @@
         "parentEntityId": "CONVEYOR_LEFT_TURN_d2e72da9-3333-4a24-9e23-0dd64a829c94"
     },
     {
-        "components": {},
+        "components": {
+            "EquipmentComponent": {
+                "componentTypeId": "com.example.cookiefactory.equipment",
+                "properties": {
+                    "feed": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "PLASTIC_LINER_73a5c11d-d738-46ef-ba0c-969d0abd1334"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "belongTo": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "BoxErecting_637812e6-7a00-469e-9241-52a56b16331c"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "description": "",
         "entityId": "BOX_ERECTOR_170c5e21-441d-4181-ab3a-f7d01eddf1b8",
         "entityName": "BOX_ERECTOR",
@@ -1083,6 +1171,49 @@
                         }
                     }
                 }
+            },
+            "EquipmentComponent": {
+                "componentTypeId": "com.example.cookiefactory.equipment",
+                "properties": {
+                    "feed": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "VERTICAL_CONVEYOR_a10ee21c-c859-4d73-b0bb-396daaf02335"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "belongTo": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "Freezing_407758c0-f5e2-43ed-9315-ac11689d1d92"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
             }
         }
     },
@@ -1187,7 +1318,51 @@
         "parentEntityId": "VERTICAL_CONVEYOR_d5423f7f-379c-4a97-aae0-3a5c0bcc9116"
     },
     {
-        "components": {},
+        "components": {
+            "EquipmentComponent": {
+                "componentTypeId": "com.example.cookiefactory.equipment",
+                "properties": {
+                    "feed": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "LABELING_BELT_917ad457-dcb5-4781-a735-df1c7a48ab94"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "belongTo": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "BoxSealing_9d4c0ac3-d5e4-4847-9670-3640afe8928f"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "description": "",
         "entityId": "BOX_SEALER_c1638b9e-27e1-4e76-9096-5ce2aa1de6f4",
         "entityName": "BOX_SEALER",
@@ -1719,7 +1894,51 @@
         "parentEntityId": "Spaces_aae147fa-014f-41b0-adbe-1dd6802bfe48"
     },
     {
-        "components": {},
+        "components": {
+            "EquipmentComponent": {
+                "componentTypeId": "com.example.cookiefactory.equipment",
+                "properties": {
+                    "feed": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "CONVEYOR_STRIGHT_301d3d79-455f-4be2-8b87-843f6b7827d8"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "belongTo": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "Packing_5fdcc8cb-42da-4308-96b2-2e9443d1cb35"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "description": "",
         "entityId": "VERTICAL_CONVEYOR_c94f46c2-f47c-437a-998c-d6e91b736e24",
         "entityName": "VERTICAL_CONVEYOR",
@@ -2008,7 +2227,51 @@
         "parentEntityId": "CONVEYOR_RIGHT_TURN_c4f2df3d-26a2-45c5-a6c9-02ca00eb4af6"
     },
     {
-        "components": {},
+        "components": {
+            "EquipmentComponent": {
+                "componentTypeId": "com.example.cookiefactory.equipment",
+                "properties": {
+                    "feed": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "CONVEYOR_STRIGHT_301d3d79-455f-4be2-8b87-843f6b7827d8"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "belongTo": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "Packing_5fdcc8cb-42da-4308-96b2-2e9443d1cb35"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "description": "",
         "entityId": "CONVEYOR_RIGHT_TURN_e43df61e-f675-461f-97d1-fa16b9855434",
         "entityName": "CONVEYOR_RIGHT_TURN",
@@ -2097,7 +2360,51 @@
         "parentEntityId": "Warehouse_058779af-8292-4636-84ee-c065e6da462d"
     },
     {
-        "components": {},
+        "components": {
+            "EquipmentComponent": {
+                "componentTypeId": "com.example.cookiefactory.equipment",
+                "properties": {
+                    "feed": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "CONVEYOR_RIGHT_TURN_e43df61e-f675-461f-97d1-fa16b9855434"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "belongTo": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "PlasticLining_29b3a6d9-555e-4f31-9cff-4729524814ad"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "description": "",
         "entityId": "PLASTIC_LINER_73a5c11d-d738-46ef-ba0c-969d0abd1334",
         "entityName": "PLASTIC_LINER",
@@ -2143,6 +2450,49 @@
                         }
                     }
                 }
+            },
+            "EquipmentComponent": {
+                "componentTypeId": "com.example.cookiefactory.equipment",
+                "properties": {
+                    "feed": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "BOX_SEALER_91bceabc-ef3f-4783-a080-10fa25557ff8"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "belongTo": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "BoxSealing_4a8a5e2f-b80a-4c46-a138-54659f643964"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
             }
         }
     },
@@ -2183,6 +2533,49 @@
                         },
                         "value": {
                             "stringValue": "CookieLine"
+                        }
+                    }
+                }
+            },
+            "EquipmentComponent": {
+                "componentTypeId": "com.example.cookiefactory.equipment",
+                "properties": {
+                    "feed": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "FREEZER_TUNNEL_c726a21e-8fd4-4210-b71e-0ef9acc59d97"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "belongTo": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "Forming_3a983424-4449-4895-b469-1e458a7c1dd6"
+                                    }
+                                }
+                            ]
                         }
                     }
                 }
@@ -2979,11 +3372,98 @@
                         }
                     }
                 }
+            },
+            "EquipmentComponent": {
+                "componentTypeId": "com.example.cookiefactory.equipment",
+                "properties": {
+                    "feed": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "LABELING_BELT_a507db85-2d94-48d7-b7e0-a205c1b5b509"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "belongTo": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "BoxSealing_4a8a5e2f-b80a-4c46-a138-54659f643964"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
             }
         }
     },
     {
-        "components": {},
+        "components": {
+            "EquipmentComponent": {
+                "componentTypeId": "com.example.cookiefactory.equipment",
+                "properties": {
+                    "feed": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "CONVEYOR_LEFT_TURN_d2e72da9-3333-4a24-9e23-0dd64a829c94"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "belongTo": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "Packing_67eb94ad-d251-4ef9-b62f-85ba58c162ba"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "description": "",
         "entityId": "CONVEYOR_STRIGHT_a1f90af8-ea88-4397-b263-57ea6e41e554",
         "entityName": "CONVEYOR_STRIGHT",
@@ -3287,7 +3767,32 @@
         "parentEntityId": "Office_Space_3c1e1bde-b842-496d-9832-a1c7db5d85ab"
     },
     {
-        "components": {},
+        "components": {
+            "EquipmentComponent": {
+                "componentTypeId": "com.example.cookiefactory.equipment",
+                "properties": {
+                    "belongTo": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "Shipping_8d7c2d91-ec09-4d95-bc77-1300bb255fd2"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "description": "",
         "entityId": "PALLET_c790c4f2-85f0-4cf4-9c08-846ec49e3f4a",
         "entityName": "PALLET",
@@ -3387,7 +3892,51 @@
         "parentEntityId": "Mixers_b1e081ee-e6a3-4636-82cb-6b6bce0786a7"
     },
     {
-        "components": {},
+        "components": {
+            "EquipmentComponent": {
+                "componentTypeId": "com.example.cookiefactory.equipment",
+                "properties": {
+                    "feed": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "CONVEYOR_STRIGHT_9c62c546-f8ef-489d-9938-d46a12c97f32"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "belongTo": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "Packing_defd8ea2-5535-432e-8f4b-bb80f5b3ff25"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "description": "",
         "entityId": "CONVEYOR_RIGHT_TURN_c4f2df3d-26a2-45c5-a6c9-02ca00eb4af6",
         "entityName": "CONVEYOR_RIGHT_TURN",
@@ -3776,7 +4325,51 @@
         "parentEntityId": "VERTICAL_CONVEYOR_a10ee21c-c859-4d73-b0bb-396daaf02335"
     },
     {
-        "components": {},
+        "components": {
+            "EquipmentComponent": {
+                "componentTypeId": "com.example.cookiefactory.equipment",
+                "properties": {
+                    "feed": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "FREEZER_TUNNEL_2f21726d-64f9-4e92-86e2-b8d1bb3e54d7"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "belongTo": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "Forming_8e36be90-2343-4a80-a27c-00f0c97a3f14"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "description": "",
         "entityId": "COOKIE_FORMER_93bae16c-9caf-4281-8509-e044dd17fa34",
         "entityName": "COOKIE_FORMER",
@@ -3876,7 +4469,32 @@
         "parentEntityId": "Equipment_5c9e83d2-1880-4f83-affd-9a27f80d39f7"
     },
     {
-        "components": {},
+        "components": {
+            "EquipmentComponent": {
+                "componentTypeId": "com.example.cookiefactory.equipment",
+                "properties": {
+                    "belongTo": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "Shipping_4f89df26-fe50-4e5d-a79f-ef3f17afd9f9"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "description": "",
         "entityId": "PALLET_bb958ee7-e8b9-412c-91a4-adda3f924ba6",
         "entityName": "PALLET",
@@ -3926,6 +4544,49 @@
                         },
                         "value": {
                             "stringValue": "CookieLine"
+                        }
+                    }
+                }
+            },
+            "EquipmentComponent": {
+                "componentTypeId": "com.example.cookiefactory.equipment",
+                "properties": {
+                    "feed": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "PLASTIC_LINER_23df2a72-30d6-4f8f-bc15-95a8e945b4fa"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "belongTo": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "BoxErecting_c0ff59f5-caf4-47bc-8d02-e723b0b319fa"
+                                    }
+                                }
+                            ]
                         }
                     }
                 }
@@ -4309,6 +4970,49 @@
                         },
                         "value": {
                             "stringValue": "CookieLine"
+                        }
+                    }
+                }
+            },
+            "EquipmentComponent": {
+                "componentTypeId": "com.example.cookiefactory.equipment",
+                "properties": {
+                    "feed": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "PALLET_bb958ee7-e8b9-412c-91a4-adda3f924ba6"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "belongTo": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "BoxLabeling_42c97deb-17bb-453e-baa7-f277ca6967a6"
+                                    }
+                                }
+                            ]
                         }
                     }
                 }
@@ -4988,7 +5692,51 @@
         "parentEntityId": "Office_Space_3c1e1bde-b842-496d-9832-a1c7db5d85ab"
     },
     {
-        "components": {},
+        "components": {
+            "EquipmentComponent": {
+                "componentTypeId": "com.example.cookiefactory.equipment",
+                "properties": {
+                    "feed": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "VERTICAL_CONVEYOR_c94f46c2-f47c-437a-998c-d6e91b736e24"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "belongTo": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "Freezing_1c3e8853-1c30-42d3-a060-026bac17b677"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "description": "",
         "entityId": "FREEZER_TUNNEL_2f21726d-64f9-4e92-86e2-b8d1bb3e54d7",
         "entityName": "FREEZER_TUNNEL",
@@ -5045,6 +5793,49 @@
                         },
                         "value": {
                             "stringValue": "CookieLine"
+                        }
+                    }
+                }
+            },
+            "EquipmentComponent": {
+                "componentTypeId": "com.example.cookiefactory.equipment",
+                "properties": {
+                    "feed": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "CONVEYOR_RIGHT_TURN_54972194-9394-4158-a122-138a7e4a6654"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "belongTo": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "PlasticLining_f2653b52-367a-42c1-8329-656fef18f6e8"
+                                    }
+                                }
+                            ]
                         }
                     }
                 }
@@ -5173,6 +5964,49 @@
                         }
                     }
                 }
+            },
+            "EquipmentComponent": {
+                "componentTypeId": "com.example.cookiefactory.equipment",
+                "properties": {
+                    "feed": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "CONVEYOR_STRIGHT_a1f90af8-ea88-4397-b263-57ea6e41e554"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "belongTo": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "Packing_67eb94ad-d251-4ef9-b62f-85ba58c162ba"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
             }
         }
     },
@@ -5213,6 +6047,49 @@
                         },
                         "value": {
                             "stringValue": "CookieLine"
+                        }
+                    }
+                }
+            },
+            "EquipmentComponent": {
+                "componentTypeId": "com.example.cookiefactory.equipment",
+                "properties": {
+                    "feed": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "CONVEYOR_STRIGHT_a1f90af8-ea88-4397-b263-57ea6e41e554"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "belongTo": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "Packing_67eb94ad-d251-4ef9-b62f-85ba58c162ba"
+                                    }
+                                }
+                            ]
                         }
                     }
                 }
@@ -5271,14 +6148,102 @@
         "parentEntityId": "COOKIE_LINE_5ce9f1d5-61b0-433f-a850-53fa7ca27aa1"
     },
     {
-        "components": {},
+        "components": {
+            "EquipmentComponent": {
+                "componentTypeId": "com.example.cookiefactory.equipment",
+                "properties": {
+                    "feed": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "BOX_SEALER_c1638b9e-27e1-4e76-9096-5ce2aa1de6f4"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "belongTo": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "BoxSealing_9d4c0ac3-d5e4-4847-9670-3640afe8928f"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "description": "",
         "entityId": "CONVEYOR_LEFT_TURN_f518cc43-90d6-4c77-bf06-a096080234aa",
         "entityName": "CONVEYOR_LEFT_TURN",
         "parentEntityId": "COOKIE_LINE_2_31be44be-6df3-4312-bd8f-84a9282f5029"
     },
     {
-        "components": {},
+        "components": {
+            "EquipmentComponent": {
+                "componentTypeId": "com.example.cookiefactory.equipment",
+                "properties": {
+                    "feed": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "CONVEYOR_LEFT_TURN_f518cc43-90d6-4c77-bf06-a096080234aa"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "belongTo": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "Packing_5fdcc8cb-42da-4308-96b2-2e9443d1cb35"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "description": "",
         "entityId": "CONVEYOR_STRIGHT_301d3d79-455f-4be2-8b87-843f6b7827d8",
         "entityName": "CONVEYOR_STRIGHT",
@@ -5619,5 +6584,491 @@
         "entityId": "Shipping_e118463f-6bf0-4079-8a26-5b610d9e56be",
         "entityName": "Shipping",
         "parentEntityId": "PROCESS_STEP_a0c671a1-f276-4c99-86f2-e840890ad962"
+    },
+    {
+        "components": {},
+        "description": "",
+        "entityId": "PROCESS_STEP_cbcc3ce7-e925-4c9b-b88f-8e8dbd16d9de",
+        "entityName": "PROCESS_STEP",
+        "parentEntityId": "COOKIE_LINE_1_70cde09c-2c2b-4aa2-9fc3-a91ff659e8f3"
+    },
+    {
+        "components": {
+            "ProcessStepComponent": {
+                "componentTypeId": "com.example.cookiefactory.processstep",
+                "properties": {
+                    "flowTo": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "PlasticLining_f2653b52-367a-42c1-8329-656fef18f6e8"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "description": "",
+        "entityId": "BoxErecting_c0ff59f5-caf4-47bc-8d02-e723b0b319fa",
+        "entityName": "BoxErecting",
+        "parentEntityId": "PROCESS_STEP_cbcc3ce7-e925-4c9b-b88f-8e8dbd16d9de"
+    },
+    {
+        "components": {
+            "ProcessStepComponent": {
+                "componentTypeId": "com.example.cookiefactory.processstep",
+                "properties": {
+                    "flowTo": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "Packing_67eb94ad-d251-4ef9-b62f-85ba58c162ba"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "description": "",
+        "entityId": "PlasticLining_f2653b52-367a-42c1-8329-656fef18f6e8",
+        "entityName": "PlasticLining",
+        "parentEntityId": "PROCESS_STEP_cbcc3ce7-e925-4c9b-b88f-8e8dbd16d9de"
+    },
+    {
+        "components": {
+            "ProcessStepComponent": {
+                "componentTypeId": "com.example.cookiefactory.processstep",
+                "properties": {
+                    "flowTo": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "Freezing_407758c0-f5e2-43ed-9315-ac11689d1d92"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "description": "",
+        "entityId": "Forming_3a983424-4449-4895-b469-1e458a7c1dd6",
+        "entityName": "Forming",
+        "parentEntityId": "PROCESS_STEP_cbcc3ce7-e925-4c9b-b88f-8e8dbd16d9de"
+    },
+    {
+        "components": {
+            "ProcessStepComponent": {
+                "componentTypeId": "com.example.cookiefactory.processstep",
+                "properties": {
+                    "flowTo": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "Packing_67eb94ad-d251-4ef9-b62f-85ba58c162ba"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "description": "",
+        "entityId": "Freezing_407758c0-f5e2-43ed-9315-ac11689d1d92",
+        "entityName": "Freezing",
+        "parentEntityId": "PROCESS_STEP_cbcc3ce7-e925-4c9b-b88f-8e8dbd16d9de"
+    },
+    {
+        "components": {
+            "ProcessStepComponent": {
+                "componentTypeId": "com.example.cookiefactory.processstep",
+                "properties": {
+                    "flowTo": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "BoxSealing_4a8a5e2f-b80a-4c46-a138-54659f643964"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "description": "",
+        "entityId": "Packing_67eb94ad-d251-4ef9-b62f-85ba58c162ba",
+        "entityName": "Packing",
+        "parentEntityId": "PROCESS_STEP_cbcc3ce7-e925-4c9b-b88f-8e8dbd16d9de"
+    },
+    {
+        "components": {
+            "ProcessStepComponent": {
+                "componentTypeId": "com.example.cookiefactory.processstep",
+                "properties": {
+                    "flowTo": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "BoxLabeling_42c97deb-17bb-453e-baa7-f277ca6967a6"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "description": "",
+        "entityId": "BoxSealing_4a8a5e2f-b80a-4c46-a138-54659f643964",
+        "entityName": "BoxSealing",
+        "parentEntityId": "PROCESS_STEP_cbcc3ce7-e925-4c9b-b88f-8e8dbd16d9de"
+    },
+    {
+        "components": {
+            "ProcessStepComponent": {
+                "componentTypeId": "com.example.cookiefactory.processstep",
+                "properties": {
+                    "flowTo": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "Shipping_4f89df26-fe50-4e5d-a79f-ef3f17afd9f9"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "description": "",
+        "entityId": "BoxLabeling_42c97deb-17bb-453e-baa7-f277ca6967a6",
+        "entityName": "BoxLabeling",
+        "parentEntityId": "PROCESS_STEP_cbcc3ce7-e925-4c9b-b88f-8e8dbd16d9de"
+    },
+    {
+        "components": {
+            "ProcessStepComponent": {
+                "componentTypeId": "com.example.cookiefactory.processstep",
+                "properties": {}
+            }
+        },
+        "description": "",
+        "entityId": "Shipping_4f89df26-fe50-4e5d-a79f-ef3f17afd9f9",
+        "entityName": "Shipping",
+        "parentEntityId": "PROCESS_STEP_cbcc3ce7-e925-4c9b-b88f-8e8dbd16d9de"
+    },
+    {
+        "components": {},
+        "description": "",
+        "entityId": "PROCESS_STEP_e44ad319-ea48-407b-8ae5-c75fb631242f",
+        "entityName": "PROCESS_STEP",
+        "parentEntityId": "COOKIE_LINE_2_31be44be-6df3-4312-bd8f-84a9282f5029"
+    },
+    {
+        "components": {
+            "ProcessStepComponent": {
+                "componentTypeId": "com.example.cookiefactory.processstep",
+                "properties": {
+                    "flowTo": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "PlasticLining_29b3a6d9-555e-4f31-9cff-4729524814ad"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "description": "",
+        "entityId": "BoxErecting_637812e6-7a00-469e-9241-52a56b16331c",
+        "entityName": "BoxErecting",
+        "parentEntityId": "PROCESS_STEP_e44ad319-ea48-407b-8ae5-c75fb631242f"
+    },
+    {
+        "components": {
+            "ProcessStepComponent": {
+                "componentTypeId": "com.example.cookiefactory.processstep",
+                "properties": {
+                    "flowTo": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "Packing_5fdcc8cb-42da-4308-96b2-2e9443d1cb35"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "description": "",
+        "entityId": "PlasticLining_29b3a6d9-555e-4f31-9cff-4729524814ad",
+        "entityName": "PlasticLining",
+        "parentEntityId": "PROCESS_STEP_e44ad319-ea48-407b-8ae5-c75fb631242f"
+    },
+    {
+        "components": {
+            "ProcessStepComponent": {
+                "componentTypeId": "com.example.cookiefactory.processstep",
+                "properties": {
+                    "flowTo": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "Freezing_1c3e8853-1c30-42d3-a060-026bac17b677"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "description": "",
+        "entityId": "Forming_8e36be90-2343-4a80-a27c-00f0c97a3f14",
+        "entityName": "Forming",
+        "parentEntityId": "PROCESS_STEP_e44ad319-ea48-407b-8ae5-c75fb631242f"
+    },
+    {
+        "components": {
+            "ProcessStepComponent": {
+                "componentTypeId": "com.example.cookiefactory.processstep",
+                "properties": {
+                    "flowTo": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "Packing_5fdcc8cb-42da-4308-96b2-2e9443d1cb35"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "description": "",
+        "entityId": "Freezing_1c3e8853-1c30-42d3-a060-026bac17b677",
+        "entityName": "Freezing",
+        "parentEntityId": "PROCESS_STEP_e44ad319-ea48-407b-8ae5-c75fb631242f"
+    },
+    {
+        "components": {
+            "ProcessStepComponent": {
+                "componentTypeId": "com.example.cookiefactory.processstep",
+                "properties": {
+                    "flowTo": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "BoxSealing_9d4c0ac3-d5e4-4847-9670-3640afe8928f"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "description": "",
+        "entityId": "Packing_5fdcc8cb-42da-4308-96b2-2e9443d1cb35",
+        "entityName": "Packing",
+        "parentEntityId": "PROCESS_STEP_e44ad319-ea48-407b-8ae5-c75fb631242f"
+    },
+    {
+        "components": {
+            "ProcessStepComponent": {
+                "componentTypeId": "com.example.cookiefactory.processstep",
+                "properties": {
+                    "flowTo": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "BoxLabeling_30376e8b-f316-455a-945a-4928bc1b5bd1"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "description": "",
+        "entityId": "BoxSealing_9d4c0ac3-d5e4-4847-9670-3640afe8928f",
+        "entityName": "BoxSealing",
+        "parentEntityId": "PROCESS_STEP_e44ad319-ea48-407b-8ae5-c75fb631242f"
+    },
+    {
+        "components": {
+            "ProcessStepComponent": {
+                "componentTypeId": "com.example.cookiefactory.processstep",
+                "properties": {
+                    "flowTo": {
+                        "definition": {
+                            "dataType": {
+                                "nestedType": {
+                                    "type": "RELATIONSHIP"
+                                },
+                                "type": "LIST"
+                            }
+                        },
+                        "value": {
+                            "listValue": [
+                                {
+                                    "relationshipValue": {
+                                        "TargetEntityId": "Shipping_8d7c2d91-ec09-4d95-bc77-1300bb255fd2"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "description": "",
+        "entityId": "BoxLabeling_30376e8b-f316-455a-945a-4928bc1b5bd1",
+        "entityName": "BoxLabeling",
+        "parentEntityId": "PROCESS_STEP_e44ad319-ea48-407b-8ae5-c75fb631242f"
+    },
+    {
+        "components": {
+            "ProcessStepComponent": {
+                "componentTypeId": "com.example.cookiefactory.processstep",
+                "properties": {}
+            }
+        },
+        "description": "",
+        "entityId": "Shipping_8d7c2d91-ec09-4d95-bc77-1300bb255fd2",
+        "entityName": "Shipping",
+        "parentEntityId": "PROCESS_STEP_e44ad319-ea48-407b-8ae5-c75fb631242f"
     }
 ]
