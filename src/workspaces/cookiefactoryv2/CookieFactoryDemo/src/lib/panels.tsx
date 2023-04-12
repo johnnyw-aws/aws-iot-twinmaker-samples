@@ -1,0 +1,67 @@
+import { DashboardPanel, ProcessPanel, ScenePanel } from '@/lib/components/panels';
+import {
+  BellOutlinedIcon,
+  CameraIcon,
+  DashboardIcon,
+  ListIcon,
+  MessagesIcon,
+  NetworkIcon,
+  SceneIcon
+} from '@/lib/components/svgs/icons';
+import type { Panel } from '@/lib/types';
+
+export const PANELS: Panel[] = [
+  {
+    content: <ScenePanel />,
+    icon: <SceneIcon />,
+    id: 'scene',
+    label: 'Scene',
+    priority: 1,
+    slot: 1
+  },
+
+  {
+    content: <ProcessPanel />,
+    icon: <NetworkIcon />,
+    id: 'process',
+    label: 'Process',
+    priority: 2,
+    slot: 1
+  },
+  {
+    content: <DashboardPanel />,
+    icon: <DashboardIcon />,
+    id: 'dashboard',
+    label: 'Dashboard',
+    priority: 3,
+    slot: 1
+  }
+  // {
+  //   icon: <CameraIcon />,
+  //   id: 'live',
+  //   label: 'Live',
+  //   priority: 4,
+  //   slot: 1
+  // },
+  // {
+  //   icon: <BellOutlinedIcon />,
+  //   id: 'events',
+  //   label: 'Events',
+  //   priority: 1,
+  //   slot: 2
+  // },
+  // {
+  //   icon: <ListIcon />,
+  //   id: 'tickets',
+  //   label: 'Tickets',
+  //   priority: 2,
+  //   slot: 2
+  // },
+  // {
+  //   icon: <MessagesIcon />,
+  //   id: 'messages',
+  //   label: 'Messages',
+  //   priority: 3,
+  //   slot: 2
+  // }
+];

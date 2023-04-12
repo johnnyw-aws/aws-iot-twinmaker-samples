@@ -1,0 +1,12 @@
+.root {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  font-size: 24rem;
+  font-weight: 400;
+  letter-spacing: -.5rem;
+  line-height: 1;
+  color: var(--color-gray-34);
+}

@@ -1,0 +1,5 @@
+.root {
+  flex: 1 0;
+  position: relative;
+  user-select: none;
+}

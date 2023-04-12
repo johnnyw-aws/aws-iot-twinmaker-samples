@@ -1,0 +1,6 @@
+.root {
+  flex: 1;
+  display: flex;
+  background-color: var(--color-gray-54);
+  user-select: none;
+}
