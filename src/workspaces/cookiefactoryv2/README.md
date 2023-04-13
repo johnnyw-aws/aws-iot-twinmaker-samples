@@ -1,8 +1,8 @@
-# Title
+# AWS IoT TwinMaker Getting Started - Bakersville Cookie Factory Digital Twin Monitoring Application
 
 ## Summary
 
-This project walks you through the process of setting up the Bakersville CookieFactory Digital Twin Monitoring Application powered by AWS IoT TwinMaker. 
+This project walks you through the process of setting up the Bakersville Cookie Factory Digital Twin Monitoring Application powered by AWS IoT TwinMaker. 
 
 ![WebAppDashboard](docs/MonitoringApplication.png)
 
