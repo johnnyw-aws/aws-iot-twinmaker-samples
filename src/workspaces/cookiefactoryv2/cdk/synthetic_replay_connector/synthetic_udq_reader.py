@@ -24,15 +24,16 @@ df = pd.DataFrame(data)
 
 # mapping of entity names to entity_ids for CookieLine1 telemetry data
 simulatorName_to_entityId = {
-    "plasticLiner": "PLASTIC_LINER_23df2a72-30d6-4f8f-bc15-95a8e945b4fa",
-    "boxErector": "BOX_ERECTOR_c750322d-bd83-4a17-8b9c-acfa62ed6d64",
-    "labelingBelt": "LABELING_BELT_a507db85-2d94-48d7-b7e0-a205c1b5b509",
-    "freezingTunnel": "FREEZER_TUNNEL_c726a21e-8fd4-4210-b71e-0ef9acc59d97",
-    "boxSealer": "BOX_SEALER_91bceabc-ef3f-4783-a080-10fa25557ff8",
-    "cookieFormer": "COOKIE_FORMER_e87acad2-1852-4f98-891f-c8f9a3eb7dd4",
-    "conveyorRight": "CONVEYOR_RIGHT_TURN_54972194-9394-4158-a122-138a7e4a6654",
-    "verticalConveyor": "VERTICAL_CONVEYOR_a10ee21c-c859-4d73-b0bb-396daaf02335",
-    "conveyorLeft": "CONVEYOR_LEFT_TURN_d2e72da9-3333-4a24-9e23-0dd64a829c94",
+    "plasticLiner": "PLASTIC_LINER_a77e76bc-53f3-420d-8b2f-76103c810fac",
+    "boxErector": "BOX_ERECTOR_142496af-df2e-490e-aed5-2580eaf75e40",
+    "labelingBelt": "LABELING_BELT_5f98ffd2-ced1-48dd-a111-e3503b4e8532",
+    "freezingTunnel": "FREEZER_TUNNEL_e12e0733-f5df-4604-8f10-417f49e6d298",
+    "boxSealer": "BOX_SEALER_ad434a34-4363-4a36-8153-20bd7189951d",
+    "cookieFormer": "COOKIE_FORMER_19556bfd-469c-40bc-a389-dbeab255c144",
+    "conveyorRight": "CONVEYOR_RIGHT_TURN_c4f2df3d-26a2-45c5-a6c9-02ca00eb4af6",
+    "verticalConveyor": "VERTICAL_CONVEYOR_d5423f7f-379c-4a97-aae0-3a5c0bcc9116",
+    "conveyorLeft": "CONVEYOR_LEFT_TURN_b28f2ca9-b6a7-44cd-a62d-7f76fc17ba45",
+    "conveyorStraight": "CONVEYOR_STRIGHT_9c62c546-f8ef-489d-9938-d46a12c97f32",
 }
 def remap_ids(row):
     return simulatorName_to_entityId[row['Name']]
@@ -87,6 +88,7 @@ class RenderValuesReader(SingleEntityReader, MultiEntityReader):
     def _get_data_rows(self, request):
         start_dt = request.start_datetime
         end_dt = request.end_datetime
+        max_rows = request.max_rows
 
         data_rows = []
 
@@ -106,7 +108,7 @@ class RenderValuesReader(SingleEntityReader, MultiEntityReader):
             sample_time_range_length_in_seconds = (len(data_index) * (60*5))
             start_5s_bin = epoch_start_in_seconds % sample_time_range_length_in_seconds
             start_5s_bin_in_index = int(start_5s_bin / (60*5))
-            number_of_datapoints = int((end_dt.timestamp() - start_dt.timestamp()) / (60*5))
+            number_of_datapoints = min(max_rows, int((end_dt.timestamp() - start_dt.timestamp()) / (60*5)))
 
             # generate data response by repeatedly iterating over the data sample
             curr_dt = datetime.fromtimestamp(int(start_dt.timestamp() / (60*5)) * (60*5))
