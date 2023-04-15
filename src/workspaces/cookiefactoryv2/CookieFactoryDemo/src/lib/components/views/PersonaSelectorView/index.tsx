@@ -12,7 +12,7 @@ import styles from './styles.module.css';
 let disabled = false;
 
 export function PersonaSelectorView({ className }: { className?: ClassName }) {
-  const setUser = useUserState()[1];
+  const [,setUser] = useUserState();
   const [isActive, setIsActive] = useState(false);
 
   async function handlePointerDown({ firstName, icon, lastName, password, title, email }: User) {

@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import type { CSSProperties, MouseEventHandler } from 'react';
 
 import { PanelLayout } from '@/lib/components/layouts';
@@ -19,7 +19,7 @@ const closeAllControl = (
 );
 
 export function PanelView({ className }: { className?: ClassName }) {
-  const setGlobalControl = useGlobalControlState()[1];
+  const [,setGlobalControl] = useGlobalControlState();
   const [panelState] = usePanelState();
 
   useEffect(() => {
@@ -46,51 +46,23 @@ export function PanelView({ className }: { className?: ClassName }) {
 
 function Panels() {
   const [panelState] = usePanelState();
+  const isExpandable = useMemo(() => panelState.length > 1, [panelState]);
 
-  if (panelState.length === 0) return <EmptyState />;
-
-  const panels = getViewData(panelState);
-  let group1 = panels.filter((panel) => panel.slot === 1).sort((a, b) => a.priority - b.priority);
-  let group2 = panels.filter((panel) => panel.slot === 2).sort((a, b) => a.priority - b.priority);
-
-  if (group1.length && group2.length === 0) {
-    group2.push(...group1.splice(1));
-  }
-
-  if (group2.length && group1.length === 0) {
-    group1.push(group2.shift()!);
-  }
-
-  const groupsStyle: CSSProperties = {
-    gridTemplateColumns: group1.length && group2.length ? '.5fr .5fr' : '1fr'
-  };
-
-  // const group1Style: CSSProperties = {
-  //   gridTemplateRows: `repeat(${group1.length}, ${1 / group1.length}fr)`
-  // };
-
-  // const group2Style: CSSProperties = {
-  //   gridTemplateRows: group2.length > 1 ? '.5fr .5fr' : '1fr'
-  // };
-
-  const isExpandable = panels.length > 1;
+  const panelElements = useMemo(() => {
+    return PANELS.sort((a, b) => a.priority - b.priority).map((panel) => (
+      <PanelLayout
+        className={createClassName({ [styles.isHidden]: panelState.find((id) => id == panel.id) === undefined })}
+        key={panel.id}
+        isExpandable={isExpandable}
+        panel={panel}
+      />
+    ));
+  }, [panelState]);
 
   return (
-    <main className={createClassName(styles.panels)} style={groupsStyle}>
-      {group1.length > 0 ? (
-        <section key="group1">
-          {group1.map((panel) => (
-            <PanelLayout key={panel.id} isExpandable={isExpandable} panel={panel} />
-          ))}
-        </section>
-      ) : null}
-      {group2.length > 0 ? (
-        <section key="group2">
-          {group2.map((panel) => (
-            <PanelLayout key={panel.id} isExpandable={isExpandable} panel={panel} />
-          ))}
-        </section>
-      ) : null}
+    <main className={createClassName(styles.panels)}>
+      {panelElements}
+      {panelState.length === 0 && <EmptyState />}
     </main>
   );
 }

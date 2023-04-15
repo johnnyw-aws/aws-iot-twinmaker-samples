@@ -2,6 +2,7 @@
   --logo-color: var(--color-gray-50);
   flex: 1;
   display: grid;
+  /* grid-template-columns: auto auto auto; */
   grid-template-rows: 1fr auto;
   gap: 6px;
   margin: 0 20px 20px;
@@ -11,9 +12,26 @@
   display: flex;
   justify-content: space-evenly;
   gap: 6px;
+  position:relative;
 }
 
-.panels>section {
+
+.panels > * {
+  /* flex: 1; */
+ }
+
+.isHidden {
+  /* display: none; */
+  position: absolute;
+  visibility: hidden;
+  /* flex-shrink: 1;
+  visibility: hidden;
+  width: 0;
+  height: 0; */
+  /* scale: 0; */
+}
+
+/* .panels>section {
   flex: 1 0;
   display: flex;
   flex-direction: column;
@@ -24,8 +42,7 @@
 .panels>section>* {
   border-radius: var(--border-radius);
   overflow: hidden;
-}
-
+} */
 .closeAllIcon {
   display: flex;
   width: 16rem;

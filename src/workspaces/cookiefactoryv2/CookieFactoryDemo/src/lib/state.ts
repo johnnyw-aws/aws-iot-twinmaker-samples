@@ -3,7 +3,16 @@ import { IoTTwinMakerClient, ListEntitiesCommand, type EntitySummary } from '@aw
 
 import type { AwsCredentials } from '@/lib/authentication';
 import { createMutableState, createMutableStateHook, createState, createStateHook } from '@/lib/creators/state';
-import type { GlobalControl, PanelId, SelectedEntity, Site, TwinMakerDataSource, User, ViewId } from '@/lib/types';
+import type {
+  DataStream,
+  GlobalControl,
+  PanelId,
+  SelectedEntity,
+  Site,
+  TwinMakerDataSource,
+  User,
+  ViewId
+} from '@/lib/types';
 import { isNil } from '@/lib/utils/lang';
 
 export type StateName =
@@ -18,7 +27,7 @@ export type StateName =
 
 let authCheckInterval: NodeJS.Timeout;
 
-export const DEFAULT_SELECTED_ENTITY = { entityData: null, type: null } as const;
+export const DEFAULT_SELECTED_ENTITY: SelectedEntity = { entityData: null, type: null } as const;
 
 export const dataSourceState = createMutableState<TwinMakerDataSource | null>(null);
 export const useDataSourceState = createMutableStateHook(dataSourceState);
@@ -46,6 +55,9 @@ export const useTwinMakerClientState = createMutableStateHook(twinMakerClientSta
 
 export const userState = createState<User | null>(null);
 export const useUserState = createStateHook(userState);
+
+export const timeSeriesDataState = createState<DataStream[]>([]);
+export const useTimeSeriesDataState = createStateHook(timeSeriesDataState);
 
 export const viewState = createState<ViewId | null>(null);
 export const useViewState = createStateHook(viewState);
@@ -84,21 +96,21 @@ userState.subscribe((getState) => {
   }
 });
 
-panelState.subscribe((getState) => {
-  const selectedEntity = selectedEntityState.getState();
-  const state = getState();
+// panelState.subscribe((getState) => {
+//   const selectedEntity = selectedEntityState.getState();
+//   const state = getState();
 
-  switch (selectedEntity.type) {
-    case 'process': {
-      if (!state.includes('process')) selectedEntityState.setState(DEFAULT_SELECTED_ENTITY);
-      break;
-    }
-    case 'scene': {
-      if (!state.includes('scene')) selectedEntityState.setState(DEFAULT_SELECTED_ENTITY);
-      break;
-    }
-  }
-});
+//   switch (selectedEntity.type) {
+//     case 'process': {
+//       if (!state.includes('process')) selectedEntityState.setState(DEFAULT_SELECTED_ENTITY);
+//       break;
+//     }
+//     case 'scene': {
+//       if (!state.includes('scene')) selectedEntityState.setState(DEFAULT_SELECTED_ENTITY);
+//       break;
+//     }
+//   }
+// });
 
 siteState.subscribe(async (getState) => {
   const client = twinMakerClientState.getState();
@@ -135,7 +147,7 @@ siteState.subscribe((getState) => {
 
   crumbState.setState(null);
   dataSourceState.setState(null);
-  panelState.setState([]);
+  panelState.setState(['dashboard']);
   sceneLoaderState.setState(null);
   selectedEntityState.setState(DEFAULT_SELECTED_ENTITY);
   viewState.setState('panel');

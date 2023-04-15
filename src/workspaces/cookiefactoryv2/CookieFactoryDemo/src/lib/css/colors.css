@@ -8,7 +8,7 @@
 	/* --color-alarm-p0: #FF5050;
 	--color-alarm-p1: #FF8E3D;
 	--color-alarm-p2: #F7FB40; */
-	--color-health-ok: var(--color-lime-450);
+	--color-health-normal: var(--color-lime-450);
 	--color-health-critical: var(--color-red-450);
 	--color-health-high: var(--color-orange-450);
 	--color-health-medium: #F7FB40;
@@ -17,7 +17,7 @@
 	--color-health-unknown: var(--color-gray-30);
 	--color-alarm-p0: var(--color-red-450);
 	--color-alarm-p1: var(--color-amber-450);
-	--color-alarm-p2: #F7FB40;
+	--color-alarm-p2: #ffa500;
 	--color-alarm-p3: var(--color-sky-450);
 	--color-gray-1: #F8F8F9;
 	--color-gray-2: #F4F4F5;

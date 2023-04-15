@@ -7,7 +7,7 @@ import type { Site } from '@/lib/types';
 import styles from './styles.module.css';
 
 export function SiteSelectorView({ className }: { className?: ClassName }) {
-  const setSiteState = useSiteState()[1];
+  const [,setSiteState] = useSiteState();
 
   const siteElements = SITES.map((site) => {
     return <SiteElement key={site.id} handlePointerDown={() => setSiteState(site)} site={site} />;

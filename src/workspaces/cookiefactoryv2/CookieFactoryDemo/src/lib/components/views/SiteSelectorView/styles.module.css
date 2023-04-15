@@ -40,6 +40,7 @@
   background-color: var(--background-color);
   border: solid 4px var(--border-color);
   border-radius: 16px;
+  max-width: 250rem;
 }
 
 .site:hover {
@@ -67,7 +68,7 @@
   font-size: 26rem;
   font-weight: 400;
   letter-spacing: -.2rem;
-  line-height: 1;
+  line-height: 1.2;
   color: var(--text-color);
 }
 

@@ -12,7 +12,7 @@ import type {
 } from 'cytoscape';
 import type { ValueOf } from 'type-fest';
 
-import type { EntityData, Health } from '@/lib/types';
+import type { AlarmState, EntityData } from '@/lib/types';
 
 export type EdgeStyleProps = {
   color: string;
@@ -20,6 +20,11 @@ export type EdgeStyleProps = {
   dashOffset?: ValueOf<cytoscape.Css.Edge, 'line-dash-offset'>;
   dashPattern?: ValueOf<cytoscape.Css.Edge, 'line-dash-pattern'>;
   endCap?: ValueOf<cytoscape.Css.Edge, 'line-cap'>;
+  labelBackgroundColor?: string;
+  labelTextColor?: string;
+  labelTextSize: number;
+  labelOffset: number;
+  labelPadding?: number;
   lineStyle?: ValueOf<cytoscape.Css.Edge, 'line-style'>;
   midSourceArrow?: EdgeArrowStyleProps;
   midTargetArrow?: EdgeArrowStyleProps;
@@ -39,8 +44,9 @@ export type EdgeArrowStyleProps = {
 };
 
 export type EdgeData = EdgeDataDefinition & {
-  id: string;
   dashPattern?: ValueOf<EdgeStyleProps, 'dashPattern'>;
+  id: string;
+  label: string;
   lineStyle?: ValueOf<EdgeStyleProps, 'lineStyle'>;
 };
 
@@ -56,8 +62,8 @@ export type EdgeEndpoint =
 export type NodeData = NodeDataDefinition & {
   entityData: EntityData;
   id: string;
-  name: string;
-  state: Health;
+  label: string;
+  state: AlarmState;
   shape?: Css.NodeShape;
 };
 

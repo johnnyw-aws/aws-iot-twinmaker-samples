@@ -399,7 +399,10 @@ export class CookieFactoryV2Stack extends cdk.Stack {
             role: timestreamUdqRole,
             runtime: lambda.Runtime.PYTHON_3_7,
             timeout: cdk.Duration.minutes(15),
-            logRetention: logs.RetentionDays.ONE_DAY
+            logRetention: logs.RetentionDays.ONE_DAY,
+            environment: {
+                "TELEMETRY_DATA_FILE_NAME": 'telemetryData.json',
+            }
         });
         //endregion
 

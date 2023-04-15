@@ -9,17 +9,19 @@ import type { Site } from '@/lib/types';
 
 import styles from './styles.module.css';
 
+const UNKNOWN_ENTITY_NAME = 'UNKNOWN ENTITY';
+
 export function HierarchyNavigator({ className }: { className?: ClassName }) {
   const [{ entityData }] = useSelectedEntityState();
-  const [siteState, setSiteState] = useSiteState();
+  const [site, setSite] = useSiteState();
 
   const contentElement = useMemo(() => {
-    if (siteState) {
-      const parents = walkParentEntities(siteState.entities, entityData?.entityId);
+    if (site) {
+      const parents = walkParentEntities(site.entities, entityData?.entityId);
 
       return (
         <>
-          <button className={styles.icon} onPointerDown={() => setSiteState(null)}>
+          <button className={styles.icon} onPointerDown={() => setSite(null)}>
             <GlobeIcon />
           </button>
 
@@ -27,18 +29,22 @@ export function HierarchyNavigator({ className }: { className?: ClassName }) {
             <ArrowRightIcon />
           </span>
 
-          <span className={createClassName(styles.label, { [styles.active]: isNil(entityData) })}>
-            {siteState.name}
-          </span>
+          <span className={createClassName(styles.label, { [styles.active]: isNil(entityData) })}>{site.name}</span>
 
           {parents.length > 0 && parents.map((parent) => <Crumb key={parent.entityId} name={parent.entityName} />)}
-          {entityData && <Crumb key={entityData.entityId} isActive={true} name={entityData.entityName} />}
+          {entityData && (
+            <Crumb
+              key={entityData.entityId}
+              isActive={true}
+              name={site.entities[entityData.entityId]?.entityName ?? UNKNOWN_ENTITY_NAME}
+            />
+          )}
         </>
       );
     }
 
     return null;
-  }, [siteState, entityData]);
+  }, [site, entityData]);
 
   return <section className={createClassName(styles.root, className)}>{contentElement}</section>;
 }

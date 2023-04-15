@@ -92,30 +92,26 @@
   transition: var(--transition);
 }
 
-.health-ok {
+.healthNormal {
   --health-color: var(--color-health-ok);
 }
 
-.health-critical {
-  --health-color: var(--color-health-critical);
-}
-
-.health-high {
+.healthHigh {
   --health-color: var(--color-health-high);
 }
 
-.health-medium {
+.healthMedium {
   --health-color: var(--color-health-medium);
 }
 
-.health-low {
+.healthLow {
   --health-color: var(--color-health-low);
 }
 
-.health-offline {
-  --health-color: var(--color-health-offline);
+.healthOffline {
+  --health-color: var(--color-health-unknown);
 }
 
-.health-unknown {
+.healthUnknown {
   --health-color: var(--color-health-unknown);
 }

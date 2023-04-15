@@ -5,12 +5,12 @@ export const WORKSPACE_ID = 'CFv2OneClick230308';
 const sites: SiteConfig[] = [
   {
     awsConfig: {
-      sceneId: 'Mixer-copy',
+      sceneId: 'CookieFactory',
       workspaceId: WORKSPACE_ID
     },
     id: crypto.randomUUID(),
     location: '1 Main Street, Bakersville, NC, USA',
-    name: 'Bakersville Central - Mixer-copy'
+    name: 'Bakersville Central'
   },
   {
     awsConfig: {

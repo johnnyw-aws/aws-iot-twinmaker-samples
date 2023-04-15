@@ -3,7 +3,21 @@
   "version": "1",
   "unit": "meters",
   "properties": {
-    "environmentPreset": "neutral"
+    "environmentPreset": "neutral",
+    "dataBindingConfig": {
+      "fieldMapping": {
+        "entityId": [
+          "sel_entity"
+        ],
+        "componentName": [
+          "sel_comp"
+        ]
+      },
+      "template": {
+        "sel_entity": "Mixer_0_cd81d9fd-3f74-437a-802b-9747ff240837",
+        "sel_comp": "MixerComponent"
+      }
+    }
   },
   "nodes": [
     {
@@ -12,7 +26,7 @@
         "position": [
           0,
           0,
-          0
+          -10.8946034597049
         ],
         "rotation": [
           0,
@@ -30,7 +44,8 @@
         1,
         2
       ],
-      "components": []
+      "components": [],
+      "properties": {}
     },
     {
       "name": "Environment",
@@ -60,7 +75,8 @@
           "receiveShadow": true,
           "type": "ModelRef"
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Equipment",
@@ -87,7 +103,8 @@
         56,
         60
       ],
-      "components": []
+      "components": [],
+      "properties": {}
     },
     {
       "name": "Mixers",
@@ -110,9 +127,6 @@
       },
       "transformConstraint": {},
       "children": [
-        4,
-        6,
-        8,
         10,
         12,
         14,
@@ -128,39 +142,49 @@
         34,
         36,
         38,
-        40,
-        42,
         44,
         46,
         48,
         50,
         52,
-        54
+        54,
+        42,
+        6,
+        40,
+        8,
+        4
       ],
-      "components": []
+      "components": [],
+      "properties": {}
     },
     {
       "name": "Mixer_0",
       "transform": {
         "position": [
-          19.54,
-          0,
-          68.51
+          19.540000000000003,
+          1.9721522630525295e-31,
+          68.51000000000002
         ],
         "rotation": [
-          0,
-          -3.14159274,
-          0
+          -3.141592653589793,
+          8.641020686727515e-8,
+          -3.141592653589793
         ],
         "scale": [
+          1.0000000000000007,
           1,
-          1,
-          1
+          1.0000000000000007
         ]
       },
       "transformConstraint": {},
       "children": [
-        5
+        5,
+        62,
+        63,
+        64,
+        65,
+        66,
+        70
       ],
       "components": [
         {
@@ -170,7 +194,8 @@
           "receiveShadow": true,
           "type": "ModelRef"
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Tag",
@@ -212,7 +237,8 @@
             }
           }
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Mixer_1",
@@ -220,22 +246,23 @@
         "position": [
           19.54,
           0,
-          76.4
+          76.15334811887145
         ],
         "rotation": [
-          0,
-          -3.14159274,
-          0
+          -3.141592653589793,
+          8.641020686727519e-8,
+          -3.141592653589793
         ],
         "scale": [
+          1.0000000000000002,
           1,
-          1,
-          1
+          1.0000000000000002
         ]
       },
       "transformConstraint": {},
       "children": [
-        7
+        7,
+        71
       ],
       "components": [
         {
@@ -250,15 +277,16 @@
           "valueDataBinding": {
             "dataBindingContext": {
               "entityId": "Mixer_1_4b57cbee-c391-4de6-b882-622c633a697e",
-              "componentName": "MixerComponent",
+              "componentName": "com_example_cookiefactory_mixer__synthetic",
               "propertyName": "Temperature",
               "entityPath": "Equipment/Mixers/Mixer_1"
             },
-            "dataFrameLabel": "component%3DMixerComponent%26entity%3DMixer_1_4b57cbee-c391-4de6-b882-622c633a697e%26property%3DTemperature,component%3DMixerComponent%26entityPath%3DEquipment%252FMixers%252FMixer_1%26property%3DTemperature"
+            "dataFrameLabel": "component%3Dcom_example_cookiefactory_mixer__synthetic%26entity%3DMixer_1_4b57cbee-c391-4de6-b882-622c633a697e%26property%3DTemperature,componentTypeId%3Dcom.example.cookiefactory.mixer.syntheticdata%26property%3DTemperature%26telemetryAssetId%3DtelemetryAssetId__synthetic,component%3Dcom_example_cookiefactory_mixer__synthetic%26entityPath%3DEquipment%252FMixers%252FMixer_1%26property%3DTemperature"
           },
-          "ruleBasedMapId": "MeshColorRuleMap"
+          "ruleBasedMapId": "SynthMeshRuleMap"
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Tag",
@@ -300,30 +328,32 @@
             }
           }
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Mixer_2",
       "transform": {
         "position": [
           19.54,
-          0,
+          1.67632942359465e-30,
           79.9
         ],
         "rotation": [
-          0,
-          -3.14159274,
-          0
+          -3.141592653589793,
+          8.64102068672752e-8,
+          -3.141592653589793
         ],
         "scale": [
+          1.0000000000000002,
           1,
-          1,
-          1
+          1.0000000000000002
         ]
       },
       "transformConstraint": {},
       "children": [
-        9
+        9,
+        72
       ],
       "components": [
         {
@@ -333,7 +363,8 @@
           "receiveShadow": true,
           "type": "ModelRef"
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Tag",
@@ -375,7 +406,8 @@
             }
           }
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Mixer_3",
@@ -408,7 +440,8 @@
           "receiveShadow": true,
           "type": "ModelRef"
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Tag",
@@ -450,7 +483,8 @@
             }
           }
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Mixer_4",
@@ -483,7 +517,8 @@
           "receiveShadow": true,
           "type": "ModelRef"
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Tag",
@@ -525,7 +560,8 @@
             }
           }
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Mixer_5",
@@ -558,7 +594,8 @@
           "receiveShadow": true,
           "type": "ModelRef"
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Tag",
@@ -600,7 +637,8 @@
             }
           }
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Mixer_6",
@@ -633,7 +671,8 @@
           "receiveShadow": true,
           "type": "ModelRef"
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Tag",
@@ -675,7 +714,8 @@
             }
           }
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Mixer_7",
@@ -708,7 +748,8 @@
           "receiveShadow": true,
           "type": "ModelRef"
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Tag",
@@ -750,7 +791,8 @@
             }
           }
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Mixer_8",
@@ -783,7 +825,8 @@
           "receiveShadow": true,
           "type": "ModelRef"
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Tag",
@@ -825,7 +868,8 @@
             }
           }
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Mixer_9",
@@ -848,7 +892,8 @@
       },
       "transformConstraint": {},
       "children": [
-        23
+        23,
+        75
       ],
       "components": [
         {
@@ -858,7 +903,8 @@
           "receiveShadow": true,
           "type": "ModelRef"
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Tag",
@@ -900,7 +946,8 @@
             }
           }
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Mixer_10",
@@ -933,7 +980,8 @@
           "receiveShadow": true,
           "type": "ModelRef"
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Tag",
@@ -975,7 +1023,8 @@
             }
           }
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Mixer_11",
@@ -1008,7 +1057,8 @@
           "receiveShadow": true,
           "type": "ModelRef"
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Tag",
@@ -1050,7 +1100,8 @@
             }
           }
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Mixer_12",
@@ -1083,7 +1134,8 @@
           "receiveShadow": true,
           "type": "ModelRef"
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Tag",
@@ -1125,7 +1177,8 @@
             }
           }
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Mixer_13",
@@ -1158,7 +1211,8 @@
           "receiveShadow": true,
           "type": "ModelRef"
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Tag",
@@ -1200,7 +1254,8 @@
             }
           }
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Mixer_14",
@@ -1233,7 +1288,8 @@
           "receiveShadow": true,
           "type": "ModelRef"
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Tag",
@@ -1275,7 +1331,8 @@
             }
           }
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Mixer_15",
@@ -1308,7 +1365,8 @@
           "receiveShadow": true,
           "type": "ModelRef"
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Tag",
@@ -1350,7 +1408,8 @@
             }
           }
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Mixer_16",
@@ -1383,7 +1442,8 @@
           "receiveShadow": true,
           "type": "ModelRef"
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Tag",
@@ -1426,7 +1486,8 @@
             }
           }
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Mixer_17",
@@ -1459,7 +1520,8 @@
           "receiveShadow": true,
           "type": "ModelRef"
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Tag",
@@ -1501,7 +1563,8 @@
             }
           }
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Mixer_18",
@@ -1509,17 +1572,17 @@
         "position": [
           42.35,
           0,
-          70.97
+          70.97000000000003
         ],
         "rotation": [
-          0,
-          -3.14159274,
-          0
+          -3.141592653589793,
+          8.641020686727513e-8,
+          -3.141592653589793
         ],
         "scale": [
+          1.0000000000000007,
           1,
-          1,
-          1
+          1.0000000000000007
         ]
       },
       "transformConstraint": {},
@@ -1534,7 +1597,8 @@
           "receiveShadow": true,
           "type": "ModelRef"
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Tag",
@@ -1576,7 +1640,8 @@
             }
           }
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Mixer_19",
@@ -1587,14 +1652,14 @@
           74.58
         ],
         "rotation": [
-          0,
-          -3.14159274,
-          0
+          -3.141592653589793,
+          8.641020686727519e-8,
+          -3.141592653589793
         ],
         "scale": [
+          1.0000000000000002,
           1,
-          1,
-          1
+          1.0000000000000002
         ]
       },
       "transformConstraint": {},
@@ -1609,7 +1674,8 @@
           "receiveShadow": true,
           "type": "ModelRef"
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Tag",
@@ -1651,7 +1717,8 @@
             }
           }
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Mixer_20",
@@ -1684,7 +1751,8 @@
           "receiveShadow": true,
           "type": "ModelRef"
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Tag",
@@ -1726,7 +1794,8 @@
             }
           }
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Mixer_21",
@@ -1759,7 +1828,8 @@
           "receiveShadow": true,
           "type": "ModelRef"
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Tag",
@@ -1801,7 +1871,8 @@
             }
           }
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Mixer_22",
@@ -1834,7 +1905,8 @@
           "receiveShadow": true,
           "type": "ModelRef"
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Tag",
@@ -1876,7 +1948,8 @@
             }
           }
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Mixer_23",
@@ -1909,7 +1982,8 @@
           "receiveShadow": true,
           "type": "ModelRef"
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Tag",
@@ -1951,7 +2025,8 @@
             }
           }
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Mixer_24",
@@ -1984,7 +2059,8 @@
           "receiveShadow": true,
           "type": "ModelRef"
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Tag",
@@ -2026,7 +2102,8 @@
             }
           }
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Mixer_25",
@@ -2059,7 +2136,8 @@
           "receiveShadow": true,
           "type": "ModelRef"
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Tag",
@@ -2101,7 +2179,8 @@
             }
           }
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "CookieLines",
@@ -2124,32 +2203,47 @@
       },
       "transformConstraint": {},
       "children": [
-        57,
         58,
-        59
+        59,
+        57
       ],
-      "components": []
+      "components": [],
+      "properties": {}
     },
     {
       "name": "COOKIE_LINE",
       "transform": {
         "position": [
-          25.8590832,
+          25.859083200000004,
           -2.442719,
-          44.67025
+          44.67025000000001
         ],
         "rotation": [
           0,
-          0,
+          -8.262987005736024e-8,
           0
         ],
         "scale": [
+          1.0000000000000002,
           1,
-          1,
-          1
+          1.0000000000000002
         ]
       },
       "transformConstraint": {},
+      "children": [
+        67,
+        68,
+        69,
+        73,
+        74,
+        80,
+        82,
+        84,
+        86,
+        88,
+        90,
+        92
+      ],
       "components": [
         {
           "uri": "CookieFactoryLine.glb",
@@ -2157,8 +2251,13 @@
           "castShadow": true,
           "receiveShadow": true,
           "type": "ModelRef"
+        },
+        {
+          "type": "ModelShader",
+          "ruleBasedMapId": "EntitySelectedRule"
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "COOKIE_LINE_1",
@@ -2188,7 +2287,8 @@
           "receiveShadow": true,
           "type": "ModelRef"
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "COOKIE_LINE_2",
@@ -2218,7 +2318,8 @@
           "receiveShadow": true,
           "type": "ModelRef"
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "WaterTank",
@@ -2263,7 +2364,8 @@
           },
           "ruleBasedMapId": "WaterTankFlowRuleMap"
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "Tag",
@@ -2304,7 +2406,1227 @@
             }
           }
         }
-      ]
+      ],
+      "properties": {}
+    },
+    {
+      "name": "MainBody_1",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {
+        "snapToFloor": false
+      },
+      "components": [
+        {
+          "parentRef": "A67539D7-3435-450B-BA67-B7419FACBE05",
+          "selector": "MainBody_1",
+          "type": "SubModelRef"
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "Plane",
+      "transform": {
+        "position": [
+          -0.0710445,
+          -0.3166003,
+          -0.206056
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {
+        "snapToFloor": false
+      },
+      "components": [
+        {
+          "parentRef": "A67539D7-3435-450B-BA67-B7419FACBE05",
+          "selector": "Plane",
+          "type": "SubModelRef"
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "MixerBowl_2",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {
+        "snapToFloor": false
+      },
+      "components": [
+        {
+          "parentRef": "A67539D7-3435-450B-BA67-B7419FACBE05",
+          "selector": "MixerBowl_2",
+          "type": "SubModelRef"
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "MixerBowl_1",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {
+        "snapToFloor": false
+      },
+      "components": [
+        {
+          "parentRef": "A67539D7-3435-450B-BA67-B7419FACBE05",
+          "selector": "MixerBowl_1",
+          "type": "SubModelRef"
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "MainBody_3",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {
+        "snapToFloor": false
+      },
+      "components": [
+        {
+          "parentRef": "A67539D7-3435-450B-BA67-B7419FACBE05",
+          "selector": "MainBody_3",
+          "type": "SubModelRef"
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "COOKIE_FORMER",
+      "transform": {
+        "position": [
+          8.07,
+          2.429,
+          5.903
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {
+        "snapToFloor": false
+      },
+      "children": [
+        77
+      ],
+      "components": [
+        {
+          "parentRef": "4F069216-FC8A-440B-A975-09A86F857D14",
+          "selector": "COOKIE_FORMER",
+          "type": "SubModelRef"
+        },
+        {
+          "type": "ModelShader",
+          "valueDataBinding": {
+            "dataBindingContext": {
+              "entityId": "COOKIE_FORMER_19556bfd-469c-40bc-a389-dbeab255c144",
+              "componentName": "CookieLineComponent",
+              "propertyName": "AlarmMessage",
+              "entityPath": "Equipment/CookieLines/COOKIE_LINE/COOKIE_FORMER"
+            },
+            "dataFrameLabel": "component%3DCookieLineComponent%26entity%3DCOOKIE_FORMER_19556bfd-469c-40bc-a389-dbeab255c144%26property%3DAlarmMessage,component%3DCookieLineComponent%26entityPath%3DEquipment%252FCookieLines%252FCOOKIE_LINE%252FCOOKIE_FORMER%26property%3DAlarmMessage"
+          },
+          "ruleBasedMapId": "CookieLineAlarmMessageRule"
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "PLASTIC_LINER",
+      "transform": {
+        "position": [
+          8.438181,
+          3.346,
+          -15.8914127
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {
+        "snapToFloor": false
+      },
+      "children": [
+        79
+      ],
+      "components": [
+        {
+          "parentRef": "4F069216-FC8A-440B-A975-09A86F857D14",
+          "selector": "PLASTIC_LINER",
+          "type": "SubModelRef"
+        },
+        {
+          "type": "ModelShader",
+          "valueDataBinding": {
+            "dataBindingContext": {
+              "entityId": "PLASTIC_LINER_a77e76bc-53f3-420d-8b2f-76103c810fac",
+              "componentName": "CookieLineComponent",
+              "propertyName": "AlarmMessage",
+              "entityPath": "Equipment/CookieLines/COOKIE_LINE/PLASTIC_LINER"
+            },
+            "dataFrameLabel": "component%3DCookieLineComponent%26entity%3DPLASTIC_LINER_a77e76bc-53f3-420d-8b2f-76103c810fac%26property%3DAlarmMessage,component%3DCookieLineComponent%26entityPath%3DEquipment%252FCookieLines%252FCOOKIE_LINE%252FPLASTIC_LINER%26property%3DAlarmMessage"
+          },
+          "ruleBasedMapId": "CookieLineAlarmMessageRule"
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "FREEZER_TUNNEL",
+      "transform": {
+        "position": [
+          7.990183,
+          3.406,
+          -1.92541122
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {
+        "snapToFloor": false
+      },
+      "children": [
+        78
+      ],
+      "components": [
+        {
+          "parentRef": "4F069216-FC8A-440B-A975-09A86F857D14",
+          "selector": "FREEZER_TUNNEL",
+          "type": "SubModelRef"
+        },
+        {
+          "type": "ModelShader",
+          "valueDataBinding": {
+            "dataBindingContext": {
+              "entityId": "FREEZER_TUNNEL_e12e0733-f5df-4604-8f10-417f49e6d298",
+              "componentName": "CookieLineComponent",
+              "propertyName": "AlarmMessage",
+              "entityPath": "Equipment/CookieLines/COOKIE_LINE/FREEZER_TUNNEL"
+            },
+            "dataFrameLabel": "component%3DCookieLineComponent%26entity%3DFREEZER_TUNNEL_e12e0733-f5df-4604-8f10-417f49e6d298%26property%3DAlarmMessage,component%3DCookieLineComponent%26entityPath%3DEquipment%252FCookieLines%252FCOOKIE_LINE%252FFREEZER_TUNNEL%26property%3DAlarmMessage"
+          },
+          "ruleBasedMapId": "CookieLineAlarmMessageRule"
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "Anchor",
+      "transform": {
+        "position": [
+          0,
+          2.84,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {
+        "snapToFloor": false
+      },
+      "components": [
+        {
+          "parentRef": "A67539D7-3435-450B-BA67-B7419FACBE05",
+          "selector": "Anchor",
+          "type": "SubModelRef"
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "CookieFactoryMixer",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {
+        "snapToFloor": false
+      },
+      "components": [
+        {
+          "parentRef": "211E190B-8696-4AC4-9116-40A6968A5029",
+          "selector": "CookieFactoryMixer",
+          "type": "SubModelRef"
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "CookieFactoryMixer",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {
+        "snapToFloor": false
+      },
+      "components": [
+        {
+          "parentRef": "0C2D8413-060C-4534-AE6E-0110A96FE6F1",
+          "selector": "CookieFactoryMixer",
+          "type": "SubModelRef"
+        },
+        {
+          "type": "ModelShader",
+          "valueDataBinding": {
+            "dataBindingContext": {
+              "entityId": "Mixer_2_06ac63c4-d68d-4723-891a-8e758f8456ef",
+              "componentName": "AlarmComponent",
+              "propertyName": "alarm_status",
+              "entityPath": "Equipment/Mixers/Mixer_2"
+            },
+            "dataFrameLabel": "component%3DAlarmComponent%26entity%3DMixer_2_06ac63c4-d68d-4723-891a-8e758f8456ef%26property%3Dalarm_status,alarm_key%3DMixer_2_23a4ba92-f85c-423a-ba95-0a2f392d68eb%26componentTypeId%3Dcom.example.cookiefactory.alarm%26property%3Dalarm_status%26telemetryAssetId%3DMixer_2_23a4ba92-f85c-423a-ba95-0a2f392d68eb,component%3DAlarmComponent%26entityPath%3DEquipment%252FMixers%252FMixer_2%26property%3Dalarm_status"
+          },
+          "ruleBasedMapId": "AlarmRuleMap"
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "COOKIE_LINE",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {
+        "snapToFloor": false
+      },
+      "components": [
+        {
+          "parentRef": "4F069216-FC8A-440B-A975-09A86F857D14",
+          "selector": "COOKIE_LINE",
+          "type": "SubModelRef"
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "CONVEYOR_LEFT_TURN",
+      "transform": {
+        "position": [
+          4.298,
+          3.014,
+          -12.286
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {
+        "snapToFloor": false
+      },
+      "children": [
+        76
+      ],
+      "components": [
+        {
+          "parentRef": "4F069216-FC8A-440B-A975-09A86F857D14",
+          "selector": "CONVEYOR_LEFT_TURN",
+          "type": "SubModelRef"
+        },
+        {
+          "type": "ModelShader",
+          "valueDataBinding": {
+            "dataBindingContext": {
+              "entityId": "CONVEYOR_LEFT_TURN_b28f2ca9-b6a7-44cd-a62d-7f76fc17ba45",
+              "componentName": "CookieLineComponent",
+              "propertyName": "AlarmMessage",
+              "entityPath": "Equipment/CookieLines/COOKIE_LINE/CONVEYOR_LEFT_TURN"
+            },
+            "dataFrameLabel": "component%3DCookieLineComponent%26entity%3DCONVEYOR_LEFT_TURN_b28f2ca9-b6a7-44cd-a62d-7f76fc17ba45%26property%3DAlarmMessage,component%3DCookieLineComponent%26entityPath%3DEquipment%252FCookieLines%252FCOOKIE_LINE%252FCONVEYOR_LEFT_TURN%26property%3DAlarmMessage"
+          },
+          "ruleBasedMapId": "CookieLineAlarmMessageRule"
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "Tag",
+      "transform": {
+        "position": [
+          1.1995389325675454,
+          3.117654435224117,
+          -0.27162005744555984
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {},
+      "components": [
+        {
+          "type": "Tag",
+          "valueDataBinding": {}
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "Tag",
+      "transform": {
+        "position": [
+          4.3,
+          3.6,
+          -12.579
+        ],
+        "rotation": [
+          0,
+          8.262987005736022e-8,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {},
+      "components": [
+        {
+          "type": "Tag",
+          "ruleBasedMapId": "AlarmRuleMap",
+          "valueDataBinding": {
+            "dataBindingContext": {
+              "entityId": "CONVEYOR_LEFT_TURN_b28f2ca9-b6a7-44cd-a62d-7f76fc17ba45",
+              "componentName": "CookieLineComponent",
+              "propertyName": "alarm_status",
+              "entityPath": "Equipment/CookieLines/COOKIE_LINE/CONVEYOR_LEFT_TURN"
+            }
+          }
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "Tag",
+      "transform": {
+        "position": [
+          8.085137462848197,
+          4.490670162516524,
+          6.0798361211391985
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {},
+      "components": [
+        {
+          "type": "Tag",
+          "ruleBasedMapId": "AlarmRuleMap",
+          "valueDataBinding": {
+            "dataBindingContext": {
+              "entityId": "COOKIE_FORMER_19556bfd-469c-40bc-a389-dbeab255c144",
+              "componentName": "CookieLineComponent",
+              "propertyName": "alarm_status",
+              "entityPath": "Equipment/CookieLines/COOKIE_LINE/COOKIE_FORMER"
+            }
+          }
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "Tag",
+      "transform": {
+        "position": [
+          8.057,
+          4.5,
+          -1.239
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {},
+      "components": [
+        {
+          "type": "Tag",
+          "ruleBasedMapId": "AlarmRuleMap",
+          "valueDataBinding": {
+            "dataBindingContext": {
+              "entityId": "FREEZER_TUNNEL_e12e0733-f5df-4604-8f10-417f49e6d298",
+              "componentName": "CookieLineComponent",
+              "propertyName": "alarm_status",
+              "entityPath": "Equipment/CookieLines/COOKIE_LINE/FREEZER_TUNNEL"
+            }
+          }
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "Tag",
+      "transform": {
+        "position": [
+          8.42,
+          4.75,
+          -15.894
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {},
+      "components": [
+        {
+          "type": "Tag",
+          "ruleBasedMapId": "AlarmRuleMap",
+          "valueDataBinding": {
+            "dataBindingContext": {
+              "entityId": "PLASTIC_LINER_a77e76bc-53f3-420d-8b2f-76103c810fac",
+              "componentName": "CookieLineComponent",
+              "propertyName": "alarm_status",
+              "entityPath": "Equipment/CookieLines/COOKIE_LINE/PLASTIC_LINER"
+            }
+          }
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "CONVEYOR_RIGHT_TURN",
+      "transform": {
+        "position": [
+          8.437181,
+          2.988,
+          -11.727
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {
+        "snapToFloor": false
+      },
+      "children": [
+        81
+      ],
+      "components": [
+        {
+          "parentRef": "4F069216-FC8A-440B-A975-09A86F857D14",
+          "selector": "CONVEYOR_RIGHT_TURN",
+          "type": "SubModelRef"
+        },
+        {
+          "type": "ModelShader",
+          "valueDataBinding": {
+            "dataBindingContext": {
+              "entityId": "CONVEYOR_RIGHT_TURN_c4f2df3d-26a2-45c5-a6c9-02ca00eb4af6",
+              "componentName": "CookieLineComponent",
+              "propertyName": "AlarmMessage",
+              "entityPath": "Equipment/CookieLines/COOKIE_LINE/CONVEYOR_RIGHT_TURN"
+            },
+            "dataFrameLabel": "component%3DCookieLineComponent%26entity%3DCONVEYOR_RIGHT_TURN_c4f2df3d-26a2-45c5-a6c9-02ca00eb4af6%26property%3DAlarmMessage,component%3DCookieLineComponent%26entityPath%3DEquipment%252FCookieLines%252FCOOKIE_LINE%252FCONVEYOR_RIGHT_TURN%26property%3DAlarmMessage"
+          },
+          "ruleBasedMapId": "CookieLineAlarmMessageRule"
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "Tag",
+      "transform": {
+        "position": [
+          8.42,
+          3.6,
+          -12.583
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {},
+      "components": [
+        {
+          "type": "Tag",
+          "ruleBasedMapId": "AlarmRuleMap",
+          "valueDataBinding": {
+            "dataBindingContext": {
+              "entityId": "CONVEYOR_RIGHT_TURN_c4f2df3d-26a2-45c5-a6c9-02ca00eb4af6",
+              "componentName": "CookieLineComponent",
+              "propertyName": "alarm_status",
+              "entityPath": "Equipment/CookieLines/COOKIE_LINE/CONVEYOR_RIGHT_TURN"
+            }
+          }
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "VERTICAL_CONVEYOR",
+      "transform": {
+        "position": [
+          7.694,
+          2.732,
+          -8.942
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {
+        "snapToFloor": false
+      },
+      "children": [
+        83
+      ],
+      "components": [
+        {
+          "parentRef": "4F069216-FC8A-440B-A975-09A86F857D14",
+          "selector": "VERTICAL_CONVEYOR",
+          "type": "SubModelRef"
+        },
+        {
+          "type": "ModelShader",
+          "valueDataBinding": {
+            "dataBindingContext": {
+              "entityId": "VERTICAL_CONVEYOR_d5423f7f-379c-4a97-aae0-3a5c0bcc9116",
+              "componentName": "CookieLineComponent",
+              "propertyName": "AlarmMessage",
+              "entityPath": "Equipment/CookieLines/COOKIE_LINE/VERTICAL_CONVEYOR"
+            },
+            "dataFrameLabel": "component%3DCookieLineComponent%26entity%3DVERTICAL_CONVEYOR_d5423f7f-379c-4a97-aae0-3a5c0bcc9116%26property%3DAlarmMessage,component%3DCookieLineComponent%26entityPath%3DEquipment%252FCookieLines%252FCOOKIE_LINE%252FVERTICAL_CONVEYOR%26property%3DAlarmMessage"
+          },
+          "ruleBasedMapId": "CookieLineAlarmMessageRule"
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "Tag",
+      "transform": {
+        "position": [
+          6.727,
+          5.85,
+          -9.079
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {},
+      "components": [
+        {
+          "type": "Tag",
+          "ruleBasedMapId": "AlarmRuleMap",
+          "valueDataBinding": {
+            "dataBindingContext": {
+              "entityId": "VERTICAL_CONVEYOR_d5423f7f-379c-4a97-aae0-3a5c0bcc9116",
+              "componentName": "CookieLineComponent",
+              "propertyName": "alarm_status",
+              "entityPath": "Equipment/CookieLines/COOKIE_LINE/VERTICAL_CONVEYOR"
+            }
+          }
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "CONVEYOR_STRIGHT",
+      "transform": {
+        "position": [
+          6.019182,
+          3.07,
+          -10.0704117
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {
+        "snapToFloor": false
+      },
+      "children": [
+        85
+      ],
+      "components": [
+        {
+          "parentRef": "4F069216-FC8A-440B-A975-09A86F857D14",
+          "selector": "CONVEYOR_STRIGHT",
+          "type": "SubModelRef"
+        },
+        {
+          "type": "ModelShader",
+          "valueDataBinding": {
+            "dataBindingContext": {
+              "entityId": "CONVEYOR_STRIGHT_9c62c546-f8ef-489d-9938-d46a12c97f32",
+              "componentName": "CookieLineComponent",
+              "propertyName": "AlarmMessage",
+              "entityPath": "Equipment/CookieLines/COOKIE_LINE/CONVEYOR_STRAIGHT"
+            },
+            "dataFrameLabel": "component%3DCookieLineComponent%26entity%3DCONVEYOR_STRIGHT_9c62c546-f8ef-489d-9938-d46a12c97f32%26property%3DAlarmMessage,component%3DCookieLineComponent%26entityPath%3DEquipment%252FCookieLines%252FCOOKIE_LINE%252FCONVEYOR_STRAIGHT%26property%3DAlarmMessage"
+          },
+          "ruleBasedMapId": "CookieLineAlarmMessageRule"
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "Tag",
+      "transform": {
+        "position": [
+          6.419999999736524,
+          3.6,
+          -9.983188628997393
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {},
+      "components": [
+        {
+          "type": "Tag",
+          "ruleBasedMapId": "AlarmRuleMap",
+          "valueDataBinding": {
+            "dataBindingContext": {
+              "entityId": "CONVEYOR_STRIGHT_9c62c546-f8ef-489d-9938-d46a12c97f32",
+              "componentName": "CookieLineComponent",
+              "propertyName": "alarm_status",
+              "entityPath": "Equipment/CookieLines/COOKIE_LINE/CONVEYOR_STRAIGHT"
+            }
+          }
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "BOX_ERECTOR",
+      "transform": {
+        "position": [
+          8.442183,
+          3.28,
+          -19.0554123
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {
+        "snapToFloor": false
+      },
+      "children": [
+        87
+      ],
+      "components": [
+        {
+          "parentRef": "4F069216-FC8A-440B-A975-09A86F857D14",
+          "selector": "BOX_ERECTOR",
+          "type": "SubModelRef"
+        },
+        {
+          "type": "ModelShader",
+          "valueDataBinding": {
+            "dataBindingContext": {
+              "entityId": "BOX_ERECTOR_142496af-df2e-490e-aed5-2580eaf75e40",
+              "componentName": "CookieLineComponent",
+              "propertyName": "AlarmMessage",
+              "entityPath": "Equipment/CookieLines/COOKIE_LINE/BOX_ERECTOR"
+            },
+            "dataFrameLabel": "component%3DCookieLineComponent%26entity%3DBOX_ERECTOR_142496af-df2e-490e-aed5-2580eaf75e40%26property%3DAlarmMessage,alarm_key%3DBOX_ERECTOR_142496af-df2e-490e-aed5-2580eaf75e40%26componentTypeId%3Dcom.example.cookiefactory.cookieline%26property%3DAlarmMessage%26telemetryAssetId%3DBOX_ERECTOR_142496af-df2e-490e-aed5-2580eaf75e40,component%3DCookieLineComponent%26entityPath%3DEquipment%252FCookieLines%252FCOOKIE_LINE%252FBOX_ERECTOR%26property%3DAlarmMessage"
+          },
+          "ruleBasedMapId": "CookieLineAlarmMessageRule"
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "Tag",
+      "transform": {
+        "position": [
+          8.42,
+          4.45,
+          -18.695
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {},
+      "components": [
+        {
+          "type": "Tag",
+          "ruleBasedMapId": "AlarmRuleMap",
+          "valueDataBinding": {
+            "dataBindingContext": {
+              "entityId": "BOX_ERECTOR_142496af-df2e-490e-aed5-2580eaf75e40",
+              "componentName": "CookieLineComponent",
+              "propertyName": "alarm_status",
+              "entityPath": "Equipment/CookieLines/COOKIE_LINE/BOX_ERECTOR"
+            }
+          }
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "LABELING_BELT",
+      "transform": {
+        "position": [
+          4.49,
+          3.058,
+          -18.727
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {
+        "snapToFloor": false
+      },
+      "children": [
+        89
+      ],
+      "components": [
+        {
+          "parentRef": "4F069216-FC8A-440B-A975-09A86F857D14",
+          "selector": "LABELING_BELT",
+          "type": "SubModelRef"
+        },
+        {
+          "type": "ModelShader",
+          "valueDataBinding": {
+            "dataBindingContext": {
+              "entityId": "LABELING_BELT_5f98ffd2-ced1-48dd-a111-e3503b4e8532",
+              "componentName": "CookieLineComponent",
+              "propertyName": "AlarmMessage",
+              "entityPath": "Equipment/CookieLines/COOKIE_LINE/LABELING_BELT"
+            },
+            "dataFrameLabel": "component%3DCookieLineComponent%26entity%3DLABELING_BELT_5f98ffd2-ced1-48dd-a111-e3503b4e8532%26property%3DAlarmMessage,component%3DCookieLineComponent%26entityPath%3DEquipment%252FCookieLines%252FCOOKIE_LINE%252FLABELING_BELT%26property%3DAlarmMessage"
+          },
+          "ruleBasedMapId": "CookieLineAlarmMessageRule"
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "Tag",
+      "transform": {
+        "position": [
+          4.26,
+          3.6,
+          -18.937
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {},
+      "components": [
+        {
+          "type": "Tag",
+          "ruleBasedMapId": "AlarmRuleMap",
+          "valueDataBinding": {
+            "dataBindingContext": {
+              "entityId": "LABELING_BELT_5f98ffd2-ced1-48dd-a111-e3503b4e8532",
+              "componentName": "CookieLineComponent",
+              "propertyName": "alarm_status",
+              "entityPath": "Equipment/CookieLines/COOKIE_LINE/LABELING_BELT"
+            }
+          }
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "BOX_SEALER",
+      "transform": {
+        "position": [
+          4.257,
+          3.299,
+          -15.619
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {
+        "snapToFloor": false
+      },
+      "children": [
+        91
+      ],
+      "components": [
+        {
+          "parentRef": "4F069216-FC8A-440B-A975-09A86F857D14",
+          "selector": "BOX_SEALER",
+          "type": "SubModelRef"
+        },
+        {
+          "type": "ModelShader",
+          "valueDataBinding": {
+            "dataBindingContext": {
+              "entityId": "BOX_SEALER_ad434a34-4363-4a36-8153-20bd7189951d",
+              "componentName": "CookieLineComponent",
+              "propertyName": "AlarmMessage",
+              "entityPath": "Equipment/CookieLines/COOKIE_LINE/BOX_SEALER"
+            },
+            "dataFrameLabel": "component%3DCookieLineComponent%26entity%3DBOX_SEALER_ad434a34-4363-4a36-8153-20bd7189951d%26property%3DAlarmMessage,component%3DCookieLineComponent%26entityPath%3DEquipment%252FCookieLines%252FCOOKIE_LINE%252FBOX_SEALER%26property%3DAlarmMessage"
+          },
+          "ruleBasedMapId": "CookieLineAlarmMessageRule"
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "Tag",
+      "transform": {
+        "position": [
+          4.2641842047109435,
+          4,
+          -15.73569400429597
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {},
+      "components": [
+        {
+          "type": "Tag",
+          "ruleBasedMapId": "AlarmRuleMap",
+          "valueDataBinding": {
+            "dataBindingContext": {
+              "entityId": "BOX_SEALER_ad434a34-4363-4a36-8153-20bd7189951d",
+              "componentName": "CookieLineComponent",
+              "propertyName": "alarm_status",
+              "entityPath": "Equipment/CookieLines/COOKIE_LINE/BOX_SEALER"
+            }
+          }
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "PALLET",
+      "transform": {
+        "position": [
+          4.26318169,
+          2.42571855,
+          -21.8604126
+        ],
+        "rotation": [
+          0,
+          -1.5707963267948966,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {
+        "snapToFloor": false
+      },
+      "children": [
+        93
+      ],
+      "components": [
+        {
+          "parentRef": "4F069216-FC8A-440B-A975-09A86F857D14",
+          "selector": "PALLET",
+          "type": "SubModelRef"
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "Tag",
+      "transform": {
+        "position": [
+          4.262,
+          3,
+          -21.85
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {},
+      "components": [
+        {
+          "type": "Tag",
+          "valueDataBinding": {
+            "dataBindingContext": {
+              "entityId": "PALLET_98648a84-72da-443a-b625-f671d99a13ba",
+              "componentName": "EquipmentComponent",
+              "propertyName": "belongTo",
+              "entityPath": "Equipment/CookieLines/COOKIE_LINE/PALLET"
+            }
+          }
+        }
+      ],
+      "properties": {}
     }
   ],
   "rootNodeIndexes": [
@@ -2317,6 +3639,10 @@
         {
           "expression": "alarm_status == 'ACTIVE'",
           "target": "iottwinmaker.common.icon:Error"
+        },
+        {
+          "expression": "alarm_status == 'NORMAL'",
+          "target": "iottwinmaker.common.icon:Info"
         }
       ]
     },
@@ -2341,6 +3667,58 @@
         {
           "expression": "flowRate1 <= 40",
           "target": "iottwinmaker.common.color:green"
+        }
+      ]
+    },
+    "SynthMeshRuleMap": {
+      "statements": [
+        {
+          "expression": "Temperature > 100",
+          "target": "iottwinmaker.common.color:#d13212"
+        },
+        {
+          "expression": "Temperature > 90",
+          "target": "iottwinmaker.common.color:#d0d112"
+        },
+        {
+          "expression": "Temperature < 20",
+          "target": "iottwinmaker.common.color:#12c9d1"
+        }
+      ]
+    },
+    "EntitySelectedRule": {
+      "statements": [
+        {
+          "expression": "telemetryAssetType == 'Alarm'",
+          "target": "iottwinmaker.common.color:#23ff06"
+        }
+      ]
+    },
+    "CookieLineAlarmRule": {
+      "statements": [
+        {
+          "expression": "alarm_status == 'ACTIVE'",
+          "target": "iottwinmaker.common.color:#d13212"
+        },
+        {
+          "expression": "alarm_status == 'NORMAL'",
+          "target": "iottwinmaker.common.color:#12d11d"
+        }
+      ]
+    },
+    "CookieLineAlarmMessageRule": {
+      "statements": [
+        {
+          "expression": "AlarmMessage == \"High\"",
+          "target": "iottwinmaker.common.color:#ff8080"
+        },
+        {
+          "expression": "AlarmMessage == \"Medium\"",
+          "target": "iottwinmaker.common.color:#ffbf66"
+        },
+        {
+          "expression": "AlarmMessage == \"Low\"",
+          "target": "iottwinmaker.common.color:#fff480"
         }
       ]
     }

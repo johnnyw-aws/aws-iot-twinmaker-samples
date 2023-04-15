@@ -15,6 +15,7 @@ export const PANELS: Panel[] = [
     content: <ScenePanel />,
     icon: <SceneIcon />,
     id: 'scene',
+    isVisible: false,
     label: 'Scene',
     priority: 1,
     slot: 1
@@ -24,6 +25,7 @@ export const PANELS: Panel[] = [
     content: <ProcessPanel />,
     icon: <NetworkIcon />,
     id: 'process',
+    isVisible: false,
     label: 'Process',
     priority: 2,
     slot: 1
@@ -32,6 +34,7 @@ export const PANELS: Panel[] = [
     content: <DashboardPanel />,
     icon: <DashboardIcon />,
     id: 'dashboard',
+    isVisible: false,
     label: 'Dashboard',
     priority: 3,
     slot: 1

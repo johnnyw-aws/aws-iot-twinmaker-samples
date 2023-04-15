@@ -1,10 +1,39 @@
 import type { EntitySummary } from '@aws-sdk/client-iottwinmaker';
-import type { initialize } from '@iot-app-kit/source-iottwinmaker';
+import type { StyleSettingsMap, TimeSeriesDataQuery } from '@iot-app-kit/core';
+import type { initialize, PropertyQueryInfo } from '@iot-app-kit/source-iottwinmaker';
 import type { ReactNode } from 'react';
 
 import type { AwsCredentials } from '@/lib/authentication';
 
-export type EntityData = { componentName: string; entityId: string; entityName: string };
+export type {
+  DataStream,
+  StyleSettingsMap,
+  Threshold,
+  ThresholdSettings,
+  ThresholdValue,
+  TimeSeriesDataQuery
+} from '@iot-app-kit/core';
+export type { Axis } from '@iot-app-kit/charts-core';
+export type { PropertyQueryInfo, TwinMakerEntityHistoryQuery, TwinMakerQuery } from '@iot-app-kit/source-iottwinmaker';
+
+export type EntityData = {
+  componentName: string;
+  entityId: string;
+  properties: EntityDataProperty[];
+};
+
+export type EntityDataProperty = {
+  propertyQueryInfo: PropertyQueryInfo;
+  type: EntityPropertyType;
+};
+
+export type EntityPropertyType = 'alarm' | 'data';
+
+// export type EntitQueryData = {
+//   componentName: string;
+//   entityId: string;
+//   property: PropertyQueryInfo;
+// };
 
 export type Event = {
   date: number;
@@ -18,7 +47,8 @@ export type Event = {
 
 export type GlobalControl = ReactNode;
 
-export type Health = 'ok' | 'critical' | 'high' | 'medium' | 'low' | 'offline' | 'unknown';
+export type AlarmState = 'High' | 'Medium' | 'Low' | 'Normal' | 'Unknown';
+// export type Health = 'ok' | 'high' | 'medium' | 'low' | 'offline' | 'unknown';
 
 export type Panel = {
   content?: ReactNode;
@@ -27,16 +57,19 @@ export type Panel = {
   label: string;
   priority: number;
   slot: 1 | 2;
+  isVisible: boolean;
 };
 
 export type PanelId = 'dashboard' | 'scene' | 'process' | 'live' | 'events' | 'tickets' | 'messages';
+
+export type SceneSelectedDataBinding = Record<'entityId' | 'componentName', string>;
 
 export type SelectedEntity = { entityData: EntityData | null; type: 'process' | 'scene' | null };
 
 export type Site = SiteConfig &
   Readonly<{
     entities: Record<string, EntitySummary>;
-    health: Health;
+    health: AlarmState;
   }>;
 
 export type SiteConfig = Readonly<{
@@ -49,6 +82,11 @@ export type SiteConfig = Readonly<{
 export type TwinMakerConfig = {
   workspaceId: string;
   sceneId: string;
+};
+
+export type TimeSeriesDataQueries = {
+  queries: TimeSeriesDataQuery[];
+  styles: StyleSettingsMap;
 };
 
 export type TwinMakerDataSource = ReturnType<typeof initialize>;
@@ -66,11 +104,11 @@ export type TwinMakerQueryNodeData = {
   workspaceId: string;
   description: string;
   components: {
-    componentName: 'EquipmentComponent' | 'ProcessStepComponent';
+    componentName: 'CookieLineComponent' | 'ProcessStepComponent';
     componentTypeId: string;
     properties: {
-      propertyName: 'telemetryAssetId';
-      propertyValue?: 'Mixer_0_237685e2-3f33-42f9-8cff-5f761c94aa73';
+      propertyName: string;
+      propertyValue?: string;
     }[];
   }[];
 };

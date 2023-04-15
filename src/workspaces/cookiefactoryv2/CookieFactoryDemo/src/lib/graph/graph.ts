@@ -11,9 +11,9 @@ import type {
 // `cytoscape-cise` does not have TypeScript definitions.
 //@ts-ignore
 import cise from 'cytoscape-cise';
-import type { SetRequired, ValueOf } from 'type-fest';
+import type { Except, SetRequired, ValueOf } from 'type-fest';
 
-import type { Health } from '@/lib/types';
+import type { AlarmState } from '@/lib/types';
 import { isNil, isString } from '@/lib/utils/lang';
 import { GRAPH_COLORS } from './constants';
 import { createSvgString, getPolygonPoints, getSvgSize } from './svg';
@@ -32,6 +32,12 @@ import type {
 
 const EDGE_DEFAULT_STYLE_PROPS: SetRequired<EdgeStyleProps, 'targetArrow'> = {
   color: GRAPH_COLORS.GRAY_40,
+  labelBackgroundColor: GRAPH_COLORS.GRAY_45,
+  labelTextColor: GRAPH_COLORS.GRAY_10,
+  labelTextSize: 13,
+  labelOffset: 0,
+  labelPadding: 6,
+  sourceEndpoint: 'outside-to-node',
   targetArrow: {
     color: GRAPH_COLORS.GRAY_40,
     scale: 1.5,
@@ -61,7 +67,7 @@ const NODE_DEFAULT_STYLE_PROPS: NodeStyleProps = {
   labelTextColor: GRAPH_COLORS.GRAY_14,
   labelTextSize: 16,
   labelOffset: 12,
-  labelPadding: 8,
+  labelPadding: 6,
   labelPosition: 'bottom',
   shape: getNodeShape,
   transitionDuration: 300
@@ -79,7 +85,8 @@ const NODE_SELECTED_STYLE_PROPS: NodeStyleProps = {
   backgroundImage: getSelectedSvg,
   borderColor: GRAPH_COLORS.WHITE,
   borderWidth: 6,
-  labelTextColor: GRAPH_COLORS.WHITE
+  labelBackgroundColor: GRAPH_COLORS.WHITE,
+  labelTextColor: GRAPH_COLORS.GRAY_50
 };
 
 const nodeNormalStyles = getNodeStyle(NODE_DEFAULT_STYLE_PROPS);
@@ -116,7 +123,9 @@ export function createGraph(
     name: 'cise',
     animate: false,
     fit: fitOnLoad,
+    idealInterClusterEdgeLengthCoefficient: 2,
     nodeDimensionsIncludeLabels: true,
+    nodeSeparation: 30,
     padding: canvasPadding,
     randomize: false,
     roots: rootElementIds
@@ -259,6 +268,12 @@ export function createGraph(
     return () => unsubscribe(subscriber);
   }
 
+  function updateNode(id: string, data: Partial<Pick<NodeData, 'state' | 'shape'>>) {
+    const node = cy.nodes(`#${id}`);
+    const currentData = node.data();
+    node.data({ ...currentData, ...data, isDirty: true });
+  }
+
   function unsubscribe(subscriber: Subscriber) {
     subscribers.delete(subscriber);
   }
@@ -289,6 +304,7 @@ export function createGraph(
     setNodeData,
     setZoom,
     subscribe,
+    updateNode,
     unsubscribe,
     unsubscribeAll
   };
@@ -311,6 +327,11 @@ function getEdgeStyle({
   dashOffset,
   dashPattern,
   endCap,
+  labelBackgroundColor,
+  labelPadding,
+  labelOffset,
+  labelTextColor,
+  labelTextSize,
   midSourceArrow,
   midTargetArrow,
   opacity,
@@ -341,6 +362,9 @@ function getEdgeStyle({
 
   return {
     ...arrowStyles,
+    color: labelTextColor ?? 'steelblue',
+    'font-size': labelTextSize,
+    'font-weight': 'normal',
     'line-color': color,
     'curve-style': curveStyle ?? 'straight',
     'line-dash-offset': dashOffset,
@@ -353,6 +377,12 @@ function getEdgeStyle({
     'overlay-opacity': 0,
     'source-endpoint': sourceEndpoint ?? getEdgeEndpointStyle('inside-to-node'),
     'target-endpoint': targetEndpoint ?? getEdgeEndpointStyle('outside-to-node'),
+    label: 'data(label)',
+    // 'source-text-offset': 80,
+    'text-background-color': labelBackgroundColor,
+    'text-background-opacity': isNil(labelBackgroundColor) ? 0 : 1,
+    'text-background-padding': `${labelPadding}px`,
+    'text-background-shape': 'roundrectangle',
     width: width
   };
 }
@@ -389,19 +419,15 @@ function getHoverSvg(node: NodeSingular) {
   return hoverSvg;
 }
 
-function getNodeColor(state: Health) {
+function getNodeColor(state: AlarmState) {
   switch (state) {
-    case 'critical':
-      return GRAPH_COLORS.HEALTH_CRITICAL;
-    case 'high':
+    case 'High':
       return GRAPH_COLORS.HEALTH_HIGH;
-    case 'low':
+    case 'Low':
       return GRAPH_COLORS.HEALTH_LOW;
-    case 'medium':
+    case 'Medium':
       return GRAPH_COLORS.HEALTH_MEDIUM;
-    case 'offline':
-      return GRAPH_COLORS.HEALTH_OFFLINE;
-    case 'ok':
+    case 'Normal':
       return GRAPH_COLORS.HEALTH_OK;
     default:
       return GRAPH_COLORS.HEALTH_UNKNOWN;
@@ -433,7 +459,7 @@ function getNodeStyle({
     color: labelTextColor ?? 'steelblue',
     'font-size': labelTextSize,
     'font-weight': 'normal',
-    label: 'data(name)',
+    label: 'data(label)',
     'line-height': 1,
     'text-background-color': labelBackgroundColor,
     'text-background-opacity': isNil(labelBackgroundColor) ? 0 : 1,

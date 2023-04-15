@@ -8,11 +8,11 @@ import type { UserConfig } from '@/lib/types';
  */
 const users: UserConfig[] = [
   {
-    email: 'fran@cookiefactory',
-    firstName: 'fran',
-    lastName: 'franL',
-    title: 'franT',
-    password: 'fran12'
+    email: '',
+    firstName: '',
+    lastName: '',
+    title: '',
+    password: ''
   }
 ];
 

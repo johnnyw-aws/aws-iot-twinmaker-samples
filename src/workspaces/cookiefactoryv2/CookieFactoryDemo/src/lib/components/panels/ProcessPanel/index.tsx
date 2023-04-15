@@ -1,24 +1,52 @@
 import { ExecuteQueryCommand } from '@aws-sdk/client-iottwinmaker';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
+import { ALARM_PROPERTY_NAME, COMPONENT_NAMES } from '@/config/iottwinmaker';
 import { FitIcon, MinusIcon, PlusIcon, TargetIcon } from '@/lib/components/svgs/icons';
-import { createGraph, getElementsDefinition, type EdgeData, type NodeData } from '@/lib/graph';
+import { isIgnoredEntity, normalizedEntityData } from '@/lib/entities';
+import { createGraph, getElementsDefinition, type EdgeData, type NodeData, type NodeRenderData } from '@/lib/graph';
+import { useTimeSeriesDataQuery } from '@/lib/hooks';
+import { TimeSeriesDataProvider } from '@/lib/providers';
 import { createQueryByEquipment, fullEquipmentAndProcess } from '@/lib/queries';
-import { usePanelState, useSelectedEntityState, useSiteState, useTwinMakerClientState } from '@/lib/state';
-import type { TwinMakerQueryData, TwinMakerQueryEdgeData, TwinMakerQueryNodeData } from '@/lib/types';
+import {
+  usePanelState,
+  useSelectedEntityState,
+  useSiteState,
+  useTimeSeriesDataState,
+  useTwinMakerClientState
+} from '@/lib/state';
+import type { AlarmState, TwinMakerQueryData, TwinMakerQueryEdgeData, TwinMakerQueryNodeData } from '@/lib/types';
 import { createClassName, type ClassName } from '@/lib/utils/element';
+import { getEntityHistoryQuery } from '@/lib/utils/entity';
 
 import styles from './styles.module.css';
 
+type Meta = {
+  entityId: string;
+  componentName: string;
+  propertyName: string;
+};
+
 const GRAPH_CANVAS_PADDING = 30;
+const alarmHistoryQuery = normalizedEntityData.map((entity) => getEntityHistoryQuery(entity, 'alarm'));
+const dataHistoryQuery = normalizedEntityData.map((entity) => getEntityHistoryQuery(entity, 'data'));
 
 export function ProcessPanel({ className }: { className?: ClassName }) {
+  const [alarmQuery] = useTimeSeriesDataQuery(alarmHistoryQuery);
+  const [dataQuery] = useTimeSeriesDataQuery(dataHistoryQuery);
   const [client] = useTwinMakerClientState();
   const [panels] = usePanelState();
   const [selectedEntity, setSelectedEntity] = useSelectedEntityState();
   const [site] = useSiteState();
+  const [dataStreams] = useTimeSeriesDataState();
   const [graph, setGraph] = useState<ReturnType<typeof createGraph>>();
   const ref = useRef<HTMLElement>(null);
+
+  const timeSeriesDataprovider = useMemo(() => {
+    if (alarmQuery.length && dataQuery.length) {
+      return <TimeSeriesDataProvider queries={[...alarmQuery, ...dataQuery]} />;
+    }
+  }, [alarmQuery, dataQuery]);
 
   const loadData = useCallback(
     async (queryStatement: string) => {
@@ -39,35 +67,47 @@ export function ProcessPanel({ className }: { className?: ClassName }) {
               for await (const item of rowData) {
                 if (isTwinMakerQueryNodeData(item)) {
                   const { entityId, entityName, components } = item;
-                  const component = components.find(
-                    (component) =>
-                      component.componentName === 'EquipmentComponent' ||
-                      component.componentName === 'ProcessStepComponent'
-                  );
 
-                  if (component) {
-                    const { componentName } = component;
+                  if (!isIgnoredEntity(entityId)) {
+                    const component = components.find(
+                      ({ componentName }) =>
+                        componentName === COMPONENT_NAMES.EQUIPMENT || componentName === COMPONENT_NAMES.PROCESS_STEP
+                    );
 
-                    nodeData.set(entityId, {
-                      entityData: { componentName, entityId, entityName },
-                      id: entityId,
-                      name: entityName,
-                      shape: componentName === 'EquipmentComponent' ? 'hexagon' : 'ellipse',
-                      state: 'unknown'
-                    });
+                    if (component) {
+                      const { componentName } = component;
+                      const entityData = normalizedEntityData.find(({ entityId: id }) => id === entityId) ?? {
+                        entityId,
+                        componentName,
+                        properties: []
+                      };
+
+                      nodeData.set(entityId, {
+                        entityData,
+                        id: entityId,
+                        label: entityName,
+                        shape: componentName === COMPONENT_NAMES.EQUIPMENT ? 'hexagon' : 'ellipse',
+                        state: componentName === COMPONENT_NAMES.EQUIPMENT ? 'Unknown' : 'Normal'
+                      });
+                    }
                   }
                 }
 
                 if (isTwinMakerQueryEdgeData(item)) {
-                  const id = `${item.sourceEntityId}-${item.targetEntityId}`;
-                  const lineStyle = item.relationshipName === 'belongTo' ? 'dashed' : 'solid';
+                  const { relationshipName, sourceEntityId, targetEntityId } = item;
 
-                  edgeData.set(id, {
-                    id,
-                    lineStyle,
-                    source: item.sourceEntityId,
-                    target: item.targetEntityId
-                  });
+                  if (!isIgnoredEntity(sourceEntityId) && !isIgnoredEntity(targetEntityId)) {
+                    const id = `${sourceEntityId}-${targetEntityId}`;
+                    const lineStyle = relationshipName === 'belongTo' ? 'dashed' : 'solid';
+
+                    edgeData.set(id, {
+                      id,
+                      label: relationshipName,
+                      lineStyle,
+                      source: sourceEntityId,
+                      target: targetEntityId
+                    });
+                  }
                 }
               }
             }
@@ -89,7 +129,7 @@ export function ProcessPanel({ className }: { className?: ClassName }) {
 
         if (data) {
           graph.setGraphData(getElementsDefinition([...data.nodeData.values()], [...data.edgeData.values()]));
-          graph.resize();
+          // graph.setZoom(1);
           graph.center();
           if (selectedEntityId) graph.selectNode(selectedEntityId);
         }
@@ -126,6 +166,7 @@ export function ProcessPanel({ className }: { className?: ClassName }) {
         if (selectedEntity.type !== 'process') executeQuery(selectedEntity.entityData.entityId);
       } else {
         graph.deselectNode();
+        executeQuery();
       }
     }
   }, [graph, selectedEntity, executeQuery]);
@@ -143,7 +184,8 @@ export function ProcessPanel({ className }: { className?: ClassName }) {
         switch (eventName) {
           case 'click': {
             if (data?.entityData) {
-              setSelectedEntity({ entityData: data.entityData, type: 'process' });
+              const { entityData } = data as NodeRenderData;
+              setSelectedEntity({ entityData, type: 'process' });
             } else {
               setSelectedEntity({ entityData: null, type: 'process' });
             }
@@ -164,6 +206,23 @@ export function ProcessPanel({ className }: { className?: ClassName }) {
     executeQuery();
   }, [graph]);
 
+  useEffect(() => {
+    if (graph && dataStreams.length) {
+      for (const { data, meta } of dataStreams) {
+        if (meta) {
+          const { entityId, propertyName } = meta as Meta;
+          const latestValue = data[data.length - 1];
+
+          if (propertyName === ALARM_PROPERTY_NAME) {
+            graph.updateNode(entityId, { state: latestValue.y as AlarmState });
+          } else {
+            // console.log(entityId, propertyName, latestValue);
+          }
+        }
+      }
+    }
+  }, [dataStreams, graph]);
+
   return (
     <main className={createClassName(styles.root, className)}>
       <section ref={ref} className={styles.canvas} />
@@ -181,6 +240,7 @@ export function ProcessPanel({ className }: { className?: ClassName }) {
           <MinusIcon className={styles.buttonZoomOutIcon} />
         </button>
       </section>
+      {timeSeriesDataprovider}
     </main>
   );
 }

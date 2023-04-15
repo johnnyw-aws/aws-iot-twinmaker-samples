@@ -7,7 +7,7 @@ import { useMenu } from '@/lib/hooks';
 import { useSiteState } from '@/lib/state';
 import { isNil } from '@/lib/utils/lang';
 import { createClassName, type ClassName } from '@/lib/utils/element';
-import type { Health } from '@/lib/types';
+import type { AlarmState } from '@/lib/types';
 
 import menuStyles from '../menu.module.css';
 import styles from './styles.module.css';
@@ -66,16 +66,14 @@ export function SiteSelector({ className }: { className?: ClassName }) {
   );
 }
 
-function getHealthIcon(health: Health, className: ClassName) {
+function getHealthIcon(health: AlarmState, className: ClassName) {
   switch (health) {
-    case 'critical':
-    case 'high':
-    case 'low':
-    case 'medium':
-    case 'offline':
-    case 'ok':
-      return <Circle className={createClassName(className, styles[`health-${health}`])} />;
+    case 'High':
+    case 'Medium':
+    case 'Low':
+    case 'Normal':
+      return <Circle className={createClassName(className, styles[`health${health}`])} />;
     default:
-      return <Ring className={createClassName(className, styles[`health-${health}`])} />;
+      return <Ring className={createClassName(className, styles[`health${health}`])} />;
   }
 }

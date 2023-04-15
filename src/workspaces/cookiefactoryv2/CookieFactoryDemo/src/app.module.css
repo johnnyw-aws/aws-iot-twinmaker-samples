@@ -1,7 +1,7 @@
 :root {
   --background-color: transparent;
   --background-hover-color: var(--color-gray-46);
-  --border-radius: 3px;
+  --border-radius: 2px;
   --border-color: var(--color-gray-54);
   --border-hover-color: var(--color-gray-54);
   --menu-z-index: 999;
@@ -30,4 +30,8 @@ body {
 .root {
   flex: 1;
   display: flex;
+}
+
+.canvasHidden {
+  visibility: hidden;
 }

@@ -7,6 +7,7 @@ from udq_utils.udq_models import IoTTwinMakerUDQEntityRequest, IoTTwinMakerUDQCo
 from datetime import datetime, timedelta
 import json
 import pandas as pd
+import os
 
 # for debugging
 # pd.set_option('display.max_rows', 500)
@@ -15,14 +16,26 @@ import pandas as pd
 
 # read the telemetry data sample into a pandas dataframe for serving queries
 data = []
-with open('telemetryData.json', 'r') as f:
-    lines = f.readlines()
-    for line in lines:
-        data.append(json.loads(line.strip()))
+try:
+    telemetryDataFileName = os.environ['TELEMETRY_DATA_FILE_NAME']
+    if telemetryDataFileName is None or telemetryDataFileName.strip() == '':
+        telemetryDataFileName = 'telemetryData.json'
+    print(f"telemetryDataFileName: {telemetryDataFileName}")
+    with open(telemetryDataFileName, 'r') as f:
+        lines = f.readlines()
+        for line in lines:
+            data.append(json.loads(line.strip()))
+except:
+    with open('telemetryData.json', 'r') as f:
+        lines = f.readlines()
+        for line in lines:
+            data.append(json.loads(line.strip()))
 
 df = pd.DataFrame(data)
 
-# mapping of entity names to entity_ids for CookieLine1 telemetry data
+# sample data cleaning operations for the csv data
+
+# re-mapping of entity names to entity_ids for CookieLine1 telemetry data
 simulatorName_to_entityId = {
     "plasticLiner": "PLASTIC_LINER_a77e76bc-53f3-420d-8b2f-76103c810fac",
     "boxErector": "BOX_ERECTOR_142496af-df2e-490e-aed5-2580eaf75e40",
@@ -40,6 +53,7 @@ def remap_ids(row):
 
 df['entityId'] = df.apply(remap_ids, axis=1)
 
+# re-map alarm status values to match IoT TwinMaker's com.amazon.iottwinmaker.alarm.basic component type
 def remap_alarm_status(row):
     if row['Alarming']:
         return 'ACTIVE'
@@ -139,5 +153,5 @@ def lambda_handler(event, context):
 # used for local testing, not executed by Lambda when deployed
 if __name__ == '__main__':
     test_workspace_id = "__FILL_IN__"
-    test_event = {'workspaceId': test_workspace_id, 'selectedProperties': ['Resources'], 'startDateTime': 1679465064, 'startTime': '2023-03-22T06:04:24Z', 'endDateTime': 1679551464, 'endTime': '2023-03-23T06:04:24Z', 'properties': {'AlarmMessage': {'definition': {'dataType': {'type': 'STRING'}, 'isTimeSeries': True, 'isRequiredInEntity': False, 'isExternalId': False, 'isStoredExternally': True, 'isImported': False, 'isFinal': False, 'isInherited': False, 'requiredInEntity': False, 'imported': False, 'externalId': False, 'storedExternally': True, 'timeSeries': True, 'inherited': False, 'final': False}}, 'Speed': {'definition': {'dataType': {'type': 'DOUBLE'}, 'isTimeSeries': True, 'isRequiredInEntity': False, 'isExternalId': False, 'isStoredExternally': True, 'isImported': False, 'isFinal': False, 'isInherited': False, 'requiredInEntity': False, 'imported': False, 'externalId': False, 'storedExternally': True, 'timeSeries': True, 'inherited': False, 'final': False}}, 'Temperature': {'definition': {'dataType': {'type': 'DOUBLE'}, 'isTimeSeries': True, 'isRequiredInEntity': False, 'isExternalId': False, 'isStoredExternally': True, 'isImported': False, 'isFinal': False, 'isInherited': False, 'requiredInEntity': False, 'imported': False, 'externalId': False, 'storedExternally': True, 'timeSeries': True, 'inherited': False, 'final': False}}, 'alarm_status': {'definition': {'dataType': {'type': 'STRING', 'allowedValues': [{'stringValue': 'ACTIVE'}, {'stringValue': 'SNOOZE_DISABLED'}, {'stringValue': 'ACKNOWLEDGED'}, {'stringValue': 'NORMAL'}]}, 'isTimeSeries': True, 'isRequiredInEntity': False, 'isExternalId': False, 'isStoredExternally': True, 'isImported': False, 'isFinal': False, 'isInherited': True, 'requiredInEntity': False, 'imported': False, 'externalId': False, 'storedExternally': True, 'timeSeries': True, 'inherited': True, 'final': False}}, 'Resources': {'definition': {'dataType': {'type': 'MAP', 'nestedType': {'type': 'DOUBLE'}}, 'isTimeSeries': True, 'isRequiredInEntity': False, 'isExternalId': False, 'isStoredExternally': True, 'isImported': False, 'isFinal': False, 'isInherited': False, 'requiredInEntity': False, 'imported': False, 'externalId': False, 'storedExternally': True, 'timeSeries': True, 'inherited': False, 'final': False}}, 'telemetryAssetId': {'definition': {'dataType': {'type': 'STRING'}, 'isTimeSeries': False, 'isRequiredInEntity': True, 'isExternalId': True, 'isStoredExternally': False, 'isImported': False, 'isFinal': False, 'isInherited': True, 'requiredInEntity': True, 'imported': False, 'externalId': True, 'storedExternally': False, 'timeSeries': False, 'inherited': True, 'final': False}, 'value': {'stringValue': 'PLASTIC_LINER_23df2a72-30d6-4f8f-bc15-95a8e945b4fa'}}, 'telemetryAssetType': {'definition': {'dataType': {'type': 'STRING'}, 'isTimeSeries': False, 'isRequiredInEntity': True, 'isExternalId': False, 'isStoredExternally': False, 'isImported': False, 'isFinal': False, 'isInherited': True, 'defaultValue': {'stringValue': 'CookieLine'}, 'requiredInEntity': True, 'imported': False, 'externalId': False, 'storedExternally': False, 'timeSeries': False, 'inherited': True, 'final': False}, 'value': {'stringValue': 'CookieLine'}}, 'alarm_key': {'definition': {'dataType': {'type': 'STRING'}, 'isTimeSeries': False, 'isRequiredInEntity': True, 'isExternalId': True, 'isStoredExternally': False, 'isImported': False, 'isFinal': False, 'isInherited': True, 'requiredInEntity': True, 'imported': False, 'externalId': True, 'storedExternally': False, 'timeSeries': False, 'inherited': True, 'final': False}, 'value': {'stringValue': 'PLASTIC_LINER_23df2a72-30d6-4f8f-bc15-95a8e945b4fa'}}}, 'entityId': 'PLASTIC_LINER_23df2a72-30d6-4f8f-bc15-95a8e945b4fa', 'componentName': 'CookieLineComponent', 'maxResults': 100, 'orderByTime': 'ASCENDING'}
+    test_event = {'workspaceId': test_workspace_id, 'selectedProperties': ['Resources'], 'startDateTime': 1679465064, 'startTime': '2023-03-22T06:04:24Z', 'endDateTime': 1679551464, 'endTime': '2023-03-23T06:04:24Z', 'properties': {'AlarmMessage': {'definition': {'dataType': {'type': 'STRING'}, 'isTimeSeries': True, 'isRequiredInEntity': False, 'isExternalId': False, 'isStoredExternally': True, 'isImported': False, 'isFinal': False, 'isInherited': False, 'requiredInEntity': False, 'imported': False, 'externalId': False, 'storedExternally': True, 'timeSeries': True, 'inherited': False, 'final': False}}, 'Speed': {'definition': {'dataType': {'type': 'DOUBLE'}, 'isTimeSeries': True, 'isRequiredInEntity': False, 'isExternalId': False, 'isStoredExternally': True, 'isImported': False, 'isFinal': False, 'isInherited': False, 'requiredInEntity': False, 'imported': False, 'externalId': False, 'storedExternally': True, 'timeSeries': True, 'inherited': False, 'final': False}}, 'Temperature': {'definition': {'dataType': {'type': 'DOUBLE'}, 'isTimeSeries': True, 'isRequiredInEntity': False, 'isExternalId': False, 'isStoredExternally': True, 'isImported': False, 'isFinal': False, 'isInherited': False, 'requiredInEntity': False, 'imported': False, 'externalId': False, 'storedExternally': True, 'timeSeries': True, 'inherited': False, 'final': False}}, 'alarm_status': {'definition': {'dataType': {'type': 'STRING', 'allowedValues': [{'stringValue': 'ACTIVE'}, {'stringValue': 'SNOOZE_DISABLED'}, {'stringValue': 'ACKNOWLEDGED'}, {'stringValue': 'NORMAL'}]}, 'isTimeSeries': True, 'isRequiredInEntity': False, 'isExternalId': False, 'isStoredExternally': True, 'isImported': False, 'isFinal': False, 'isInherited': True, 'requiredInEntity': False, 'imported': False, 'externalId': False, 'storedExternally': True, 'timeSeries': True, 'inherited': True, 'final': False}}, 'Resources': {'definition': {'dataType': {'type': 'MAP', 'nestedType': {'type': 'DOUBLE'}}, 'isTimeSeries': True, 'isRequiredInEntity': False, 'isExternalId': False, 'isStoredExternally': True, 'isImported': False, 'isFinal': False, 'isInherited': False, 'requiredInEntity': False, 'imported': False, 'externalId': False, 'storedExternally': True, 'timeSeries': True, 'inherited': False, 'final': False}}, 'telemetryAssetId': {'definition': {'dataType': {'type': 'STRING'}, 'isTimeSeries': False, 'isRequiredInEntity': True, 'isExternalId': True, 'isStoredExternally': False, 'isImported': False, 'isFinal': False, 'isInherited': True, 'requiredInEntity': True, 'imported': False, 'externalId': True, 'storedExternally': False, 'timeSeries': False, 'inherited': True, 'final': False}, 'value': {'stringValue': 'PLASTIC_LINER_23df2a72-30d6-4f8f-bc15-95a8e945b4fa'}}, 'telemetryAssetType': {'definition': {'dataType': {'type': 'STRING'}, 'isTimeSeries': False, 'isRequiredInEntity': True, 'isExternalId': False, 'isStoredExternally': False, 'isImported': False, 'isFinal': False, 'isInherited': True, 'defaultValue': {'stringValue': 'CookieLine'}, 'requiredInEntity': True, 'imported': False, 'externalId': False, 'storedExternally': False, 'timeSeries': False, 'inherited': True, 'final': False}, 'value': {'stringValue': 'CookieLine'}}, 'alarm_key': {'definition': {'dataType': {'type': 'STRING'}, 'isTimeSeries': False, 'isRequiredInEntity': True, 'isExternalId': True, 'isStoredExternally': False, 'isImported': False, 'isFinal': False, 'isInherited': True, 'requiredInEntity': True, 'imported': False, 'externalId': True, 'storedExternally': False, 'timeSeries': False, 'inherited': True, 'final': False}, 'value': {'stringValue': 'PLASTIC_LINER_23df2a72-30d6-4f8f-bc15-95a8e945b4fa'}}}, 'entityId': 'PLASTIC_LINER_a77e76bc-53f3-420d-8b2f-76103c810fac', 'componentName': 'CookieLineComponent', 'maxResults': 100, 'orderByTime': 'ASCENDING'}
     lambda_handler(test_event, None)

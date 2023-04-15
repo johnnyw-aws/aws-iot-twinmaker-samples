@@ -1,0 +1,73 @@
+.root {
+  position: relative;
+}
+
+iot-app-kit-vis-status-timeline iot-app-kit-vis-data-stream-name {
+  color: var(--color-gray-10) !important;
+  margin-bottom: 2rem;
+}
+
+iot-app-kit-vis-status-timeline [class=no-data-visualization] {
+  background: repeating-linear-gradient(45deg, var(--color-gray-48), var(--color-gray-48) 10px, var(--color-gray-45) 10px, var(--color-gray-45) 20px) !important;
+}
+
+iot-app-kit-vis-status-timeline [class=x-axis-separator] {
+  display: none;
+}
+
+iot-app-kit-vis-status-timeline iot-app-kit-vis-threshold-legend {
+  color: var(--color-gray-20) !important;
+}
+
+iot-app-kit-vis-legend-row span {
+  color: var(--color-gray-10) !important;
+  font-size: 13rem;
+}
+
+iot-app-kit-vis-legend-row [class=legend-value] h4 {
+  color: var(--color-gray-10) !important;
+  font-size: 18rem;
+  font-weight: 400;
+  margin-top: 5rem;
+}
+
+[class=legend-value] small {
+  color: var(--color-gray-15) !important;
+  font-size: 14rem;
+  font-weight: 400;
+  margin-top: 5rem;
+}
+
+[class=y-axis-label] {
+  fill: var(--color-gray-20) !important;
+}
+
+[class=x-axis-separator] {
+  stroke: none;
+}
+
+[class=axis] [class=tick] line {
+  stroke: var(--color-gray-34) !important;
+}
+
+[class=axis] [class=tick] text {
+  fill: var(--color-gray-30) !important;
+}
+
+iot-app-kit-vis-status-timeline-overlay-row [class=value] {
+  visibility: hidden !important;
+}
+
+iot-app-kit-vis-error-badge {
+  margin-top: -15rem;
+}
+
+iot-app-kit-vis-error-badge div {
+  color: var(--color-gray-10);
+}
+
+iot-app-kit-vis-error-badge [class=warning-symbol] {
+  color: var(--color-health-critical);
+  font-size: 12rem;
+  font-weight: 400;
+}
