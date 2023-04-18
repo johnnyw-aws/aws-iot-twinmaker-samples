@@ -63,6 +63,30 @@
             "isRequiredInEntity": false,
             "isStoredExternally": true,
             "isTimeSeries": true
+        },
+        "telemetryAssetId": {
+            "dataType": {
+                "type": "STRING"
+            },
+            "isExternalId": true,
+            "isFinal": false,
+            "isImported": false,
+            "isInherited": true,
+            "isRequiredInEntity": true,
+            "isStoredExternally": false,
+            "isTimeSeries": false
+        },
+        "telemetryAssetType": {
+            "dataType": {
+                "type": "STRING"
+            },
+            "isExternalId": false,
+            "isFinal": false,
+            "isImported": false,
+            "isInherited": true,
+            "isRequiredInEntity": true,
+            "isStoredExternally": false,
+            "isTimeSeries": false
         }
     }
 }

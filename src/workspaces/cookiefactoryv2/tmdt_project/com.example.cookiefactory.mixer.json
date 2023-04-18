@@ -40,10 +40,32 @@
             "isStoredExternally": true,
             "isTimeSeries": true
         },
+        "telemetryAssetId": {
+            "dataType": {
+                "type": "STRING"
+            },
+            "isExternalId": true,
+            "isFinal": false,
+            "isImported": false,
+            "isInherited": true,
+            "isRequiredInEntity": true,
+            "isStoredExternally": false,
+            "isTimeSeries": false
+        },
         "telemetryAssetType": {
+            "dataType": {
+                "type": "STRING"
+            },
             "defaultValue": {
                 "stringValue": "Mixer"
-            }
+            },
+            "isExternalId": false,
+            "isFinal": false,
+            "isImported": false,
+            "isInherited": true,
+            "isRequiredInEntity": true,
+            "isStoredExternally": false,
+            "isTimeSeries": false
         }
     }
 }

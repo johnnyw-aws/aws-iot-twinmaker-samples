@@ -46,6 +46,14 @@ class VerboseLogger {
     }
 }
 
+function escapeRegExp(string: string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+}
+
+function replaceAll(str: string, find: string, replace: string) {
+    return str.replace(new RegExp(escapeRegExp(find), 'g'), replace);
+}
+
 // Note: this construct currently only handles deployments less than 200 resources
 // TMDT = IoT TwinMaker Development Tools - https://github.com/awslabs/iot-app-kit/tree/main/packages/tools-iottwinmaker
 export class TmdtApplication extends Construct {
@@ -64,7 +72,7 @@ export class TmdtApplication extends Construct {
 
         // simple string replacement for props.replacement - e.g. to replace source ARN references with destination-generated ones
         for (const k in props.replacements) {
-            tmdt_config_str = tmdt_config_str.replace(k, props.replacements[k])
+            tmdt_config_str = replaceAll(tmdt_config_str, k, props.replacements[k])
         }
 
         var tmdtConfig: any = JSON.parse(tmdt_config_str)
@@ -78,16 +86,40 @@ export class TmdtApplication extends Construct {
 
         // prepare component type resources
         var componentTypesMap : any = {};
-        for (const componentTypeFile of tmdtConfig['component-types']) {
+        for (const componentTypeFile of tmdtConfig['component_types']) {
             verbose.log(componentTypeFile)
             var componentTypeFileBuffer = fs.readFileSync(path.join(props.tmdtRoot, componentTypeFile), 'utf-8');
 
             // e.g. replace Lambda references in component types to updated ones
             for (const k in props.replacements) {
-                componentTypeFileBuffer = componentTypeFileBuffer.replace(k, props.replacements[k])
+                componentTypeFileBuffer = tmdt_config_str = replaceAll(componentTypeFileBuffer, k, props.replacements[k])
             }
 
             var componentTypeDefinition = JSON.parse(`${componentTypeFileBuffer}`)
+            // remove inherited properties
+            var propertyDefinitions = componentTypeDefinition['propertyDefinitions'] as object;
+            if (propertyDefinitions != undefined) {
+                const filtered_property_definitions = Object.entries(propertyDefinitions).reduce((acc, [key, value]) => {
+                    if (!value['isInherited']) {
+                        acc[key] = value;
+                    } else if ('defaultValue' in value) {
+                        acc[key] = { defaultValue: value['defaultValue'] };
+                    }
+                    return acc;
+                }, {} as { [key: string]: object });
+                componentTypeDefinition['propertyDefinitions'] = filtered_property_definitions;
+            }
+            // remove inherited functions
+            var componentTypeFunctions = componentTypeDefinition['functions'] as object;
+            if (componentTypeFunctions != undefined) {
+                const filtered_functions = Object.entries(componentTypeFunctions).reduce((acc, [key, value]) => {
+                    if (!value['isInherited']) {
+                        acc[key] = value;
+                    }
+                    return acc;
+                }, {} as { [key: string]: object });
+                componentTypeDefinition['functions'] = filtered_functions;
+            }
             verbose.log(componentTypeDefinition);
 
             // generate the CFN resource and save a reference to it so we can later model resource dependencies
@@ -106,7 +138,7 @@ export class TmdtApplication extends Construct {
 
         // model component type dependencies in CFN:
         // for each file, define a CFN dependency between the resource references in `extendsFrom`
-        for (const componentTypeFile of tmdtConfig['component-types']) {
+        for (const componentTypeFile of tmdtConfig['component_types']) {
             componentTypeFileBuffer = fs.readFileSync(path.join(props.tmdtRoot, componentTypeFile), 'utf-8');
             componentTypeDefinition = JSON.parse(`${componentTypeFileBuffer}`)
             if (componentTypeDefinition["extendsFrom"]) {
@@ -128,7 +160,12 @@ export class TmdtApplication extends Construct {
         // prepare entity resources
         var entityResources : any = {};
         var entitiesFileBuffer = fs.readFileSync(path.join(props.tmdtRoot, "entities.json"), 'utf-8');
+        for (const k in props.replacements) {
+            entitiesFileBuffer = replaceAll(entitiesFileBuffer, k, props.replacements[k])
+        }
+
         var entities = JSON.parse(`${entitiesFileBuffer}`)
+
         for (const entity of entities) {
             verbose.log(entity)
 
@@ -399,7 +436,10 @@ export class CookieFactoryV2Stack extends cdk.Stack {
             role: timestreamUdqRole,
             runtime: lambda.Runtime.PYTHON_3_7,
             timeout: cdk.Duration.minutes(15),
-            logRetention: logs.RetentionDays.ONE_DAY
+            logRetention: logs.RetentionDays.ONE_DAY,
+            environment: {
+                "TELEMETRY_DATA_FILE_NAME": 'telemetryData.json',
+            }
         });
         //endregion
 
@@ -411,7 +451,8 @@ export class CookieFactoryV2Stack extends cdk.Stack {
             replacements: {
                 "__FILL_IN_TS_DB__": `${timestreamDB.databaseName}`,
                 "__TO_FILL_IN_TIMESTREAM_LAMBDA_ARN__": `${timestreamReaderUDQ.functionArn}`,
-                "__TO_FILL_IN_SYNTHETIC_DATA_ARN__": `${syntheticDataUDQ.functionArn}`
+                "__TO_FILL_IN_SYNTHETIC_DATA_ARN__": `${syntheticDataUDQ.functionArn}`,
+                '"targetEntityId"': '"TargetEntityId"',
             },
             account: this.account,
             region: this.region,

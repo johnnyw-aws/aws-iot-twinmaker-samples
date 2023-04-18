@@ -1,15 +1,48 @@
 {
     "componentTypeId": "com.example.cookiefactory.cookieline",
     "extendsFrom": [
-        "com.example.synthetic-telemetry",
-        "com.amazon.iottwinmaker.alarm.basic"
+        "com.amazon.iottwinmaker.alarm.basic",
+        "com.example.synthetic-telemetry"
     ],
+    "functions": {
+        "dataReader": {
+            "implementedBy": {
+                "isNative": false,
+                "lambda": {
+                    "arn": "__TO_FILL_IN_SYNTHETIC_DATA_ARN__"
+                }
+            },
+            "isInherited": true
+        }
+    },
     "isSingleton": false,
     "propertyDefinitions": {
-        "telemetryAssetType": {
-            "defaultValue": {
-                "stringValue": "CookieLine"
-            }
+        "AlarmMessage": {
+            "dataType": {
+                "type": "STRING"
+            },
+            "isExternalId": false,
+            "isFinal": false,
+            "isImported": false,
+            "isInherited": false,
+            "isRequiredInEntity": false,
+            "isStoredExternally": true,
+            "isTimeSeries": true
+        },
+        "Resources": {
+            "dataType": {
+                "nestedType": {
+                    "type": "DOUBLE"
+                },
+                "type": "MAP"
+            },
+            "isExternalId": false,
+            "isFinal": false,
+            "isImported": false,
+            "isInherited": false,
+            "isRequiredInEntity": false,
+            "isStoredExternally": true,
+            "isTimeSeries": true
         },
         "Speed": {
             "dataType": {
@@ -35,30 +68,70 @@
             "isStoredExternally": true,
             "isTimeSeries": true
         },
-        "AlarmMessage": {
+        "alarm_key": {
             "dataType": {
+                "type": "STRING"
+            },
+            "isExternalId": true,
+            "isFinal": false,
+            "isImported": false,
+            "isInherited": true,
+            "isRequiredInEntity": true,
+            "isStoredExternally": false,
+            "isTimeSeries": false
+        },
+        "alarm_status": {
+            "dataType": {
+                "allowedValues": [
+                    {
+                        "stringValue": "ACTIVE"
+                    },
+                    {
+                        "stringValue": "SNOOZE_DISABLED"
+                    },
+                    {
+                        "stringValue": "ACKNOWLEDGED"
+                    },
+                    {
+                        "stringValue": "NORMAL"
+                    }
+                ],
                 "type": "STRING"
             },
             "isExternalId": false,
             "isFinal": false,
             "isImported": false,
-            "isInherited": false,
+            "isInherited": true,
             "isRequiredInEntity": false,
             "isStoredExternally": true,
             "isTimeSeries": true
         },
-        "Resources": {
+        "telemetryAssetId": {
             "dataType": {
-                "type": "MAP",
-                "nestedType": {"type": "DOUBLE"}
+                "type": "STRING"
+            },
+            "isExternalId": true,
+            "isFinal": false,
+            "isImported": false,
+            "isInherited": true,
+            "isRequiredInEntity": true,
+            "isStoredExternally": false,
+            "isTimeSeries": false
+        },
+        "telemetryAssetType": {
+            "dataType": {
+                "type": "STRING"
+            },
+            "defaultValue": {
+                "stringValue": "CookieLine"
             },
             "isExternalId": false,
             "isFinal": false,
             "isImported": false,
-            "isInherited": false,
-            "isRequiredInEntity": false,
-            "isStoredExternally": true,
-            "isTimeSeries": true
+            "isInherited": true,
+            "isRequiredInEntity": true,
+            "isStoredExternally": false,
+            "isTimeSeries": false
         }
     }
 }

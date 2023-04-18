@@ -1,8 +1,8 @@
 {
     "componentTypeId": "com.example.cookiefactory.alarm",
     "extendsFrom": [
-        "com.example.timestream-telemetry",
-        "com.amazon.iottwinmaker.alarm.basic"
+        "com.amazon.iottwinmaker.alarm.basic",
+        "com.example.timestream-telemetry"
     ],
     "functions": {
         "dataReader": {
@@ -17,10 +17,70 @@
     },
     "isSingleton": false,
     "propertyDefinitions": {
+        "alarm_key": {
+            "dataType": {
+                "type": "STRING"
+            },
+            "isExternalId": true,
+            "isFinal": false,
+            "isImported": false,
+            "isInherited": true,
+            "isRequiredInEntity": true,
+            "isStoredExternally": false,
+            "isTimeSeries": false
+        },
+        "alarm_status": {
+            "dataType": {
+                "allowedValues": [
+                    {
+                        "stringValue": "ACTIVE"
+                    },
+                    {
+                        "stringValue": "SNOOZE_DISABLED"
+                    },
+                    {
+                        "stringValue": "ACKNOWLEDGED"
+                    },
+                    {
+                        "stringValue": "NORMAL"
+                    }
+                ],
+                "type": "STRING"
+            },
+            "isExternalId": false,
+            "isFinal": false,
+            "isImported": false,
+            "isInherited": true,
+            "isRequiredInEntity": false,
+            "isStoredExternally": true,
+            "isTimeSeries": true
+        },
+        "telemetryAssetId": {
+            "dataType": {
+                "type": "STRING"
+            },
+            "isExternalId": true,
+            "isFinal": false,
+            "isImported": false,
+            "isInherited": true,
+            "isRequiredInEntity": true,
+            "isStoredExternally": false,
+            "isTimeSeries": false
+        },
         "telemetryAssetType": {
+            "dataType": {
+                "type": "STRING"
+            },
             "defaultValue": {
                 "stringValue": "Alarm"
-            }
+            },
+            "isExternalId": false,
+            "isFinal": false,
+            "isImported": false,
+            "isInherited": true,
+            "isRequiredInEntity": true,
+            "isStoredExternally": false,
+            "isTimeSeries": false
         }
     }
 }

@@ -1,0 +1,5 @@
+:root {
+  --font-family: 'NotoSans';
+  --transition-duration: 100ms;
+  --z-max: 9999;
+}

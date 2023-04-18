@@ -1,0 +1,9 @@
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 15px 20px;
+  background-color: var(--menu-item-background-color);
+  transition: var(--transition);
+}

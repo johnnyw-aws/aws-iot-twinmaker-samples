@@ -1,0 +1,37 @@
+:root {
+  --background-color: transparent;
+  --background-hover-color: var(--color-gray-46);
+  --border-radius: 2px;
+  --border-color: var(--color-gray-54);
+  --border-hover-color: var(--color-gray-54);
+  --menu-z-index: 999;
+  --icon-color: var(--color-gray-26);
+  --icon-hover-color: var(--color-gray-4);
+  --icon-active-color: var(--color-gray-4);
+  --text-color: var(--color-gray-14);
+  --text-hover-color: var(--color-gray-4);
+  --text-active-color: var(--color-gray-4);
+  --transition:
+    background-color var(--transition-duration) ease-out,
+    border-color var(--transition-duration) ease-out,
+    color var(--transition-duration) ease-out,
+    rotate var(--transition-duration) ease-out;
+  font-family: var(--font-family);
+  font-size: 1px;
+  text-rendering: geometricPrecision;
+}
+
+body {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+}
+
+.root {
+  flex: 1;
+  display: flex;
+}
+
+.canvasHidden {
+  visibility: hidden;
+}
