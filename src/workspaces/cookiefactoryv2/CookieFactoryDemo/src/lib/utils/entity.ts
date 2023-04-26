@@ -1,7 +1,20 @@
-import type { EntityData, EntityPropertyType, TwinMakerEntityHistoryQuery, TwinMakerQuery } from '@/lib/types';
+import type {
+  EntityData,
+  EntityPropertyType,
+  TimeSeriesDataQuery,
+  TwinMakerDataSource,
+  TwinMakerEntityHistoryQuery
+} from '@/lib/types';
 import type { ValueOf } from 'type-fest';
 
-export function getEntityHistoryQuery<T extends EntityData>(
+export function createTimeSeriesQuery(
+  dataSource: TwinMakerDataSource,
+  historyQuery: TwinMakerEntityHistoryQuery[]
+): TimeSeriesDataQuery[] {
+  return historyQuery.map((query) => dataSource.query.timeSeriesData(query));
+}
+
+export function createHistoryQuery<T extends EntityData>(
   entityData: T,
   propertyType: EntityPropertyType
 ): TwinMakerEntityHistoryQuery {
@@ -20,7 +33,7 @@ export function getEntityHistoryQuery<T extends EntityData>(
   return { componentName, entityId, properties: reducedProperties };
 }
 
-export function getEntityHistoryQueries<T extends EntityData>(
+export function createHistoryQueries<T extends EntityData>(
   entityData: T,
   propertyType: EntityPropertyType
 ): TwinMakerEntityHistoryQuery[] {

@@ -96,7 +96,7 @@ const edgeNormalStyles = getEdgeStyle(EDGE_DEFAULT_STYLE_PROPS);
 const edgeHoverStyles = getEdgeStyle(EDGE_HOVER_STYLE_PROPS);
 const edgeSelectedStyles = getEdgeStyle(EDGE_SELECTED_STYLE_PROPS);
 
-cytoscape.use(cise);
+// cytoscape.use(cise);
 
 export function createGraph(
   container: HTMLElement,
@@ -118,17 +118,29 @@ export function createGraph(
 ) {
   const subscribers = new Set<Subscriber>();
 
-  const layoutOptions = {
-    //@ts-ignore
-    name: 'cise',
+  const commonLayoutOptions = {
     animate: false,
     fit: fitOnLoad,
-    idealInterClusterEdgeLengthCoefficient: 2,
     nodeDimensionsIncludeLabels: true,
-    nodeSeparation: 30,
-    padding: canvasPadding,
-    randomize: false,
+    padding: canvasPadding
+  };
+
+  const ciseLayoutOptions = {
+    ...commonLayoutOptions,
+    name: 'cise',
+    idealInterClusterEdgeLengthCoefficient: 2,
+    nodeSeparation: 30
+  };
+
+  const breadthFirstLayoutOptions = {
+    ...commonLayoutOptions,
+    name: 'breadthfirst',
+    grid: true,
     roots: rootElementIds
+  };
+
+  const layoutOptions = {
+    ...breadthFirstLayoutOptions
   };
 
   const cy = cytoscape({
@@ -150,29 +162,33 @@ export function createGraph(
   });
 
   cy.on('click', ({ target }: EventObjectNode | EventObjectEdge | EventObjectCore) => {
-    emitEvent({ eventName: 'click', data: getTargetData(target) });
+    emitEvent({ eventName: 'click', data: getTargetData(target), target });
   });
 
   cy.on('mouseover', 'node', ({ target }: EventObjectNode) => {
     if (!target.selected()) target.addClass('hover');
     target.connectedEdges().addClass('related-hover');
-    emitEvent({ eventName: 'mouseover', data: getTargetData(target) });
+    emitEvent({ eventName: 'mouseover', data: getTargetData(target), target });
   });
 
   cy.on('mouseout', 'node', ({ target }: EventObjectNode) => {
     target.removeClass('hover');
     target.connectedEdges().removeClass('related-hover');
-    emitEvent({ eventName: 'mouseout', data: getTargetData(target) });
+    emitEvent({ eventName: 'mouseout', data: getTargetData(target), target });
+  });
+
+  cy.on('resize', ({ target }: EventObjectCore) => {
+    emitEvent({ eventName: 'resize', target });
   });
 
   cy.on('select', 'node', ({ target }: EventObjectNode) => {
     target.connectedEdges().addClass('related-selected');
-    emitEvent({ eventName: 'select', data: getTargetData(target) });
+    emitEvent({ eventName: 'select', data: getTargetData(target), target });
   });
 
   cy.on('unselect', 'node', ({ target }: EventObjectNode) => {
     target.connectedEdges().removeClass('related-selected');
-    emitEvent({ eventName: 'unselect', data: getTargetData(target) });
+    emitEvent({ eventName: 'unselect', data: getTargetData(target), target });
   });
 
   function getTargetData(
@@ -222,6 +238,15 @@ export function createGraph(
     cy.fit(...args);
   }
 
+  function getNode(id: string) {
+    return cy.nodes(`#${id}`);
+  }
+
+  function getNodeBoundingBox(id: string) {
+    const node = getNode(id);
+    return node.renderedBoundingBox();
+  }
+
   function getZoom() {
     return cy.zoom();
   }
@@ -229,7 +254,10 @@ export function createGraph(
   /**
    * Based on: https://github.com/cytoscape/cytoscape.js/issues/2283#issuecomment-461897618
    */
-  function nodesInView(nodes: NodeCollection | NodeSingular) {
+  function nodesInView(nodes: NodeCollection | NodeSingular | string) {
+    if (isString(nodes)) {
+      nodes = getNode(nodes);
+    }
     const bb1 = nodes.boundingBox();
     const bb2 = cy.extent();
     return bb1.x1 > bb2.x1 && bb1.x2 < bb2.x2 && bb1.y1 > bb2.y1 && bb1.y2 < bb2.y2;
@@ -241,17 +269,17 @@ export function createGraph(
 
   function selectNode(id: string) {
     cy.nodes().unselect();
-    const node = cy.nodes(`#${id}`);
+    const node = getNode(id);
     node.select();
     center(node);
   }
 
-  function setGraphData(elementsDefinition: ElementsDefinition) {
+  function setGraphData(elementsDefinition: ElementsDefinition, options: Partial<typeof layoutOptions> = {}) {
     clearGraph();
 
     if (elementsDefinition.nodes.length) {
       cy.add(elementsDefinition);
-      cy.layout(layoutOptions).run();
+      cy.layout({ ...layoutOptions, ...options }).run();
     }
   }
 
@@ -269,7 +297,7 @@ export function createGraph(
   }
 
   function updateNode(id: string, data: Partial<Pick<NodeData, 'state' | 'shape'>>) {
-    const node = cy.nodes(`#${id}`);
+    const node = getNode(id);
     const currentData = node.data();
     node.data({ ...currentData, ...data, isDirty: true });
   }
@@ -296,6 +324,8 @@ export function createGraph(
     deselectNode,
     dispose,
     fit,
+    getNode,
+    getNodeBoundingBox,
     getZoom,
     nodesInView,
     resize,

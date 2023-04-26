@@ -5,7 +5,8 @@ import { PanelLayout } from '@/lib/components/layouts';
 import { CloseAllIcon } from '@/lib/components/svgs/icons';
 import { CookieFactoryLogoWide } from '@/lib/components/svgs/logos';
 import { PANELS } from '@/lib/panels';
-import { globalControlState, panelState, useGlobalControlState, usePanelState } from '@/lib/state';
+import { globalControlState, useGlobalControlState } from '@/lib/state/control';
+import { panelState, usePanelState } from '@/lib/state/panel';
 import type { GlobalControl, Panel, PanelId } from '@/lib/types';
 import { createClassName, type ClassName } from '@/lib/utils/element';
 
@@ -60,7 +61,7 @@ function Panels() {
   }, [panelState]);
 
   return (
-    <main className={createClassName(styles.panels)}>
+    <main className={createClassName(styles.panels)} data-count={panelState.length}>
       {panelElements}
       {panelState.length === 0 && <EmptyState />}
     </main>

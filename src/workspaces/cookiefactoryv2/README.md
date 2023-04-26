@@ -41,7 +41,7 @@ TODO indicate specific versions for above, validate in Cloud9 environment
       ```
       aws iottwinmaker get-property-value-history \
           --region us-east-1 \
-          --cli-input-json '{"componentName": "CookieLineComponent","endTime": "2023-06-01T00:00:00Z","entityId": "PLASTIC_LINER_a77e76bc-53f3-420d-8b2f-76103c810fac","orderByTime": "ASCENDING","selectedProperties": ["alarm_status", "AlarmMessage", "Speed", "Resources"],"startTime": "2022-06-01T00:00:00Z","workspaceId": "__FILL_IN__", "maxResults": 10}'
+          --cli-input-json '{"componentName": "CookieLineComponent","endTime": "2023-06-01T00:00:00Z","entityId": "PLASTIC_LINER_a77e76bc-53f3-420d-8b2f-76103c810fac","orderByTime": "ASCENDING","selectedProperties": ["alarm_status", "AlarmMessage", "Speed"],"startTime": "2022-06-01T00:00:00Z","workspaceId": "__FILL_IN__", "maxResults": 10}'
       ```
     - Knowledge Graph
       ```

@@ -1,4 +1,4 @@
-import { useGlobalControlState } from '@/lib/state';
+import { useGlobalControlState } from '@/lib/state/control';
 import { createClassName, type ClassName } from '@/lib/utils/element';
 
 import styles from './styles.module.css';

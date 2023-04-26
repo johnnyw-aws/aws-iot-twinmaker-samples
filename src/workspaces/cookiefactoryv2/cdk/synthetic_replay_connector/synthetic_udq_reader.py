@@ -14,22 +14,30 @@ import os
 # pd.set_option('display.max_columns', 500)
 # pd.set_option('display.width', 1000)
 
+# read the telemetry data interval
+DATA_INTERVAL = 10
+try:
+    DATA_INTERVAL = int(os.environ['TELEMETRY_DATA_TIME_INTERVAL_SECONDS'])
+except:
+    pass # use default interval
+
 # read the telemetry data sample into a pandas dataframe for serving queries
 data = []
+
 try:
-    telemetryDataFileName = os.environ['TELEMETRY_DATA_FILE_NAME']
-    if telemetryDataFileName is None or telemetryDataFileName.strip() == '':
-        telemetryDataFileName = 'telemetryData.json'
-    print(f"telemetryDataFileName: {telemetryDataFileName}")
-    with open(telemetryDataFileName, 'r') as f:
-        lines = f.readlines()
-        for line in lines:
-            data.append(json.loads(line.strip()))
+   telemetryDataFileName = os.environ['TELEMETRY_DATA_FILE_NAME']
+   if telemetryDataFileName is None or telemetryDataFileName.strip() == '':
+       telemetryDataFileName = 'demoTelemetryData.json'
+   print(f"telemetryDataFileName: {telemetryDataFileName}")
+   with open(telemetryDataFileName, 'r') as f:
+       lines = f.readlines()
+       for line in lines:
+           data.append(json.loads(line.strip()))
 except:
-    with open('telemetryData.json', 'r') as f:
-        lines = f.readlines()
-        for line in lines:
-            data.append(json.loads(line.strip()))
+   with open('demoTelemetryData.json', 'r') as f:
+       lines = f.readlines()
+       for line in lines:
+           data.append(json.loads(line.strip()))
 
 df = pd.DataFrame(data)
 
@@ -119,21 +127,21 @@ class RenderValuesReader(SingleEntityReader, MultiEntityReader):
 
             # determine the relative start point in the data set to generate synthetic data for, as well as number of data points to return
             epoch_start_in_seconds = start_dt.timestamp()
-            sample_time_range_length_in_seconds = (len(data_index) * (60*5))
-            start_5s_bin = epoch_start_in_seconds % sample_time_range_length_in_seconds
-            start_5s_bin_in_index = int(start_5s_bin / (60*5))
-            number_of_datapoints = min(max_rows, int((end_dt.timestamp() - start_dt.timestamp()) / (60*5)))
+            sample_time_range_length_in_seconds = (len(data_index) * (DATA_INTERVAL))
+            start_interval_bin = epoch_start_in_seconds % sample_time_range_length_in_seconds
+            start_interval_bin_in_index = int(start_interval_bin / (DATA_INTERVAL))
+            number_of_datapoints = min(max_rows, int((end_dt.timestamp() - start_dt.timestamp()) / (DATA_INTERVAL)))
 
             # generate data response by repeatedly iterating over the data sample
-            curr_dt = datetime.fromtimestamp(int(start_dt.timestamp() / (60*5)) * (60*5))
-            curr_index = start_5s_bin_in_index
+            curr_dt = datetime.fromtimestamp(int(start_dt.timestamp() / (DATA_INTERVAL)) * (DATA_INTERVAL))
+            curr_index = start_interval_bin_in_index
             for i in range(number_of_datapoints):
                 dt = curr_dt
                 value = data_index[curr_index][selected_property]
 
                 data_rows.append(RenderIoTTwinMakerDataRow(dt, value, selected_property, request.entity_id))
 
-                curr_dt = dt + timedelta(minutes=5)
+                curr_dt = dt + timedelta(seconds=DATA_INTERVAL)
                 curr_index = (curr_index + 1) % len(data_index)
 
         return data_rows

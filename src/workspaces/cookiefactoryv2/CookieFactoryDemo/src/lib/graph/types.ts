@@ -96,5 +96,9 @@ export type NodeStyleProps = {
 };
 
 export type Subscriber = (ev: EventDetail) => void;
-export type EventDetail = { eventName: EventName; data?: NodeRenderData | EdgeRenderData };
+export type EventDetail = {
+  eventName: EventName;
+  data?: NodeRenderData | EdgeRenderData;
+  target: NodeSingular | EdgeSingular| Core;
+};
 export type EventName = CollectionEventName | GraphEventName | UserInputDeviceEventName | UserInputDeviceEventNameExt;

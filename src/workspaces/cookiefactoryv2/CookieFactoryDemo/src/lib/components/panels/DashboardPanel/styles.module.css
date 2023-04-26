@@ -1,16 +1,13 @@
 .root {
-  /* flex: 1; */
   display: grid;
   grid-template-rows: 30rem 1fr;
+  position: relative;
+  height: 100%;
+  width: 100%;
   padding: 30px 50px 10px;
   overflow: hidden;
   user-select: none;
-  height: 100%;
-  width: 100%
-  /* position: relative; */
 }
-
-
 
 .name {
   /* padding: 30rem 30rem 0 30rem; */
@@ -25,8 +22,8 @@
   /* grid-template-rows: 1fr; */
   /* gap: 20rem; */
   /* justify-content: center; */
-  position: relative;
-  height: 100%;
+  /* position: relative;
+  height: 100%; */
 }
 
 .multi {
@@ -36,7 +33,6 @@
 .root:not(.multi) {
   grid-template-rows: 50rem 1fr;
   padding: 30px 50px 50px;
-
 }
 
 .multi iot-app-kit-vis-status-timeline iot-app-kit-vis-data-stream-name {

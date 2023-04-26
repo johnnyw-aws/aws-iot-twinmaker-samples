@@ -1,1 +1,1 @@
-export { TimeSeriesDataProvider } from './TimeSeriesDataProvider';
+export { TimeSeriesContext } from './TimeSeriesContext';

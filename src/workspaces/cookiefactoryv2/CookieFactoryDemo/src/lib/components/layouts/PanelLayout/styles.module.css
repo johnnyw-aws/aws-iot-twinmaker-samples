@@ -1,10 +1,9 @@
 .root {
-  --background-color: var(--color-gray-50);
+  --background-color: var(--color-gray-51);
   /* --icon-color: var(--color-gray-8);
   --text-color: var(--color-gray-8); */
   /* --icon-color: var(--text-color); */
   --text-color: var(--icon-color);
-  flex: 1 0;
   display: grid;
   grid-template-rows: 34px 1fr;
 }
@@ -64,11 +63,7 @@
   font-size: 14rem;
   font-weight: 400;
   line-height: 16rem;
-  /* letter-spacing: .2rem; */
   color: var(--text-color);
-  /* text-transform: uppercase; */
-  /* scale: 1.03 1; */
-  /* transform-origin: left center; */
 }
 
 .body {

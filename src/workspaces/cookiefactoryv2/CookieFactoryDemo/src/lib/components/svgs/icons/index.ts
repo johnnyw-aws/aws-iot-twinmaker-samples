@@ -19,3 +19,4 @@ export { PanelIcon } from './PanelIcon';
 export { PlusIcon } from './PlusIcon';
 export { SceneIcon } from './SceneIcon';
 export { TargetIcon } from './TargetIcon';
+export { TrendIcon } from './TrendIcon';

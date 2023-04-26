@@ -1,5 +1,5 @@
 .root {
-  --background-color: var(--color-gray-52);
+  --background-color: var(--color-gray-51);
   display: grid;
   grid-template-rows: auto auto;
   user-select: none;

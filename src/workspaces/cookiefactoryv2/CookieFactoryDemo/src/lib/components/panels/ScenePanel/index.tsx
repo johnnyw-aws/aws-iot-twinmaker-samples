@@ -8,22 +8,22 @@ import { useCallback, useEffect } from 'react';
 
 import { VIEWPORT } from '@/config/iottwinmaker';
 import { normalizedEntityData } from '@/lib/entities';
-import { useTimeSeriesDataQuery } from '@/lib/hooks';
-import { useSceneLoaderState, useSelectedEntityState } from '@/lib/state';
+import { useTimeSeriesQuery } from '@/lib/hooks';
+import { useSelectedState, useAlarmHistoryQueryState } from '@/lib/state/entity';
+import { useSceneLoaderState } from '@/lib/state/twinMaker';
 import type { DataBindingContext, EntityData } from '@/lib/types';
 import { createClassName, type ClassName } from '@/lib/utils/element';
-import { getEntityHistoryQuery } from '@/lib/utils/entity';
 import { isNil } from '@/lib/utils/lang';
 
 import styles from './styles.module.css';
 
 const sceneComposerId = crypto.randomUUID();
-const alarmHistoryQuery = normalizedEntityData.map((entity) => getEntityHistoryQuery(entity, 'alarm'));
 
 export const ScenePanel = ({ className }: { className?: ClassName }) => {
   const { findSceneNodeRefBy, setSelectedSceneNodeRef, setCameraTarget } = useSceneComposerApi(sceneComposerId);
-  const [alarmQuery, setAlarmQuery] = useTimeSeriesDataQuery();
-  const [selectedEntity, setSelectedEntity] = useSelectedEntityState();
+  const [alarmHistoryQuery] = useAlarmHistoryQueryState();
+  const [timeSeriesQuery, setTimeSeriesQuery] = useTimeSeriesQuery(alarmHistoryQuery);
+  const [selectedEntity, setSelectedEntity] = useSelectedState();
   const [sceneLoader] = useSceneLoaderState();
 
   const handleSelectionChange: SelectionChangedEventCallback = useCallback(
@@ -76,8 +76,8 @@ export const ScenePanel = ({ className }: { className?: ClassName }) => {
   }, [selectedEntity]);
 
   useEffect(() => {
-    setAlarmQuery(alarmHistoryQuery);
-  }, []);
+    setTimeSeriesQuery(alarmHistoryQuery);
+  }, [alarmHistoryQuery]);
 
   return (
     <main className={createClassName(styles.root, className)}>
@@ -90,7 +90,7 @@ export const ScenePanel = ({ className }: { className?: ClassName }) => {
               path: 'https://www.gstatic.com/draco/versioned/decoders/1.5.3/' // path to the draco files
             }
           }}
-          queries={alarmQuery}
+          queries={timeSeriesQuery}
           selectedDataBinding={selectedEntity.entityData ?? undefined}
           sceneLoader={sceneLoader}
           onSelectionChanged={handleSelectionChange}

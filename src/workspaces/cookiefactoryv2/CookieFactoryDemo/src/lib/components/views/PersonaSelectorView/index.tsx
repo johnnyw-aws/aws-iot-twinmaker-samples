@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { getAwsCredentials } from '@/lib/authentication';
 import { AWS_CREDENTIAL_CONFIG } from '@/lib/credentials';
-import { useUserState } from '@/lib/state';
+import { useUserState } from '@/lib/state/user';
 import { USERS } from '@/lib/users';
 import { createClassName, type ClassName } from '@/lib/utils/element';
 import type { User } from '@/lib/types';
@@ -12,7 +12,7 @@ import styles from './styles.module.css';
 let disabled = false;
 
 export function PersonaSelectorView({ className }: { className?: ClassName }) {
-  const [,setUser] = useUserState();
+  const [, setUser] = useUserState();
   const [isActive, setIsActive] = useState(false);
 
   async function handlePointerDown({ firstName, icon, lastName, password, title, email }: User) {

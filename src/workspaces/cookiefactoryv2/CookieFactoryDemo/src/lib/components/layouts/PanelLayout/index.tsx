@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react';
 
-import { usePanelState } from '@/lib/state';
+import { usePanelState } from '@/lib/state/panel';
 import { CloseIcon, ExpandIcon } from '@/lib/components/svgs/icons';
 import { createClassName, type ClassName } from '@/lib/utils/element';
 import type { Panel } from '@/lib/types';
@@ -16,7 +16,7 @@ export function PanelLayout({
   isExpandable?: boolean;
   panel: Panel;
 }) {
-  const setPanelState = usePanelState()[1];
+  const [, setPanelState] = usePanelState();
 
   const handleCloseClick = useCallback(() => {
     setPanelState((panels) => {

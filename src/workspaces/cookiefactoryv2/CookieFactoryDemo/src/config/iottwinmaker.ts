@@ -1,19 +1,11 @@
-import type { Threshold, ThresholdValue, Viewport } from '@iot-app-kit/core';
+import type { Threshold, Viewport } from '@iot-app-kit/core';
 
 import { ALARM_STATUS_COLORS, STATUS_TIMELINE_TRACK_COLOR } from '@/lib/css/colors';
-import type { AlarmState, EntityData } from '@/lib/types';
+import type { AlarmState, EntityData, PanelId } from '@/lib/types';
 import type { ValueOf } from 'type-fest';
 
 const DATA_PROPERTY_NAME_1 = 'Speed';
 const DATA_PROPERTY_NAME_2 = 'Temperature';
-
-export const ALARM_PROPERTY_NAME = 'AlarmMessage';
-
-export const COMPONENT_NAMES = {
-  DATA: 'CookieLineComponent',
-  EQUIPMENT: 'CookieLineComponent',
-  PROCESS_STEP: 'ProcessStepComponent'
-};
 
 const alarmNames: Record<AlarmState, string> = {
   High: 'High',
@@ -22,6 +14,8 @@ const alarmNames: Record<AlarmState, string> = {
   Normal: 'Normal',
   Unknown: 'Unknown'
 };
+
+export const ALARM_PROPERTY_NAME = 'AlarmMessage';
 
 export const ALARM_THRESHOLDS: Threshold<AlarmState>[] = [
   {
@@ -49,11 +43,21 @@ export const ALARM_THRESHOLDS: Threshold<AlarmState>[] = [
   }
 ];
 
+export const COMPONENT_NAMES = {
+  DATA: 'CookieLineComponent',
+  EQUIPMENT: 'CookieLineComponent',
+  PROCESS_STEP: 'ProcessStepComponent'
+};
+
+export const DEFAULT_PANEL_ID: PanelId | null = null;
+export const DEFAULT_QUERY_HOPS = 2;
+
 export const ENTITY_DATA: EntityData[] = [
   {
     entityId: 'BOX_ERECTOR_142496af-df2e-490e-aed5-2580eaf75e40',
     componentName: COMPONENT_NAMES.DATA,
-    properties: getProperties()
+    properties: getProperties(),
+    isRoot: true
   },
   {
     entityId: 'BOX_SEALER_ad434a34-4363-4a36-8153-20bd7189951d',
@@ -63,7 +67,8 @@ export const ENTITY_DATA: EntityData[] = [
   {
     entityId: 'COOKIE_FORMER_19556bfd-469c-40bc-a389-dbeab255c144',
     componentName: COMPONENT_NAMES.DATA,
-    properties: getProperties()
+    properties: getProperties(),
+    isRoot: true
   },
   {
     entityId: 'CONVEYOR_LEFT_TURN_b28f2ca9-b6a7-44cd-a62d-7f76fc17ba45',
@@ -83,7 +88,33 @@ export const ENTITY_DATA: EntityData[] = [
   {
     entityId: 'FREEZER_TUNNEL_e12e0733-f5df-4604-8f10-417f49e6d298',
     componentName: COMPONENT_NAMES.DATA,
-    properties: getProperties()
+    properties: [
+      {
+        propertyQueryInfo: {
+          propertyName: ALARM_PROPERTY_NAME,
+          refId: crypto.randomUUID()
+        },
+        type: 'alarm'
+      },
+      {
+        propertyQueryInfo: {
+          propertyName: DATA_PROPERTY_NAME_1,
+          refId: crypto.randomUUID()
+        },
+        threshold: { upper: 10, lower: 3 },
+        type: 'data',
+        unit: 'rpm'
+      },
+      {
+        propertyQueryInfo: {
+          propertyName: DATA_PROPERTY_NAME_2,
+          refId: crypto.randomUUID()
+        },
+        threshold: { upper: -10, lower: -40 },
+        type: 'data',
+        unit: '°F'
+      }
+    ]
   },
   {
     entityId: 'LABELING_BELT_5f98ffd2-ced1-48dd-a111-e3503b4e8532',
@@ -109,12 +140,34 @@ export const ENTITY_DATA: EntityData[] = [
 
 export const IGNORED_ENTITIES = ['PALLET_98648a84-72da-443a-b625-f671d99a13ba'];
 
-export const VIEWPORT: Viewport = { duration: '4h' };
+export const VIEWPORT: Viewport = { duration: '15m' };
 
 function getProperties(): ValueOf<EntityData, 'properties'> {
   return [
-    { propertyQueryInfo: { propertyName: ALARM_PROPERTY_NAME, refId: crypto.randomUUID() }, type: 'alarm' },
-    { propertyQueryInfo: { propertyName: DATA_PROPERTY_NAME_1, refId: crypto.randomUUID() }, type: 'data' },
-    { propertyQueryInfo: { propertyName: DATA_PROPERTY_NAME_2, refId: crypto.randomUUID() }, type: 'data' }
+    {
+      propertyQueryInfo: {
+        propertyName: ALARM_PROPERTY_NAME,
+        refId: crypto.randomUUID()
+      },
+      type: 'alarm'
+    },
+    {
+      propertyQueryInfo: {
+        propertyName: DATA_PROPERTY_NAME_1,
+        refId: crypto.randomUUID()
+      },
+      threshold: { upper: 10, lower: 3 },
+      type: 'data',
+      unit: 'rpm'
+    },
+    {
+      propertyQueryInfo: {
+        propertyName: DATA_PROPERTY_NAME_2,
+        refId: crypto.randomUUID()
+      },
+      threshold: { upper: 50, lower: 15 },
+      type: 'data',
+      unit: '°F'
+    }
   ];
 }

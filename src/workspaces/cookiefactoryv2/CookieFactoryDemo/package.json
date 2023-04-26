@@ -4,14 +4,14 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "kill $(lsof -t -i:5000) ; webpack serve",
-    "build": "tsc && vite build",
-    "preview": "kill $(lsof -t -i:4000) ; vite preview"
+    "dev": "kill $(lsof -t -i:5000) ; webpack serve --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js"
   },
   "dependencies": {
     "@aws-sdk/client-cognito-identity": "3.252.0",
     "@aws-sdk/client-iottwinmaker": "3.252.0",
     "@aws-sdk/credential-provider-cognito-identity": "3.252.0",
+    "@floating-ui/react": "^0.23.0",
     "@formatjs/intl": "^2.6.9",
     "@iot-app-kit/react-components": "5.5.1",
     "@iot-app-kit/scene-composer": "5.5.1",
@@ -50,7 +50,8 @@
     "typescript-plugin-css-modules": "latest",
     "webpack": "^5.78.0",
     "webpack-cli": "^5.0.1",
-    "webpack-dev-server": "^4.13.2"
+    "webpack-dev-server": "^4.13.2",
+    "webpack-merge": "^5.8.0"
   },
   "overrides": {
     "three": "0.146.0"

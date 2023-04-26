@@ -1,7 +1,7 @@
 .root {
-  --background-color: var(--color-gray-50);
+  --background-color: var(--color-gray-51);
   --background-hover-color: var(--color-gray-44);
-  --background-active-color: var(--color-gray-50);
+  --background-active-color: var(--color-gray-51);
   --background-selected-color: var(--color-blue);
   --icon-hover-color: var(--text-active-color);
   --icon-selected-color: #E2E7F2;

@@ -1,6 +1,6 @@
 import { FactoryIcon } from '@/lib/components/svgs/icons';
 import { SITES } from '@/lib/sites';
-import { useSiteState } from '@/lib/state';
+import { useSiteState } from '@/lib/state/site';
 import { createClassName, type ClassName } from '@/lib/utils/element';
 import type { Site } from '@/lib/types';
 

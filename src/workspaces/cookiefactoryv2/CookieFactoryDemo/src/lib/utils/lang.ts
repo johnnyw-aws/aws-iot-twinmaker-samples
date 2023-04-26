@@ -1,5 +1,12 @@
 type Primitive = number | string | boolean | bigint | symbol | null | undefined;
 
+/**
+ * Invokes `func` after `delay` milliseconds. Any additional arguments are provided to `func` when it's invoked.
+ */
+export function delay<T extends any[]>(func: (...args: T) => void, delay: number, ...args: T) {
+  return setTimeout(() => func.apply(func, args), delay);
+}
+
 export function isEven(value: number) {
   return (~value & 1) === 1;
 }
@@ -67,4 +74,19 @@ export function isSvgElement(value: any): value is SVGElement {
 
 export function isUndefined(value: any): value is undefined {
   return value === undefined;
+}
+
+export function lastItem<T>(arr: T[], count = 1): T | undefined {
+  return arr[arr.length - count];
+}
+
+export function takeRight<T>(arr: T[], count = 1): T[] {
+  return arr.slice(Math.max(arr.length - count, 0));
+}
+
+/**
+ * Invokes `func` on next exeuction of the event loop. Any additional arguments are provided to `func` when it's invoked.
+ */
+export function nextTick<T extends any[]>(func: (...args: T) => void, ...args: T) {
+  return setTimeout(() => func.apply(func, args), 0);
 }

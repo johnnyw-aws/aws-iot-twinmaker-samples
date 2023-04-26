@@ -1,31 +1,50 @@
 import type { EntitySummary } from '@aws-sdk/client-iottwinmaker';
-import type { StyleSettingsMap, TimeSeriesDataQuery } from '@iot-app-kit/core';
+import type { Primitive, StyleSettingsMap, TimeSeriesDataQuery, Timestamp } from '@iot-app-kit/core';
 import type { initialize, PropertyQueryInfo } from '@iot-app-kit/source-iottwinmaker';
 import type { ReactNode } from 'react';
 
 import type { AwsCredentials } from '@/lib/authentication';
+import type { ValueOf } from 'type-fest';
 
+export type { EntitySummary, IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 export type {
+  DataPoint,
   DataStream,
+  Primitive,
   StyleSettingsMap,
-  Threshold,
   ThresholdSettings,
   ThresholdValue,
   TimeSeriesDataQuery
 } from '@iot-app-kit/core';
 export type { Axis } from '@iot-app-kit/charts-core';
-export type { PropertyQueryInfo, TwinMakerEntityHistoryQuery, TwinMakerQuery } from '@iot-app-kit/source-iottwinmaker';
+export type {
+  PropertyQueryInfo,
+  SceneLoader,
+  TwinMakerEntityHistoryQuery,
+  TwinMakerQuery
+} from '@iot-app-kit/source-iottwinmaker';
+
+export type DataStreamMetaData = {
+  componentName: string;
+  entityId: string;
+  propertyName: string;
+};
 
 export type EntityData = {
   componentName: string;
   entityId: string;
   properties: EntityDataProperty[];
+  isRoot?: boolean;
 };
 
 export type EntityDataProperty = {
   propertyQueryInfo: PropertyQueryInfo;
+  threshold?: Threshold;
   type: EntityPropertyType;
+  unit?: string;
 };
+
+export type Threshold = { upper: number | null; lower: number | null } | number | boolean;
 
 export type EntityPropertyType = 'alarm' | 'data';
 
@@ -47,20 +66,28 @@ export type Event = {
 
 export type GlobalControl = ReactNode;
 
+export type LatestValue<T extends AlarmState | Primitive> = {
+  dataPoint: { x: Timestamp; y: T };
+  metaData: DataStreamMetaData;
+  threshold?: Threshold;
+  trend: 1 | 0 | -1;
+  unit?: string;
+};
+
 export type AlarmState = 'High' | 'Medium' | 'Low' | 'Normal' | 'Unknown';
 // export type Health = 'ok' | 'high' | 'medium' | 'low' | 'offline' | 'unknown';
 
 export type Panel = {
   content?: ReactNode;
   icon: ReactNode;
-  id: PanelId;
+  id: 'dashboard' | 'scene' | 'process' | 'live' | 'events' | 'tickets' | 'messages';
   label: string;
   priority: number;
   slot: 1 | 2;
   isVisible: boolean;
 };
 
-export type PanelId = 'dashboard' | 'scene' | 'process' | 'live' | 'events' | 'tickets' | 'messages';
+export type PanelId = ValueOf<Panel, 'id'>;
 
 export type SceneSelectedDataBinding = Record<'entityId' | 'componentName', string>;
 
@@ -68,7 +95,7 @@ export type SelectedEntity = { entityData: EntityData | null; type: 'process' | 
 
 export type Site = SiteConfig &
   Readonly<{
-    entities: Record<string, EntitySummary>;
+    // entities: Record<string, EntitySummary>;
     health: AlarmState;
   }>;
 
@@ -78,6 +105,16 @@ export type SiteConfig = Readonly<{
   location: string;
   name: string;
 }>;
+
+export type StateName =
+  | 'twinMakerClientState'
+  | 'crumbState'
+  | 'panelState'
+  | 'userState'
+  | 'siteState'
+  | 'sceneLoaderState'
+  | 'selectedEntityState'
+  | 'viewState';
 
 export type TwinMakerConfig = {
   workspaceId: string;
@@ -137,10 +174,10 @@ export type UserConfig = Readonly<{
 
 export type View = {
   content: ReactNode;
-  id: ViewId;
+  id: 'panel';
 };
 
-export type ViewId = 'panel';
+export type ViewId = ValueOf<View, 'id'>;
 
 // AWS IoT TwinMaker types
 

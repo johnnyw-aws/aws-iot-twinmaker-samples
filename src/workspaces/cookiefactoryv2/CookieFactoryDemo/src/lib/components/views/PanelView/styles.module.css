@@ -14,6 +14,22 @@
   position: relative;
 }
 
+.panels[data-count="1"]>* {
+  width: 100%;
+}
+
+.panels[data-count="2"]>* {
+  width: calc(100% / 2);
+}
+
+.panels[data-count="3"]>* {
+  width: calc(100% / 3);
+}
+
+.canvasHidden {
+  visibility: hidden;
+}
+
 .isHidden {
   /* display: none; */
   position: absolute;

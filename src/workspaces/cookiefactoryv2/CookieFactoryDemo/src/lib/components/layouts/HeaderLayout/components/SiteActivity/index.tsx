@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import type { CSSProperties, ReactNode } from 'react';
 
 import { BellOutlinedIcon, ListIcon, MessagesIcon } from '@/lib/components/svgs/icons';
-import { usePanelState } from '@/lib/state';
+import { usePanelState } from '@/lib/state/panel';
 import { createClassName, type ClassName } from '@/lib/utils/element';
 import type { PanelId } from '@/lib/types';
 
@@ -31,7 +31,7 @@ function InfoItem({
   style?: CSSProperties;
   value?: number;
 }) {
-  const setPanelState = usePanelState()[1];
+  const [, setPanelState] = usePanelState();
 
   function handleClick() {
     setPanelState([id]);

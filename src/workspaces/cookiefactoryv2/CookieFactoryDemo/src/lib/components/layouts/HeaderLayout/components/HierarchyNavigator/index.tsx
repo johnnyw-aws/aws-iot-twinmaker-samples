@@ -2,22 +2,24 @@ import { useMemo } from 'react';
 import type { ValueOf } from 'type-fest';
 
 import { ArrowRightIcon, GlobeIcon } from '@/lib/components/svgs/icons';
-import { useSelectedEntityState, useSiteState } from '@/lib/state';
+import { useSummaryState, useSelectedState } from '@/lib/state/entity';
+import { useSiteState } from '@/lib/state/site';
 import { isNil } from '@/lib/utils/lang';
 import { createClassName, type ClassName } from '@/lib/utils/element';
-import type { Site } from '@/lib/types';
+import type { EntitySummary } from '@/lib/types';
 
 import styles from './styles.module.css';
 
 const UNKNOWN_ENTITY_NAME = 'UNKNOWN ENTITY';
 
 export function HierarchyNavigator({ className }: { className?: ClassName }) {
-  const [{ entityData }] = useSelectedEntityState();
+  const [entitySummaries] = useSummaryState();
+  const [{ entityData }] = useSelectedState();
   const [site, setSite] = useSiteState();
 
   const contentElement = useMemo(() => {
-    if (site) {
-      const parents = walkParentEntities(site.entities, entityData?.entityId);
+    if (entitySummaries && site) {
+      const parents = walkParentEntities(entitySummaries, entityData?.entityId);
 
       return (
         <>
@@ -36,7 +38,7 @@ export function HierarchyNavigator({ className }: { className?: ClassName }) {
             <Crumb
               key={entityData.entityId}
               isActive={true}
-              name={site.entities[entityData.entityId]?.entityName ?? UNKNOWN_ENTITY_NAME}
+              name={entitySummaries[entityData.entityId]?.entityName ?? UNKNOWN_ENTITY_NAME}
             />
           )}
         </>
@@ -44,7 +46,7 @@ export function HierarchyNavigator({ className }: { className?: ClassName }) {
     }
 
     return null;
-  }, [site, entityData]);
+  }, [entitySummaries, entityData, site]);
 
   return <section className={createClassName(styles.root, className)}>{contentElement}</section>;
 }
@@ -60,7 +62,7 @@ function Crumb({ isActive = false, name }: { isActive?: boolean; name: string })
   );
 }
 
-function walkParentEntities(entities: ValueOf<Site, 'entities'>, selectedEntityId?: string) {
+function walkParentEntities(entities: ReturnType<typeof useSummaryState>[0], selectedEntityId?: string) {
   let parents: { entityId: string; entityName: string }[] = [];
   if (selectedEntityId) {
     let parentEntityId = entities[selectedEntityId]?.parentEntityId;
