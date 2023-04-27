@@ -1,22 +1,17 @@
 import { TimeSync } from '@iot-app-kit/react-components';
-import { useEffect, useMemo, useRef } from 'react';
+import { useMemo, useRef } from 'react';
 
 import { ALARM_THRESHOLDS, VIEWPORT } from '@/config/iottwinmaker';
 import { LineChart, StatusTimeline } from '@/lib/components/charts';
 import { LINE_CHART_COLORS } from '@/lib/css/colors';
 import { normalizedEntityData } from '@/lib/entities';
-import {
-  useAlarmHistoryQueryState,
-  useDataHistoryQueryState,
-  useSelectedState,
-  useSummaryState
-} from '@/lib/state/entity';
-import { usePanelState } from '@/lib/state/panel';
+import { useAlarmHistoryQueryState, useSelectedState, useSummaryState } from '@/lib/state/entity';
 import type { StyleSettingsMap } from '@/lib/types';
 import { createClassName, type ClassName } from '@/lib/utils/element';
 
 import '@iot-app-kit/react-components/styles.css';
 import css from './styles.module.css';
+import { createHistoryQueries } from '@/lib/utils/entity';
 
 const ALL_COMPONENTS_TEXT = 'Alarm Status: All Equipment';
 const ALARM_STATUS_TEXT = 'Alarm Status';
@@ -24,8 +19,6 @@ const PROPERTY_DETAIL_TEXT = 'Property Detail';
 
 export function DashboardPanel({ className }: { className?: ClassName; entityId?: string }) {
   const [alarmHistoryQuery] = useAlarmHistoryQueryState();
-  const [dataHistoryQuery] = useDataHistoryQueryState();
-  const [panels] = usePanelState();
   const [selectedEntity] = useSelectedState();
   const [entitySummaries] = useSummaryState();
   const chartContainerRef = useRef<HTMLDivElement>(null);
@@ -83,30 +76,47 @@ export function DashboardPanel({ className }: { className?: ClassName; entityId?
   }, [entitySummaries]);
 
   const lineChartElement = useMemo(() => {
-    return dataHistoryQuery.length
-      ? dataHistoryQuery.map((query) => {
-          return (
-            <LineChart
-              axis={{ showX: true, showY: true }}
-              key={crypto.randomUUID()}
-              queries={[query]}
-              styles={entityDataStyles}
-            />
-          );
-        })
-      : null;
-  }, [dataHistoryQuery, entityAlarmStyles]);
+    if (selectedEntity.entityData) {
+      const historyQueries = createHistoryQueries(selectedEntity.entityData, 'data');
+      return historyQueries.map((query) => {
+        return (
+          <LineChart
+            axis={{ showX: true, showY: true }}
+            key={crypto.randomUUID()}
+            queries={[query]}
+            styles={entityDataStyles}
+          />
+        );
+      });
+    }
+
+    return null;
+  }, [selectedEntity, entityDataStyles]);
 
   const statusTimelineElement = useMemo(() => {
-    return alarmHistoryQuery.length ? (
-      <StatusTimeline
-        key={crypto.randomUUID()}
-        queries={alarmHistoryQuery}
-        thresholds={ALARM_THRESHOLDS}
-        styles={entityAlarmStyles}
-      />
-    ) : null;
-  }, [alarmHistoryQuery, entityAlarmStyles]);
+    if (selectedEntity.entityData) {
+      const historyQueries = createHistoryQueries(selectedEntity.entityData, 'alarm');
+      return (
+        <StatusTimeline
+          key={crypto.randomUUID()}
+          queries={historyQueries}
+          thresholds={ALARM_THRESHOLDS}
+          styles={entityAlarmStyles}
+        />
+      );
+    } else if (alarmHistoryQuery.length) {
+      return (
+        <StatusTimeline
+          key={crypto.randomUUID()}
+          queries={alarmHistoryQuery}
+          thresholds={ALARM_THRESHOLDS}
+          styles={entityAlarmStyles}
+        />
+      );
+    }
+
+    return null;
+  }, [alarmHistoryQuery, entityAlarmStyles, selectedEntity]);
 
   return (
     <main
@@ -116,7 +126,7 @@ export function DashboardPanel({ className }: { className?: ClassName; entityId?
       <TimeSync initialViewport={VIEWPORT}>
         <div className={css.name}>{selectedEntity.entityData ? ALARM_STATUS_TEXT : ALL_COMPONENTS_TEXT}</div>
         {statusTimelineElement}
-        {selectedEntity.entityData && lineChartElement && (
+        {lineChartElement && (
           <>
             <div className={css.name}>{PROPERTY_DETAIL_TEXT}</div>
             {lineChartElement}
