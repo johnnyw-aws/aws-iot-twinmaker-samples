@@ -1,4 +1,4 @@
-# TwinMaker Cookie Factory Demo: Setting up user authentication in Cognito
+# AWS IoT TwinMaker Cookie Factory Demo: Setting up user authentication in Cognito
 
 The web application requires specific Cognito profiles, corresponding to the two user types, to be set up in order to access the backend’s resources. Note that the following configuration is a sample demo setup, for production deployments please adjust settings as appropriate for your organization's security policy.
 

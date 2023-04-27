@@ -1,4 +1,4 @@
-# TwinMaker Cookie Factory Demo: Web Application
+# AWS IoT TwinMaker Cookie Factory Demo: Web Application
 
 ## Prerequisites
 

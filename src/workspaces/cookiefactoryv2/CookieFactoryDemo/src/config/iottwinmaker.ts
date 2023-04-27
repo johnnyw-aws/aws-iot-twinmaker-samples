@@ -1,3 +1,5 @@
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved. 2023
+// SPDX-License-Identifier: Apache-2.0
 import type { Threshold, Viewport } from '@iot-app-kit/core';
 
 import { ALARM_STATUS_COLORS, STATUS_TIMELINE_TRACK_COLOR } from '@/lib/css/colors';

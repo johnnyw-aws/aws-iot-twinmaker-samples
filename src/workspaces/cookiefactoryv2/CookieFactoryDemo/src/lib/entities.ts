@@ -1,3 +1,5 @@
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved. 2023
+// SPDX-License-Identifier: Apache-2.0
 import { ENTITY_DATA, IGNORED_ENTITIES } from '@/config/iottwinmaker';
 import type { SelectedEntity, TwinMakerEntityHistoryQuery } from '@/lib/types';
 import { createHistoryQuery, createHistoryQueries } from '@/lib/utils/entity';

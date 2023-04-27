@@ -1,3 +1,5 @@
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved. 2023
+// SPDX-License-Identifier: Apache-2.0
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { merge } from 'webpack-merge';
@@ -12,7 +14,7 @@ export default merge(common, {
 
   devServer: {
     hot: true,
-    port: 5000,
+    port: 9000,
     static: './public/'
   },
 

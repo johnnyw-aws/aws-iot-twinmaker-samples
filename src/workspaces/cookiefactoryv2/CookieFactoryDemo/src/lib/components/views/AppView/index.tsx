@@ -1,3 +1,5 @@
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved. 2023
+// SPDX-License-Identifier: Apache-2.0
 import { AppLayout } from '@/lib/components/layouts';
 import { defaultAlarmHistoryQuery, defaultDataHistoryQuery } from '@/lib/entities';
 import { TimeSeriesContext } from '@/lib/providers';

@@ -1,3 +1,5 @@
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved. 2023
+// SPDX-License-Identifier: Apache-2.0
 import { ExecuteQueryCommand } from '@aws-sdk/client-iottwinmaker';
 import { useFloating } from '@floating-ui/react';
 import { CSSProperties, useCallback, useEffect, useMemo, useRef, useState } from 'react';

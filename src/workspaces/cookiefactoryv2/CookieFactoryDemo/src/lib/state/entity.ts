@@ -1,3 +1,5 @@
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved. 2023
+// SPDX-License-Identifier: Apache-2.0
 import { createState, createStateHook } from '@/lib/creators/state';
 import { DEFAULT_SELECTED_ENTITY } from '@/lib/entities';
 import type { EntitySummary, SelectedEntity, TimeSeriesDataQuery, TwinMakerEntityHistoryQuery } from '@/lib/types';

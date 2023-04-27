@@ -1,3 +1,5 @@
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved. 2023
+// SPDX-License-Identifier: Apache-2.0
 import { ALARM_PROPERTY_NAME } from '@/config/iottwinmaker';
 import { createState, createStateHook } from '@/lib/creators/state';
 import { normalizedEntityData } from '@/lib/entities';

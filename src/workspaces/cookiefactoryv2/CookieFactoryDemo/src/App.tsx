@@ -1,3 +1,5 @@
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved. 2023
+// SPDX-License-Identifier: Apache-2.0
 import { IoTTwinMakerClient, ListEntitiesCommand, type EntitySummary } from '@aws-sdk/client-iottwinmaker';
 import { WebglContext } from '@iot-app-kit/react-components';
 import { initialize } from '@iot-app-kit/source-iottwinmaker';
