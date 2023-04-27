@@ -1,8 +1,8 @@
 {
-  "name": "cdk_lambdas",
-  "version": "0.1.0",
+  "name": "cookiefactory_v2",
+  "version": "1.0.0",
   "bin": {
-    "cdk_lambdas": "bin/cookiefactory_v2.js"
+    "cookiefactory_v2": "bin/cookiefactory_v2.js"
   },
   "scripts": {
     "build": "tsc",

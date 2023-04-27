@@ -20,7 +20,10 @@ from crhelper import CfnResource
 logger = logging.getLogger(__name__)
 
 session = boto3.session.Session()
-iottm = session.client(service_name='iottwinmaker')
+session_config = Config(
+    user_agent="cookiefactory_v2/1.0.0"
+)
+iottm = session.client(service_name='iottwinmaker', config=session_config)
 
 cfnResource = CfnResource(json_logging=False, log_level='INFO', polling_interval=1)
 

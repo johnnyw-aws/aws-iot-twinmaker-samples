@@ -8,11 +8,12 @@
 ## Configure
 
 1. Create an AWS IoT TwinMaker workspace.
-1. Deploy the Cookie Factory Demo project to the workspace.
-1. Change `WORKSPACE_ID` in `src/config/sites.ts` the your workspace ID.
-1. Create Amazon Cognito Identity and User Pools.
-1. Create and verify one or more user accounts in the user pool.
-1. Set your AWS and Cognito user credentials in: `src/config/cognito.template.ts` and `src/config/user.template.ts` and rename the files to `src/config/cognito.ts` and `src/config/user.ts`, respectively.
+2. Deploy the Cookie Factory Demo project to the workspace.
+3. Change `WORKSPACE_ID` in `src/config/sites.ts` to your workspace ID.
+4. Create Amazon Cognito Identity and User Pools.
+5. Create and verify one or more user accounts in the user pool.
+   1. [Console instructions](./COGNITO_SAMPLE_SETUP_CONSOLE.md)
+6. Set your AWS and Cognito user credentials in: `src/config/cognito.template.ts` and `src/config/user.template.ts` and rename the files to `src/config/cognito.ts` and `src/config/users.ts`, respectively.
 
 ## Install
 

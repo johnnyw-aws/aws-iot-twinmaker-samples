@@ -8,19 +8,26 @@ This project walks you through the process of setting up the Bakersville Cookie 
 
 ## Prerequisites
 
-* node + npm
-* CDK + AWS account that has been bootstrapped for CDK
-* awscli
-* docker
-
-TODO indicate specific versions for above, validate in Cloud9 environment
+1. CDK version 2.68.0 or higher + an AWS account that has been [bootstrapped for CDK](https://docs.aws.amazon.com/cdk/v2/guide/bootstrapping.html)
+2. Node.js 16.x or higher
+3. NPM 8.x or higher
+4. AWS CLI version 1.27.2 or higher
+5. Docker version 20.10.16 or higher
 
 ---
 
 ## Setup / Test
 
 1. Create a TwinMaker workspace
-1. Setup application AWS resources (e.g. AWS IoT TwinMaker, Sample Lambdas, Sample Data, etc.)
+   1. Console instructions
+      1. Go to https://us-east-1.console.aws.amazon.com/iottwinmaker/home
+      2. Click "Create Workspace"
+      3. Enter a workspace name of your choice and note it down (will be supplied to later commands below)
+      4. Under "S3 bucket", select "Create an S3 bucket"
+      5. Under "Execution Role", select "Auto-generate a new role"
+      6. Click "Skip to review and create"
+      7. Click "Create workspace". Note the name of the created S3 bucket (will be supplied to later commands below)
+2. Setup application AWS resources (e.g. AWS IoT TwinMaker, Sample Lambdas, Sample Data, etc.)
     - Prepare environment (run from the same directory as this README)
       ```
       cd cdk
@@ -29,14 +36,14 @@ TODO indicate specific versions for above, validate in Cloud9 environment
       
       aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws
       ```
-    - Deploy CDK stack containing application resources. Fill-in parameters based on your AWS IoT TwinMaker workspace.
+    - Deploy CDK stack containing application resources. Fill-in parameters based on your AWS IoT TwinMaker workspace and preferred stack name.
       ```
       cdk deploy \
         --context stackName="__FILL_IN__" \
         --context iottwinmakerWorkspaceId="__FILL_IN__" \
         --context iottwinmakerWorkspaceBucket="__FILL_IN__"
       ```
-1. (optional) Sample calls to validate resources created
+3. (optional) Sample calls to validate resources created
     - UDQ
       ```
       aws iottwinmaker get-property-value-history \
@@ -49,11 +56,8 @@ TODO indicate specific versions for above, validate in Cloud9 environment
       ```
     - Open scene in console: `https://us-east-1.console.aws.amazon.com/iottwinmaker/home?region=us-east-1#/workspaces/__FILL_IN__/scenes/CookieFactory`
 
-1. Setup Web Application
+4. Setup Web Application
    - Follow instructions in [CookieFactoryDemo](./CookieFactoryDemo/README.md)
-
-TODO update instructions to be new-to-AWS-friendly
-TODO consolidate instructions from CookieFactoryDemo README
 
 ## Cleanup
 
@@ -65,7 +69,7 @@ TODO consolidate instructions from CookieFactoryDemo README
           --context iottwinmakerWorkspaceId="__FILL_IN__" \
           --context iottwinmakerWorkspaceBucket="__FILL_IN__"
         ```
-2. TODO: cleanup instructions for resources created as part of CookieFactoryDemo (e.g. User pools etc.)
+2. Delete any Cognito-related resources setup for the demo if needed
 
 ---
 
