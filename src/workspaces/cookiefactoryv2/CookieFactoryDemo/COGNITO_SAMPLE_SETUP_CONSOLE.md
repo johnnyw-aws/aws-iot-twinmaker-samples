@@ -19,7 +19,7 @@ In Cognito, select ‘Create user pool’
 Adding Cognito users
 
 * On your newly created user pool page, scroll down and under ‘Users’ click ‘Create user’.
-* Under ‘User information’, enter the user’s email address and check ‘Mark email address as verified’. You can choose to set a password here or have one generated for you. Note that if you generate a password, you will have to update your credentials in the web app to match.
+* Under ‘User information’, enter the user’s email address (need not be a real email, later we will administratively confirm and set the user password) and check ‘Mark email address as verified’. You can choose to set a password here or have one generated for you.
 * On the left hand navigation bar, selected ‘Federate entities’ then ‘Create new identity pool’. Name your identity pool and select ‘Allow Basic (Classic) Flow’
 * Open the ‘Authentication providers’ dropdown and enter the ‘User Pool ID’ and ‘App client id’ for the user pool you just created (App client id is found under ‘App integration’ and ‘App clients and analytics’ in the user pool dashboard). Then click ‘Create pool’.
 * In the next step, since both users will be authorized, you can just change the IAM policy under the authorized role, though changing both won’t do any harm. Make sure to update the account id and workspace name fields in the role below before completing the process.
@@ -61,3 +61,11 @@ Adding Cognito users
     ]
 }
 ```
+
+After setting up the above, you can update the following CLI command to administratively set the password for your users.
+
+```
+aws cognito-idp admin-set-user-password --user-pool-id "[YOUR_USER_POOL_ID]" --username "[USERNAME]" --password "[PASSWORD]" --permanent
+```
+
+You should now have Cognito and Users configured and usable for the [remaining steps](./README.md)
