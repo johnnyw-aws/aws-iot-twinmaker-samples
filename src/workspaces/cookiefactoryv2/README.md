@@ -8,7 +8,7 @@ This project walks you through the process of setting up the Bakersville Cookie 
 
 ## Prerequisites
 
-1. CDK version 2.68.0 or higher + an AWS account that has been [bootstrapped for CDK](https://docs.aws.amazon.com/cdk/v2/guide/bootstrapping.html)
+1. CDK version 2.77.0 or higher + an AWS account that has been [bootstrapped for CDK](https://docs.aws.amazon.com/cdk/v2/guide/bootstrapping.html)
 2. Node.js 16.x or higher
 3. NPM 8.x or higher
 4. AWS CLI version 1.27.2 or higher
