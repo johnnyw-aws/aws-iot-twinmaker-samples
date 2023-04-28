@@ -1,11 +1,14 @@
-# AWS IoT TwinMaker Cookie Factory Demo: Setting up user authentication in Cognito
+# AWS IoT TwinMaker Cookie Factory Demo: Setting up user authentication in Amazon Cognito
 
-The web application requires specific Cognito profiles, corresponding to the two user types, to be set up in order to access the backend’s resources. Note that the following configuration is a sample demo setup, for production deployments please adjust settings as appropriate for your organization's security policy.
+The web application requires a specific Amazon Cognito profile, which corresponds to the built-in user persona, that grants the application access to backend resources. 
 
-Setting up the user pool
+**The following is an sample Amazon Cognito configuration. Please adjust as appropriate for your organization's security policy.**
 
-In Cognito, select ‘Create user pool’
+## Setting up your Amazon Cognito user pool
 
+In Amazon Cognito, under User Pools:
+
+* Click the ‘Create user pool’ button.
 * In ‘Configure sign-in experience’, select ‘Email’ under ‘Cognito user pool sign-in options’, then hit ‘Next’.
 * In ‘Configure security requirements’, under ‘Multi-factor authentication’, select ‘No MFA’, then hit ‘Next’.
 * In ‘Configure sign-up experience’, under ‘Self-service sign-up’, deselect ‘Enable self-registration.’
@@ -16,14 +19,21 @@ In Cognito, select ‘Create user pool’
 * Under ‘Advanced app client settings’, open the ‘Authentication flows’ dropdown and select ‘'ALLOW_USER_SRP_AUTH'. Then click ‘Next’.
 * Finally, review your settings and click ‘Create’.
 
-Adding Cognito users
+### Adding an Amazon Cognito user
 
-* On your newly created user pool page, scroll down and under ‘Users’ click ‘Create user’.
-* Under ‘User information’, enter the user’s email address (need not be a real email, later we will administratively confirm and set the user password) and check ‘Mark email address as verified’. You can choose to set a password here or have one generated for you.
-* On the left hand navigation bar, selected ‘Federate entities’ then ‘Create new identity pool’. Name your identity pool and select ‘Allow Basic (Classic) Flow’
-* Open the ‘Authentication providers’ dropdown and enter the ‘User Pool ID’ and ‘App client id’ for the user pool you just created (App client id is found under ‘App integration’ and ‘App clients and analytics’ in the user pool dashboard). Then click ‘Create pool’.
-* In the next step, since both users will be authorized, you can just change the IAM policy under the authorized role, though changing both won’t do any harm. Make sure to update the account id and workspace name fields in the role below before completing the process.
-  * Be sure to replace the content for  `[ACCOUNT_ID]` and `[WORKSPACE_NAME]`
+* On your newly created user pool detail page, scroll to find the ‘Users’ tab and click ‘Create user’.
+* Under ‘User information’, enter an email address **(this can be a fake email address; in a subsequent step, you will confirm it administratively)** and check ‘Mark email address as verified’. **Becaause you will set a permanant password in the last step, you may choose to have an initial password generated for you at this stage.**
+
+## Setting up your Amazon Cognito Federated Identity pool
+
+In Amazon Cognito, under Federated Identities:
+
+* Click the ‘Create new identity pool’ button. 
+* Name your identity pool.
+* Scroll to ‘Authentication providers’ and expand it.
+* Enter the ‘User Pool ID’ and ‘App client id’ for the user pool you just created (App client id is found under ‘App integration’ and ‘App clients and analytics’ in the user pool dashboard). 
+* Click ‘Create pool’.
+* On the next step, add a policy to the newly created Authorized role. Copy and paste the following JSON. **Replace `[ACCOUNT_ID]` and `[WORKSPACE_NAME]` with your Amazon account id and your AWS IoT TwinMaker workspace name, respectively.**
 
 ```
 {
@@ -62,7 +72,9 @@ Adding Cognito users
 }
 ```
 
-After setting up the above, you can update the following CLI command to administratively set the password for your users.
+## Confirming the Amazon Cognito user
+
+After setting up the above, you can use the following CLI command to administratively set the password for your user. **Note the email address and password for when you configure the web application.**
 
 ```
 aws cognito-idp admin-set-user-password --user-pool-id "[YOUR_USER_POOL_ID]" --username "[USERNAME]" --password "[PASSWORD]" --permanent

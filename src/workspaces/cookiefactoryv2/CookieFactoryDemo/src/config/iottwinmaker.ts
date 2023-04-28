@@ -142,6 +142,8 @@ export const ENTITY_DATA: EntityData[] = [
 
 export const IGNORED_ENTITIES = ['PALLET_98648a84-72da-443a-b625-f671d99a13ba'];
 
+export const SDK_CUSTOM_USER_AGENT = 'cookiefactory_v2/1.0.0';
+
 export const VIEWPORT: Viewport = { duration: '15m' };
 
 function getProperties(): ValueOf<EntityData, 'properties'> {
