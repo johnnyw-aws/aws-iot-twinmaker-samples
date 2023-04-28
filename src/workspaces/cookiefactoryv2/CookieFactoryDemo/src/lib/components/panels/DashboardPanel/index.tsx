@@ -80,6 +80,7 @@ export function DashboardPanel({ className }: { className?: ClassName; entityId?
   const lineChartElement = useMemo(() => {
     if (selectedEntity.entityData) {
       const historyQueries = createHistoryQueries(selectedEntity.entityData, 'data');
+
       return historyQueries.map((query) => {
         return (
           <LineChart
@@ -98,6 +99,7 @@ export function DashboardPanel({ className }: { className?: ClassName; entityId?
   const statusTimelineElement = useMemo(() => {
     if (selectedEntity.entityData) {
       const historyQueries = createHistoryQueries(selectedEntity.entityData, 'alarm');
+
       return (
         <StatusTimeline
           key={crypto.randomUUID()}

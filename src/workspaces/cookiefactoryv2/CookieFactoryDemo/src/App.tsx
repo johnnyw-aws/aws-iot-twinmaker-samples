@@ -5,10 +5,9 @@ import { WebglContext } from '@iot-app-kit/react-components';
 import { initialize } from '@iot-app-kit/source-iottwinmaker';
 import { useEffect } from 'react';
 
-import { DEFAULT_PANEL_ID } from '@/config/iottwinmaker';
+import { DEFAULT_PANEL_ID, SDK_CUSTOM_USER_AGENT } from '@/config/iottwinmaker';
 import { AppView, PersonaSelectorView, SiteSelectorView } from '@/lib/components/views';
 import { DEFAULT_SELECTED_ENTITY } from '@/lib/entities';
-
 import { selectedState, summaryState } from '@/lib/state/entity';
 import { hierarchyState } from '@/lib/state/hierarchy';
 import { panelState, usePanelState } from '@/lib/state/panel';
@@ -87,6 +86,7 @@ export function App() {
         clientState.setState(
           new IoTTwinMakerClient({
             credentials: state.awsCredentials,
+            customUserAgent: SDK_CUSTOM_USER_AGENT,
             region: state.awsCredentials!.region
           })
         );
