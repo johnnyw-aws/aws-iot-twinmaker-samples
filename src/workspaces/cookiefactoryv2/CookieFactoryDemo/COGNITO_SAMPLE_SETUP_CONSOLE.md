@@ -22,7 +22,7 @@ In Amazon Cognito, under User Pools:
 ### Adding an Amazon Cognito user
 
 * On your newly created user pool detail page, scroll to find the 'Users' tab and click 'Create user'.
-* Under 'User information', enter an email address **(this can be a fake email address; in a subsequent step, you will confirm it administratively)** and check 'Mark email address as verified'. **Because you will set a permanent password in the last step, you may choose to have an initial password generated for you at this stage.*
+* Under 'User information', enter an email address **(this can be a fake email address; in a subsequent step, you will confirm it administratively)** and check 'Mark email address as verified'. **Because you will set a permanent password in the last step, you may choose to have an initial password generated for you at this stage.**
 * Click "Create User"
 
 ## Setting up your Amazon Cognito Federated Identity pool
