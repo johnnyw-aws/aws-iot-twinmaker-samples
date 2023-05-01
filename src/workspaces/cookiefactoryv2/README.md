@@ -38,7 +38,7 @@ Note: These instructions have primarily been tested for OSX/Linux/WSL environmen
    npm --version
    ```
 
-5. [AWS CDK toolkit](https://docs.aws.amazon.com/cdk/latest/guide/getting_started.html#getting_started_install) with version at least `2.77.0`. (The CDK should be pre-installed in Cloud9, but you may need to bootstrap your account.) Use the following command to verify.
+5. [AWS CDK toolkit](https://docs.aws.amazon.com/cdk/latest/guide/getting_started.html#getting_started_install) with version at least `2.76.0`. (The CDK should be pre-installed in Cloud9, but you may need to bootstrap your account.) Use the following command to verify.
 
    ```shell
    cdk --version
@@ -76,41 +76,49 @@ Note: These instructions have primarily been tested for OSX/Linux/WSL environmen
       6. Click "Skip to review and create"
       7. Click "Create workspace". Note the name of the created S3 bucket (will be supplied to later commands below)
 2. Setup application AWS resources (e.g. AWS IoT TwinMaker, Sample Lambdas, Sample Data, etc.)
+    - Set environment variables for convenience
+      ```shell
+      export WORKSPACE_ID=__FILL_IN__
+      export WORKSPACE_BUCKET_NAME=__FILL_IN__
+      ```
     - Prepare environment (run from the same directory as this README)
       ```shell
       cd cdk && npm install
       ```
-    - Deploy CDK stack containing application resources. Fill-in parameters based on your AWS IoT TwinMaker workspace and preferred stack name. Note: that `iottwinmakerWorkspaceBucket` should be the bucket name, not the ARN.
+    - Deploy CDK stack containing application resources. Fill-in parameters based on your AWS IoT TwinMaker workspace and update the stack name as needed. Note: that `iottwinmakerWorkspaceBucket` should be the bucket name, not the ARN.
       ```shell
       cdk deploy \
-        --context stackName="__FILL_IN__" \
-        --context iottwinmakerWorkspaceId="__FILL_IN__" \
-        --context iottwinmakerWorkspaceBucket="__FILL_IN__"
+        --context stackName="CookieFactoryDemo" \
+        --context iottwinmakerWorkspaceId="$WORKSPACE_ID" \
+        --context iottwinmakerWorkspaceBucket="$WORKSPACE_BUCKET_NAME"
       ```
     - Return to root project directory
       ```shell
       cd ..
       ```
-    - (optional) Sample calls to validate resources created successfully (Change `region` as needed. Commands should return results and scene should load in console)
-      - UDQ
+    - (optional) Verify that the resources have been created (Change `region` as needed. Commands should return results and scene should load in console)
+      - Verify data connectivity by invoking [AWS IoT TwinMaker data connectors](https://docs.aws.amazon.com/iot-twinmaker/latest/guide/data-connector-interface.html)
         ```shell
         aws iottwinmaker get-property-value-history \
             --region us-east-1 \
-            --cli-input-json '{"componentName": "CookieLineComponent","endTime": "2023-06-01T01:00:00Z","entityId": "PLASTIC_LINER_a77e76bc-53f3-420d-8b2f-76103c810fac","orderByTime": "ASCENDING","selectedProperties": ["alarm_status", "AlarmMessage", "Speed"],"startTime": "2023-06-01T00:00:00Z","workspaceId": "__FILL_IN__", "maxResults": 10}'
+            --cli-input-json '{"componentName": "CookieLineComponent","endTime": "2023-06-01T01:00:00Z","entityId": "PLASTIC_LINER_a77e76bc-53f3-420d-8b2f-76103c810fac","orderByTime": "ASCENDING","selectedProperties": ["alarm_status", "AlarmMessage", "Speed"],"startTime": "2023-06-01T00:00:00Z","workspaceId": "'$WORKSPACE_ID'", "maxResults": 10}'
         ```
-      - Knowledge Graph
+      - Verify entity relationships using AWS IoT TwinMaker Knowledge Graph query
         ```shell
-        aws iottwinmaker execute-query --cli-input-json '{"workspaceId": "__FILL_IN__","queryStatement": "SELECT processStep, r1, e, r2, equipment     FROM EntityGraph     MATCH (cookieLine)<-[:isChildOf]-(processStepParent)<-[:isChildOf]-(processStep)-[r1]-(e)-[r2]-(equipment), equipment.components AS c     WHERE cookieLine.entityName = '"'"'COOKIE_LINE'"'"'     AND processStepParent.entityName = '"'"'PROCESS_STEP'"'"'     AND c.componentTypeId = '"'"'com.example.cookiefactory.equipment'"'"'"}'
+        aws iottwinmaker execute-query --cli-input-json '{"workspaceId": "'$WORKSPACE_ID''","queryStatement": "SELECT processStep, r1, e, r2, equipment     FROM EntityGraph     MATCH (cookieLine)<-[:isChildOf]-(processStepParent)<-[:isChildOf]-(processStep)-[r1]-(e)-[r2]-(equipment), equipment.components AS c     WHERE cookieLine.entityName = '"'"'COOKIE_LINE'"'"'     AND processStepParent.entityName = '"'"'PROCESS_STEP'"'"'     AND c.componentTypeId = '"'"'com.example.cookiefactory.equipment'"'"'"}'
         ```
-      - Open scene in console: `https://us-east-1.console.aws.amazon.com/iottwinmaker/home?region=us-east-1#/workspaces/__FILL_IN__/scenes/CookieFactory`
+      - Verify scene loads in console (update workspace id __FILL_IN__) : `https://us-east-1.console.aws.amazon.com/iottwinmaker/home?region=us-east-1#/workspaces/__FILL_IN__/scenes/CookieFactory`
 
-3. Setup AWS IoT TwinMaker Cookie Factory Demo: Web Application
+4. Setup AWS IoT TwinMaker Cookie Factory Demo: Web Application
    - Prepare environment (run from the same directory as this README)
      ```shell
      cd CookieFactoryDemo && npm install
      ```
    - Setup Cognito and Update web application configuration. **Note: the files referenced in the following steps are relative to the `CookieFactoryDemo` directory.**
-     - Change `WORKSPACE_ID` in `src/config/sites.ts` to your AWS IoT TwinMaker workspace ID.
+     - Change `WORKSPACE_ID` in `src/config/sites.ts` to your AWS IoT TwinMaker workspace ID. i.e. in this line:
+       ```typescript
+       export const WORKSPACE_ID = '__FILL_IN__';
+       ```
      - Follow the [Amazon Cognito set-up instructions](./COGNITO_SAMPLE_SETUP_CONSOLE.md) to create the application user account.
      - Set the Amazon Cognito credentials in `src/config/cognito.template.ts` and `src/config/users.template.ts`, renaming the files to `src/config/cognito.ts` and `src/config/users.ts`, respectively.
    - Start the development server
@@ -126,11 +134,54 @@ Note: These instructions have primarily been tested for OSX/Linux/WSL environmen
     - cdk destroy
         ```
         cdk destroy \
-          --context stackName="__FILL_IN__" \
-          --context iottwinmakerWorkspaceId="__FILL_IN__" \
-          --context iottwinmakerWorkspaceBucket="__FILL_IN__"
+          --context stackName="CookieFactoryDemo" \
+          --context iottwinmakerWorkspaceId="$WORKSPACE_ID" \
+          --context iottwinmakerWorkspaceBucket="$WORKSPACE_BUCKET_NAME"
         ```
 2. Delete any Cognito-related resources setup for the demo if needed
+
+## Troubleshooting
+
+For any issue not addressed here, please open an issue or contact AWS Support.
+
+### Web application landing page loads but after clicking on a user the page just refreshes
+
+* Try opening your browser's web development tools to see if there are any errors in the console logs
+* Typically the page not loading further is due to configuration mismatches (e.g. in `cognito.ts`, `sites.ts`, or `users.ts`) or the Cognito user did not have its password administratively reset with `admin-set-user-password` (see details in [Amazon Cognito set-up instructions](./COGNITO_SAMPLE_SETUP_CONSOLE.md))
+
+### Not enough disk space on Cloud9
+
+* Some useful commands for resizing disk on Cloud9
+   ```shell
+   curl https://aws-data-analytics-workshops.s3.amazonaws.com/athena-workshop/scripts/cloud9\_resize.sh > cloud9\_resize.sh
+   sh cloud9\_resize.sh 20
+   df -h  
+   ```
+### No space during `cdk deploy`: `OSError: [Errno 28] No space left on device` 
+
+* Consider pruning your unused Docker containers
+   ```shell
+   docker system prune --all --force
+   ```
+
+### `This CDK CLI is not compatible with the CDK library used by your application`
+
+* Upgrade your installation of AWS CDK:
+  ```shell
+  npm install -g aws-cdk
+  ```
+* If the above doesn't resolve the issue, try to uninstall first then re-install
+  ```shell
+  npm uninstall -g aws-cdk && npm install -g aws-cdk
+  ```
+* If uninstall/re-install doesn't work, verify the path your `cdk` CLI is deployed relative to `npm`. 
+  ```shell
+  which cdk
+  which npm
+  ```
+  * e.g. if using [nvm](https://npm.github.io/installation-setup-docs/installing/using-a-node-version-manager.html) they should both be in the same `... /.nvm/versions/node/<node_version>/bin/` directory
+* `... com.docker.docker/Data/backend.sock: connect: no such file or directory`
+  * Confirm that docker is running: `docker --version`
 
 ---
 
