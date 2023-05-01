@@ -370,6 +370,11 @@ export class CookieFactoryV2Stack extends cdk.Stack {
             throw Error("'iottwinmakerWorkspaceId' and 'iottwinmakerWorkspaceBucket' must be provided via --context or specified in cdk.json")
         }
 
+        // Some resources like Lambda function names have a name restriction of 64 characters, since we suffix these functions with the stack the name can't be too long
+        if (`${this.stackName}`.length > 32) {
+            throw Error('stackName too long: stackName is used in some generated resource names with length restrictions, please use a stackName no longer than 32 characters')
+        }
+
         // lambda layer for helper utilities for implementing UDQ Lambdas
         const udqHelperLayer = new lambdapython.PythonLayerVersion(this, 'udq_utils_layer', {
             entry: path.join(sample_libs_root, "udq_helper_utils"),
@@ -401,7 +406,7 @@ export class CookieFactoryV2Stack extends cdk.Stack {
                 udqHelperLayer,
             ],
             // name starts with "iottwinmaker-" so console-generated workspace role can invoke it
-            functionName: `iottwinmaker-CFv2-${this.stackName}`,
+            functionName: `iottwinmaker-tsUDQ-${this.stackName}`,
             handler: "lambda_handler",
             index: 'udq_data_reader.py',
             memorySize: 256,
@@ -429,7 +434,7 @@ export class CookieFactoryV2Stack extends cdk.Stack {
                 pandasLayer,
             ],
             // functionName starts with "iottwinmaker-" so console-generated workspace role can invoke it
-            functionName: `iottwinmaker-CFv2-syntheticDataUDQ-${this.stackName}`,
+            functionName: `iottwinmaker-synthUDQ-${this.stackName}`,
             handler: "lambda_handler",
             index: 'synthetic_udq_reader.py',
             memorySize: 256,

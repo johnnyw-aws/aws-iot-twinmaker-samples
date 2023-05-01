@@ -34,7 +34,7 @@ In Amazon Cognito, under Federated Identities:
 * Scroll to 'Authentication providers' and expand it.
 * Enter the 'User Pool ID' and 'App client id' for the user pool you just created (App client id is found under 'App integration' and 'App clients and analytics' in the user pool dashboard).
 * Click 'Create pool'.
-* On the next step, add a policy to the newly created Authorized role. Copy and paste the following JSON. **Replace `[ACCOUNT_ID]` and `[WORKSPACE_NAME]` with your Amazon account id and your AWS IoT TwinMaker workspace name, respectively.**
+* On the next step, add a policy to the newly created Authorized role. Copy and paste the following JSON. **Replace `[ACCOUNT_ID]`, `[WORKSPACE_NAME]`, and `[WORKSPACE_BUCKET]` with your Amazon account id and your AWS IoT TwinMaker workspace details, respectively.** 
 
 ```
 {
