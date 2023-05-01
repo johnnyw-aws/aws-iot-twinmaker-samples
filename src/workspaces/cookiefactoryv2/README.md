@@ -8,7 +8,7 @@ This project walks you through the process of setting up the Bakersville Cookie 
 
 ## Prerequisites
 
-Note: These instructions have primarily been tested for Mac/Linux/WSL environments. For a standardized development environment, consider using [AWS Cloud9](https://aws.amazon.com/cloud9).
+Note: These instructions have primarily been tested for OSX/Linux/WSL environments. For a standardized development environment, consider using [AWS Cloud9](https://aws.amazon.com/cloud9).
 
 1. This sample depends on AWS services that might not yet be available in all regions. Please run this sample in one of the following regions:
    - US East (N. Virginia) (us-east-1)
@@ -66,7 +66,7 @@ Note: These instructions have primarily been tested for Mac/Linux/WSL environmen
 
 ## Setup / Test
 
-1. Create a TwinMaker workspace
+1. Create a TwinMaker workspace (if reusing an existing one, please ensure it is empty)
    1. Console instructions
       1. Go to https://us-east-1.console.aws.amazon.com/iottwinmaker/home
       2. Click "Create Workspace"
