@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "kill $(lsof -t -i:5000) ; webpack serve --config webpack.dev.js",
+    "dev": "webpack serve --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js"
   },
   "dependencies": {
