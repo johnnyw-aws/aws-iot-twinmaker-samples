@@ -8,11 +8,58 @@ This project walks you through the process of setting up the Bakersville Cookie 
 
 ## Prerequisites
 
-1. CDK version 2.77.0 or higher + an AWS account that has been [bootstrapped for CDK](https://docs.aws.amazon.com/cdk/v2/guide/bootstrapping.html)
-2. Node.js 16.x or higher
-3. NPM 8.x or higher
-4. AWS CLI version 1.27.2 or higher
-5. Docker version 20.10.16 or higher
+Note: These instructions have primarily been tested for Mac/Linux/WSL environments. For a standardized development environment, consider using [AWS Cloud9](https://aws.amazon.com/cloud9).
+
+1. This sample depends on AWS services that might not yet be available in all regions. Please run this sample in one of the following regions:
+   - US East (N. Virginia) (us-east-1)
+   - US West (Oregon) (us-west-2)
+   - Europe (Ireland) (eu-west-1)
+2. An AWS account for IoT TwinMaker + [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html)
+   - We recommend that you [configure](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html) your default credentials to match the account in which you want to set up this getting started example. Use the following command to verify that you are using the correct account. (This should be pre-configured in Cloud9.)
+     ```bash
+     aws sts get-caller-identity
+     ```
+   - Ensure your AWS CLI version is at least 1.22.94. (or 2.5.5+ for AWS CLI v2)
+     ```bash
+     aws --version
+     ```
+   - When you are set up, test your access with the following command. (You should not receive errors.)
+     ```
+      aws iottwinmaker list-workspaces --region us-east-1
+     ```
+4. [Node.js](https://nodejs.org/en/) & [NPM](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) with node v16.x+ and npm version 8.10.0+. (This should be pre-installed in Cloud9.) Use the following commands to verify.
+
+   ```
+   node --version
+   ```
+
+   ```
+   npm --version
+   ```
+
+5. [AWS CDK toolkit](https://docs.aws.amazon.com/cdk/latest/guide/getting_started.html#getting_started_install) with version at least `2.77.0`. (The CDK should be pre-installed in Cloud9, but you may need to bootstrap your account.) Use the following command to verify.
+
+   ```
+   cdk --version
+   ```
+
+   - You will also need to bootstrap your account for CDK so that custom assets, such as sample Lambda functions, can be easily deployed. Use the following command.
+
+     ```
+     cdk bootstrap aws://[your 12 digit AWS account id]/[region] --app ''
+
+     # example
+     # cdk bootstrap aws://123456789012/us-east-1 --app ''
+     ```
+
+6. [Docker](https://docs.docker.com/get-docker/) version 20+. (This should be pre-installed in Cloud9.) Authenticate Docker for public ECR registries
+   ```
+   docker --version
+   ```
+   - Use the following command to build Lambda layers for CDK.
+     ```bash
+     aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws
+     ```
 
 ---
 
