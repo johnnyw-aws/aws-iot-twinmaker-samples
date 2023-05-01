@@ -66,67 +66,72 @@ Note: These instructions have primarily been tested for OSX/Linux/WSL environmen
 
 ## Setup / Test
 
-1. Create a TwinMaker workspace (if reusing an existing one, please ensure it is empty)
-   1. Console instructions
-      1. Go to https://us-east-1.console.aws.amazon.com/iottwinmaker/home
-      2. Click "Create Workspace"
-      3. Enter a workspace name of your choice and note it down (will be supplied to later commands below)
-      4. Under "S3 bucket", select "Create an S3 bucket"
-      5. Under "Execution Role", select "Auto-generate a new role"
-      6. Click "Skip to review and create"
-      7. Click "Create workspace". Note the name of the created S3 bucket (will be supplied to later commands below)
-2. Setup application AWS resources (e.g. AWS IoT TwinMaker, Sample Lambdas, Sample Data, etc.)
-    - Set environment variables for convenience
-      ```shell
-      export WORKSPACE_ID=__FILL_IN__
-      export WORKSPACE_BUCKET_NAME=__FILL_IN__
-      ```
-    - Prepare environment (run from the same directory as this README)
-      ```shell
-      cd cdk && npm install
-      ```
-    - Deploy CDK stack containing application resources. Fill-in parameters based on your AWS IoT TwinMaker workspace and update the stack name as needed. Note: that `iottwinmakerWorkspaceBucket` should be the bucket name, not the ARN.
-      ```shell
-      cdk deploy \
-        --context stackName="CookieFactoryDemo" \
-        --context iottwinmakerWorkspaceId="$WORKSPACE_ID" \
-        --context iottwinmakerWorkspaceBucket="$WORKSPACE_BUCKET_NAME"
-      ```
-    - Return to root project directory
-      ```shell
-      cd ..
-      ```
-    - (optional) Verify that the resources have been created (Change `region` as needed. Commands should return results and scene should load in console)
-      - Verify data connectivity by invoking [AWS IoT TwinMaker data connectors](https://docs.aws.amazon.com/iot-twinmaker/latest/guide/data-connector-interface.html)
-        ```shell
-        aws iottwinmaker get-property-value-history \
-            --region us-east-1 \
-            --cli-input-json '{"componentName": "CookieLineComponent","endTime": "2023-06-01T01:00:00Z","entityId": "PLASTIC_LINER_a77e76bc-53f3-420d-8b2f-76103c810fac","orderByTime": "ASCENDING","selectedProperties": ["alarm_status", "AlarmMessage", "Speed"],"startTime": "2023-06-01T00:00:00Z","workspaceId": "'$WORKSPACE_ID'", "maxResults": 10}'
-        ```
-      - Verify entity relationships using AWS IoT TwinMaker Knowledge Graph query
-        ```shell
-        aws iottwinmaker execute-query --cli-input-json '{"workspaceId": "'$WORKSPACE_ID''","queryStatement": "SELECT processStep, r1, e, r2, equipment     FROM EntityGraph     MATCH (cookieLine)<-[:isChildOf]-(processStepParent)<-[:isChildOf]-(processStep)-[r1]-(e)-[r2]-(equipment), equipment.components AS c     WHERE cookieLine.entityName = '"'"'COOKIE_LINE'"'"'     AND processStepParent.entityName = '"'"'PROCESS_STEP'"'"'     AND c.componentTypeId = '"'"'com.example.cookiefactory.equipment'"'"'"}'
-        ```
-      - Verify scene loads in console (update workspace id __FILL_IN__) : `https://us-east-1.console.aws.amazon.com/iottwinmaker/home?region=us-east-1#/workspaces/__FILL_IN__/scenes/CookieFactory`
+### Create a TwinMaker workspace (if reusing an existing one, please ensure it is empty)
 
-4. Setup AWS IoT TwinMaker Cookie Factory Demo: Web Application
-   - Prepare environment (run from the same directory as this README)
-     ```shell
-     cd CookieFactoryDemo && npm install
-     ```
-   - Setup Cognito and Update web application configuration. **Note: the files referenced in the following steps are relative to the `CookieFactoryDemo` directory.**
-     - Change `WORKSPACE_ID` in `src/config/sites.ts` to your AWS IoT TwinMaker workspace ID. i.e. in this line:
-       ```typescript
-       export const WORKSPACE_ID = '__FILL_IN__';
-       ```
-     - Follow the [Amazon Cognito set-up instructions](./COGNITO_SAMPLE_SETUP_CONSOLE.md) to create the application user account.
-     - Set the Amazon Cognito credentials in `src/config/cognito.template.ts` and `src/config/users.template.ts`, renaming the files to `src/config/cognito.ts` and `src/config/users.ts`, respectively.
-   - Start the development server
-     ```shell
-     npm run dev
-     ```
-     - Navigate to `localhost:5000` to view the application, which may take a minute to load the first time.
-     - **Note: edit the localhost port as necessary in `webpack.dev.js` (defaults to 5000).**
+#### Console instructions
+ 
+1. Go to https://us-east-1.console.aws.amazon.com/iottwinmaker/home
+2. Click "Create Workspace"
+3. Enter a workspace name of your choice and note it down (will be supplied to later commands below)
+4. Under "S3 bucket", select "Create an S3 bucket"
+5. Under "Execution Role", select "Auto-generate a new role"
+6. Click "Skip to review and create"
+7. Click "Create workspace". Note the name of the created S3 bucket (will be supplied to later commands below)
+
+### Setup application AWS resources (e.g. AWS IoT TwinMaker, Sample Lambdas, Sample Data, etc.)
+
+- Set environment variables for convenience
+  ```shell
+  export WORKSPACE_ID=__FILL_IN__
+  export WORKSPACE_BUCKET_NAME=__FILL_IN__
+  ```
+- Prepare environment (run from the same directory as this README)
+  ```shell
+  cd cdk && npm install
+  ```
+- Deploy CDK stack containing application resources. Fill-in parameters based on your AWS IoT TwinMaker workspace and update the stack name as needed. Note: that `iottwinmakerWorkspaceBucket` should be the bucket name, not the ARN.
+  ```shell
+  cdk deploy \
+    --context stackName="CookieFactoryDemo" \
+    --context iottwinmakerWorkspaceId="$WORKSPACE_ID" \
+    --context iottwinmakerWorkspaceBucket="$WORKSPACE_BUCKET_NAME"
+  ```
+- Return to root project directory
+  ```shell
+  cd ..
+  ```
+- (optional) Verify that the resources have been created (Change `region` as needed. Commands should return results and scene should load in console)
+  - Verify data connectivity by invoking [AWS IoT TwinMaker data connectors](https://docs.aws.amazon.com/iot-twinmaker/latest/guide/data-connector-interface.html)
+    ```shell
+    aws iottwinmaker get-property-value-history \
+        --region us-east-1 \
+        --cli-input-json '{"componentName": "CookieLineComponent","endTime": "2023-06-01T01:00:00Z","entityId": "PLASTIC_LINER_a77e76bc-53f3-420d-8b2f-76103c810fac","orderByTime": "ASCENDING","selectedProperties": ["alarm_status", "AlarmMessage", "Speed"],"startTime": "2023-06-01T00:00:00Z","workspaceId": "'$WORKSPACE_ID'", "maxResults": 10}'
+    ```
+  - Verify entity relationships using AWS IoT TwinMaker Knowledge Graph query
+    ```shell
+    aws iottwinmaker execute-query --cli-input-json '{"workspaceId": "'$WORKSPACE_ID''","queryStatement": "SELECT processStep, r1, e, r2, equipment     FROM EntityGraph     MATCH (cookieLine)<-[:isChildOf]-(processStepParent)<-[:isChildOf]-(processStep)-[r1]-(e)-[r2]-(equipment), equipment.components AS c     WHERE cookieLine.entityName = '"'"'COOKIE_LINE'"'"'     AND processStepParent.entityName = '"'"'PROCESS_STEP'"'"'     AND c.componentTypeId = '"'"'com.example.cookiefactory.equipment'"'"'"}'
+    ```
+  - Verify scene loads in console (update workspace id `__FILL_IN__`) : `https://us-east-1.console.aws.amazon.com/iottwinmaker/home?region=us-east-1#/workspaces/__FILL_IN__/scenes/CookieFactory`
+
+### Setup AWS IoT TwinMaker Cookie Factory Demo: Web Application
+
+- Prepare environment (run from the same directory as this README)
+  ```shell
+  cd CookieFactoryDemo && npm install
+  ```
+- Setup Cognito and Update web application configuration. **Note: the files referenced in the following steps are relative to the `CookieFactoryDemo` directory.**
+  - Change `WORKSPACE_ID` in `src/config/sites.ts` to your AWS IoT TwinMaker workspace ID. i.e. in this line:
+    ```typescript
+    export const WORKSPACE_ID = '__FILL_IN__';
+    ```
+  - Follow the [Amazon Cognito set-up instructions](./COGNITO_SAMPLE_SETUP_CONSOLE.md) to create the application user account.
+  - Set the Amazon Cognito credentials in `src/config/cognito.template.ts` and `src/config/users.template.ts`, renaming the files to `src/config/cognito.ts` and `src/config/users.ts`, respectively.
+- Start the development server
+  ```shell
+  npm run dev
+  ```
+  - Navigate to `localhost:5000` to view the application, which may take a minute to load the first time.
+  - **Note: edit the localhost port as necessary in `webpack.dev.js` (defaults to 5000).**
 
 ## Cleanup
 
@@ -180,7 +185,8 @@ For any issue not addressed here, please open an issue or contact AWS Support.
   which npm
   ```
   * e.g. if using [nvm](https://npm.github.io/installation-setup-docs/installing/using-a-node-version-manager.html) they should both be in the same `... /.nvm/versions/node/<node_version>/bin/` directory
-* `... com.docker.docker/Data/backend.sock: connect: no such file or directory`
+
+### `... com.docker.docker/Data/backend.sock: connect: no such file or directory`
   * Confirm that docker is running: `docker --version`
 
 ---
