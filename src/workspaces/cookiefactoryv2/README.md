@@ -27,6 +27,7 @@ Note: These instructions have primarily been tested for Mac/Linux/WSL environmen
      ```
       aws iottwinmaker list-workspaces --region us-east-1
      ```
+   - Note: your credentials should have permissions to AWS S3, AWS IoT TwinMaker, and AWS CloudFormation to deploy the content to your account.
 4. [Node.js](https://nodejs.org/en/) & [NPM](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) with node v16.x+ and npm version 8.10.0+. (This should be pre-installed in Cloud9.) Use the following commands to verify.
 
    ```
@@ -52,7 +53,7 @@ Note: These instructions have primarily been tested for Mac/Linux/WSL environmen
      # cdk bootstrap aws://123456789012/us-east-1 --app ''
      ```
 
-6. [Docker](https://docs.docker.com/get-docker/) version 20+. (This should be pre-installed in Cloud9.) Authenticate Docker for public ECR registries
+6. [Docker](https://docs.docker.com/get-docker/) version 20+ installed and running. (This should be pre-installed in Cloud9.) Authenticate Docker for public ECR registries
    ```
    docker --version
    ```
@@ -81,7 +82,6 @@ Note: These instructions have primarily been tested for Mac/Linux/WSL environmen
       
       npm install
       
-      aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws
       ```
     - Deploy CDK stack containing application resources. Fill-in parameters based on your AWS IoT TwinMaker workspace and preferred stack name. Note: that `iottwinmakerWorkspaceBucket` should be the bucket name, not the ARN.
       ```
