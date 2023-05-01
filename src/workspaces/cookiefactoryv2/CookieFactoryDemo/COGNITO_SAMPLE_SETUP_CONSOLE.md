@@ -34,7 +34,8 @@ In Amazon Cognito, under Federated Identities:
 * Scroll to 'Authentication providers' and expand it.
 * Enter the 'User Pool ID' and 'App client id' for the user pool you just created (App client id is found under 'App integration' and 'App clients and analytics' in the user pool dashboard).
 * Click 'Create pool'.
-* On the next step, add a policy to the newly created Authorized role. Copy and paste the following JSON. **Replace `[ACCOUNT_ID]`, `[WORKSPACE_NAME]`, and `[WORKSPACE_BUCKET]` with your Amazon account id and your AWS IoT TwinMaker workspace details, respectively.** 
+* On the next step, add a policy to the newly created Authenticated role (you don't need to change the Unauthenticated role). Copy and paste the following JSON. **Replace `[ACCOUNT_ID]`, `[WORKSPACE_NAME]`, and `[WORKSPACE_BUCKET]` with your Amazon account id and your AWS IoT TwinMaker workspace details, respectively.**
+* Note down the identity pool id (can be found either in the "Sample code" tab to the left or from the URL after `pool=`), you will need it later to configure the web application
 
 ```
 {
@@ -84,9 +85,9 @@ In Amazon Cognito, under Federated Identities:
 }
 ```
 
-## Confirming the Amazon Cognito user
+## Administratively set the Amazon Cognito user password
 
-After setting up the above, you can use the following CLI command to administratively set the password for your user. **Note the email address and password for when you configure the web application.** Be sure the password meets the default Cognito password requirements (Lowercase letter, Uppercase letter, Number, Symbol, Length >= 8)
+After setting up the above, the Cognito user will be created but not usable until its password is set. You can use the following CLI command to administratively set the password for your user. **Note the email address and password for when you configure the web application.** Be sure the password meets the default Cognito password requirements (Lowercase letter, Uppercase letter, Number, Symbol, Length >= 8)
 
 ```
 aws cognito-idp admin-set-user-password --user-pool-id "[YOUR_USER_POOL_ID]" --username "[USERNAME]" --password "[PASSWORD]" --permanent
