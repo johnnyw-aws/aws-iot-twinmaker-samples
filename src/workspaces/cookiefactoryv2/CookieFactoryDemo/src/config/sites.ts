@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 import type { SiteConfig } from '@/lib/types';
 
-export const WORKSPACE_ID = 'cookiefactory_demo_v2_0_2';
+export const WORKSPACE_ID = '__FILL_IN__';
 
 const sites: SiteConfig[] = [
   {

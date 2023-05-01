@@ -8,56 +8,130 @@ This project walks you through the process of setting up the Bakersville Cookie 
 
 ## Prerequisites
 
-1. CDK version 2.77.0 or higher + an AWS account that has been [bootstrapped for CDK](https://docs.aws.amazon.com/cdk/v2/guide/bootstrapping.html)
-2. Node.js 16.x or higher
-3. NPM 8.x or higher
-4. AWS CLI version 1.27.2 or higher
-5. Docker version 20.10.16 or higher
+Note: These instructions have primarily been tested for OSX/Linux/WSL environments. For a standardized development environment, consider using [AWS Cloud9](https://aws.amazon.com/cloud9).
+
+1. This sample depends on AWS services that might not yet be available in all regions. Please run this sample in one of the following regions:
+   - US East (N. Virginia) (us-east-1)
+   - US West (Oregon) (us-west-2)
+   - Europe (Ireland) (eu-west-1)
+2. An AWS account for IoT TwinMaker + [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html)
+   - We recommend that you [configure](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html) your default credentials to match the account in which you want to set up this getting started example. Use the following command to verify that you are using the correct account. (This should be pre-configured in Cloud9.)
+     ```shell
+     aws sts get-caller-identity
+     ```
+   - Ensure your AWS CLI version is at least 1.22.94. (or 2.5.5+ for AWS CLI v2)
+     ```shell
+     aws --version
+     ```
+   - When you are set up, test your access with the following command. (You should not receive errors.)
+     ```
+      aws iottwinmaker list-workspaces --region us-east-1
+     ```
+   - Note: your credentials should have permissions to AWS S3, AWS IoT TwinMaker, and AWS CloudFormation to deploy the content to your account.
+4. [Node.js](https://nodejs.org/en/) & [NPM](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) with node v16.x+ and npm version 8.10.0+. (This should be pre-installed in Cloud9.) Use the following commands to verify.
+
+   ```shell
+   node --version
+   ```
+
+   ```shell
+   npm --version
+   ```
+
+5. [AWS CDK toolkit](https://docs.aws.amazon.com/cdk/latest/guide/getting_started.html#getting_started_install) with version at least `2.76.0`. (The CDK should be pre-installed in Cloud9, but you may need to bootstrap your account.) Use the following command to verify.
+
+   ```shell
+   cdk --version
+   ```
+
+   - You will also need to bootstrap your account for CDK so that custom assets, such as sample Lambda functions, can be easily deployed. Use the following command.
+
+     ```shell
+     cdk bootstrap aws://[your 12 digit AWS account id]/[region] --app ''
+
+     # example
+     # cdk bootstrap aws://123456789012/us-east-1 --app ''
+     ```
+
+6. [Docker](https://docs.docker.com/get-docker/) version 20+ installed and running. (This should be pre-installed in Cloud9.) Authenticate Docker for public ECR registries
+   ```shell
+   docker --version
+   ```
+   - Use the following command to build Lambda layers for CDK.
+     ```shell
+     aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws
+     ```
 
 ---
 
 ## Setup / Test
 
-1. Create a TwinMaker workspace
-   1. Console instructions
-      1. Go to https://us-east-1.console.aws.amazon.com/iottwinmaker/home
-      2. Click "Create Workspace"
-      3. Enter a workspace name of your choice and note it down (will be supplied to later commands below)
-      4. Under "S3 bucket", select "Create an S3 bucket"
-      5. Under "Execution Role", select "Auto-generate a new role"
-      6. Click "Skip to review and create"
-      7. Click "Create workspace". Note the name of the created S3 bucket (will be supplied to later commands below)
-2. Setup application AWS resources (e.g. AWS IoT TwinMaker, Sample Lambdas, Sample Data, etc.)
-    - Prepare environment (run from the same directory as this README)
-      ```
-      cd cdk
-      
-      npm install
-      
-      aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws
-      ```
-    - Deploy CDK stack containing application resources. Fill-in parameters based on your AWS IoT TwinMaker workspace and preferred stack name.
-      ```
-      cdk deploy \
-        --context stackName="__FILL_IN__" \
-        --context iottwinmakerWorkspaceId="__FILL_IN__" \
-        --context iottwinmakerWorkspaceBucket="__FILL_IN__"
-      ```
-3. (optional) Sample calls to validate resources created
-    - UDQ
-      ```
-      aws iottwinmaker get-property-value-history \
-          --region us-east-1 \
-          --cli-input-json '{"componentName": "CookieLineComponent","endTime": "2023-06-01T00:00:00Z","entityId": "PLASTIC_LINER_a77e76bc-53f3-420d-8b2f-76103c810fac","orderByTime": "ASCENDING","selectedProperties": ["alarm_status", "AlarmMessage", "Speed"],"startTime": "2022-06-01T00:00:00Z","workspaceId": "__FILL_IN__", "maxResults": 10}'
-      ```
-    - Knowledge Graph
-      ```
-      aws iottwinmaker execute-query --cli-input-json '{"workspaceId": "__FILL_IN__","queryStatement": "SELECT processStep, r1, e, r2, equipment     FROM EntityGraph     MATCH (cookieLine)<-[:isChildOf]-(processStepParent)<-[:isChildOf]-(processStep)-[r1]-(e)-[r2]-(equipment), equipment.components AS c     WHERE cookieLine.entityName = '"'"'COOKIE_LINE'"'"'     AND processStepParent.entityName = '"'"'PROCESS_STEP'"'"'     AND c.componentTypeId = '"'"'com.example.cookiefactory.equipment'"'"'"}'
-      ```
-    - Open scene in console: `https://us-east-1.console.aws.amazon.com/iottwinmaker/home?region=us-east-1#/workspaces/__FILL_IN__/scenes/CookieFactory`
+### Create a TwinMaker workspace (if reusing an existing one, please ensure it is empty)
 
-4. Setup Web Application
-   - Follow instructions in [CookieFactoryDemo](./CookieFactoryDemo/README.md)
+#### Console instructions
+ 
+1. Go to https://us-east-1.console.aws.amazon.com/iottwinmaker/home
+2. Click "Create Workspace"
+3. Enter a workspace name of your choice and note it down (will be supplied to later commands below)
+4. Under "S3 bucket", select "Create an S3 bucket"
+5. Under "Execution Role", select "Auto-generate a new role"
+6. Click "Skip to review and create"
+7. Click "Create workspace". Note the name of the created S3 bucket (will be supplied to later commands below)
+
+### Setup application AWS resources (e.g. AWS IoT TwinMaker, Sample Lambdas, Sample Data, etc.)
+
+- Set environment variables for convenience
+  ```shell
+  export WORKSPACE_ID=__FILL_IN__
+  export WORKSPACE_BUCKET_NAME=__FILL_IN__
+  ```
+- Prepare environment (run from the same directory as this README)
+  ```shell
+  cd cdk && npm install
+  ```
+- Deploy CDK stack containing application resources. Fill-in parameters based on your AWS IoT TwinMaker workspace and update the stack name as needed. Note: that `iottwinmakerWorkspaceBucket` should be the bucket name, not the ARN.
+  ```shell
+  cdk deploy \
+    --context stackName="CookieFactoryDemo" \
+    --context iottwinmakerWorkspaceId="$WORKSPACE_ID" \
+    --context iottwinmakerWorkspaceBucket="$WORKSPACE_BUCKET_NAME"
+  ```
+- Return to root project directory
+  ```shell
+  cd ..
+  ```
+- (optional) Verify that the resources have been created (Change `region` as needed. Commands should return results and scene should load in console)
+  - Verify data connectivity by invoking [AWS IoT TwinMaker data connectors](https://docs.aws.amazon.com/iot-twinmaker/latest/guide/data-connector-interface.html)
+    ```shell
+    aws iottwinmaker get-property-value-history \
+        --region us-east-1 \
+        --cli-input-json '{"componentName": "CookieLineComponent","endTime": "2023-06-01T01:00:00Z","entityId": "PLASTIC_LINER_a77e76bc-53f3-420d-8b2f-76103c810fac","orderByTime": "ASCENDING","selectedProperties": ["alarm_status", "AlarmMessage", "Speed"],"startTime": "2023-06-01T00:00:00Z","workspaceId": "'$WORKSPACE_ID'", "maxResults": 10}'
+    ```
+  - Verify entity relationships using AWS IoT TwinMaker Knowledge Graph query
+    ```shell
+    aws iottwinmaker execute-query --cli-input-json '{"workspaceId": "'$WORKSPACE_ID'","queryStatement": "SELECT processStep, r1, e, r2, equipment     FROM EntityGraph     MATCH (cookieLine)<-[:isChildOf]-(processStepParent)<-[:isChildOf]-(processStep)-[r1]-(e)-[r2]-(equipment), equipment.components AS c     WHERE cookieLine.entityName = '"'"'COOKIE_LINE'"'"'     AND processStepParent.entityName = '"'"'PROCESS_STEP'"'"'     AND c.componentTypeId = '"'"'com.example.cookiefactory.equipment'"'"'"}'
+    ```
+  - Verify scene loads in console (update workspace id `__FILL_IN__`) : `https://us-east-1.console.aws.amazon.com/iottwinmaker/home?region=us-east-1#/workspaces/__FILL_IN__/scenes/CookieFactory`
+
+### Setup AWS IoT TwinMaker Cookie Factory Demo: Web Application
+
+- Prepare environment (run from the same directory as this README)
+  ```shell
+  cd CookieFactoryDemo && npm install
+  ```
+- Setup Cognito and Update web application configuration. **Note: the files referenced in the following steps are relative to the `CookieFactoryDemo` directory.**
+  - Change `WORKSPACE_ID` in `src/config/sites.ts` to your AWS IoT TwinMaker workspace ID. i.e. in this line:
+    ```typescript
+    export const WORKSPACE_ID = '__FILL_IN__';
+    ```
+  - Follow the [Amazon Cognito set-up instructions](./COGNITO_SAMPLE_SETUP_CONSOLE.md) to create the application user account.
+  - Set the Amazon Cognito credentials in `src/config/cognito.template.ts` and `src/config/users.template.ts`, renaming the files to `src/config/cognito.ts` and `src/config/users.ts`, respectively.
+- Start the development server
+  ```shell
+  npm run dev
+  ```
+  - Navigate to `localhost:5000` to view the application, which may take a minute to load the first time.
+  - **Note: edit the localhost port as necessary in `webpack.dev.js` (defaults to 5000).**
 
 ## Cleanup
 
@@ -65,11 +139,55 @@ This project walks you through the process of setting up the Bakersville Cookie 
     - cdk destroy
         ```
         cdk destroy \
-          --context stackName="__FILL_IN__" \
-          --context iottwinmakerWorkspaceId="__FILL_IN__" \
-          --context iottwinmakerWorkspaceBucket="__FILL_IN__"
+          --context stackName="CookieFactoryDemo" \
+          --context iottwinmakerWorkspaceId="$WORKSPACE_ID" \
+          --context iottwinmakerWorkspaceBucket="$WORKSPACE_BUCKET_NAME"
         ```
 2. Delete any Cognito-related resources setup for the demo if needed
+
+## Troubleshooting
+
+For any issue not addressed here, please open an issue or contact AWS Support.
+
+### Web application landing page loads but after clicking on a user the page just refreshes
+
+* Try opening your browser's web development tools to see if there are any errors in the console logs
+* Typically the page not loading further is due to configuration mismatches (e.g. in `cognito.ts`, `sites.ts`, or `users.ts`) or the Cognito user did not have its password administratively reset with `admin-set-user-password` (see details in [Amazon Cognito set-up instructions](./COGNITO_SAMPLE_SETUP_CONSOLE.md))
+
+### Not enough disk space on Cloud9
+
+* Some useful commands for resizing disk on Cloud9
+   ```shell
+   curl https://aws-data-analytics-workshops.s3.amazonaws.com/athena-workshop/scripts/cloud9\_resize.sh > cloud9\_resize.sh
+   sh cloud9\_resize.sh 20
+   df -h  
+   ```
+### No space during `cdk deploy`: `OSError: [Errno 28] No space left on device` 
+
+* Consider pruning your unused Docker containers
+   ```shell
+   docker system prune --all --force
+   ```
+
+### `This CDK CLI is not compatible with the CDK library used by your application`
+
+* Upgrade your installation of AWS CDK:
+  ```shell
+  npm install -g aws-cdk
+  ```
+* If the above doesn't resolve the issue, try to uninstall first then re-install
+  ```shell
+  npm uninstall -g aws-cdk && npm install -g aws-cdk
+  ```
+* If uninstall/re-install doesn't work, verify the path your `cdk` CLI is deployed relative to `npm`. 
+  ```shell
+  which cdk
+  which npm
+  ```
+  * e.g. if using [nvm](https://npm.github.io/installation-setup-docs/installing/using-a-node-version-manager.html) they should both be in the same `... /.nvm/versions/node/<node_version>/bin/` directory
+
+### `... com.docker.docker/Data/backend.sock: connect: no such file or directory`
+  * Confirm that docker is running: `docker --version`
 
 ---
 
