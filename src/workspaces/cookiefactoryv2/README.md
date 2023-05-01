@@ -83,7 +83,7 @@ Note: These instructions have primarily been tested for Mac/Linux/WSL environmen
       
       aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws
       ```
-    - Deploy CDK stack containing application resources. Fill-in parameters based on your AWS IoT TwinMaker workspace and preferred stack name.
+    - Deploy CDK stack containing application resources. Fill-in parameters based on your AWS IoT TwinMaker workspace and preferred stack name. Note: that `iottwinmakerWorkspaceBucket` should be the bucket name, not the ARN.
       ```
       cdk deploy \
         --context stackName="__FILL_IN__" \
@@ -95,7 +95,7 @@ Note: These instructions have primarily been tested for Mac/Linux/WSL environmen
       ```
       aws iottwinmaker get-property-value-history \
           --region us-east-1 \
-          --cli-input-json '{"componentName": "CookieLineComponent","endTime": "2023-06-01T00:00:00Z","entityId": "PLASTIC_LINER_a77e76bc-53f3-420d-8b2f-76103c810fac","orderByTime": "ASCENDING","selectedProperties": ["alarm_status", "AlarmMessage", "Speed"],"startTime": "2022-06-01T00:00:00Z","workspaceId": "__FILL_IN__", "maxResults": 10}'
+          --cli-input-json '{"componentName": "CookieLineComponent","endTime": "2023-06-01T01:00:00Z","entityId": "PLASTIC_LINER_a77e76bc-53f3-420d-8b2f-76103c810fac","orderByTime": "ASCENDING","selectedProperties": ["alarm_status", "AlarmMessage", "Speed"],"startTime": "2023-06-01T00:00:00Z","workspaceId": "__FILL_IN__", "maxResults": 10}'
       ```
     - Knowledge Graph
       ```
