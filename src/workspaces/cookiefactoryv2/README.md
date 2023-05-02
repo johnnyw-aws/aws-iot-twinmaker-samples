@@ -115,23 +115,54 @@ Note: These instructions have primarily been tested for OSX/Linux/WSL environmen
 
 ### Setup AWS IoT TwinMaker Cookie Factory Demo: Web Application
 
-- Prepare environment (run from the same directory as this README)
-  ```shell
-  cd CookieFactoryDemo && npm install
-  ```
-- Setup Cognito and Update web application configuration. **Note: the files referenced in the following steps are relative to the `CookieFactoryDemo` directory.**
-  - Change `WORKSPACE_ID` in `src/config/sites.ts` to your AWS IoT TwinMaker workspace ID. i.e. in this line:
+1. Follow the [Amazon Cognito set-up instructions](./COGNITO_SAMPLE_SETUP_CONSOLE.md) to create the application user account.  
+
+1. Change to the web application directory.
+    ```shell
+    cd CookieFactoryDemo
+    ```
+1. Prepare the environment.
+    ```shell
+    npm install
+    ```
+
+1. Edit the web application configuration files. **Note: the files referenced in the following steps are relative to the `CookieFactoryDemo` directory.**
+
+    a. In `src/config/sites.template.ts`, set `WORKSPACE_ID` to your AWS IoT TwinMaker workspace ID. Rename the file to `src/config/sites.ts`.
     ```typescript
     export const WORKSPACE_ID = '__FILL_IN__';
+    ```  
+    
+    b. In `src/config/cognito.template.ts`, set the IDs and region to those specified in the Amazon Cognito user and identity pools created in step 1. Rename the file to `src/config/cognito.ts`.
+    ```typescript
+    const cognito: CognitoAuthenticatedFlowConfig = {
+      clientId: '__FILL_IN__',
+      identityPoolId: '__FILL_IN__',
+      region: '__FILL_IN__',
+      userPoolId: '__FILL_IN__'
+    };
     ```
-  - Follow the [Amazon Cognito set-up instructions](./COGNITO_SAMPLE_SETUP_CONSOLE.md) to create the application user account.
-  - Set the Amazon Cognito credentials in `src/config/cognito.template.ts` and `src/config/users.template.ts`, renaming the files to `src/config/cognito.ts` and `src/config/users.ts`, respectively.
-- Start the development server
-  ```shell
-  npm run dev
-  ```
-  - Navigate to `localhost:5000` to view the application, which may take a minute to load the first time.
-  - **Note: edit the localhost port as necessary in `webpack.dev.js` (defaults to 5000).**
+
+    c. In `src/config/users.template.ts`, set `email` and `password` to those of the Amazon Cognito user account created in step 1. Set `firstName`, `lastName`, and `title` to your preference. Rename the file to `src/config/users.ts`.
+    ```typescript
+    const users: UserConfig[] = [
+      {
+        email: '__FILL_IN__',
+        firstName: '__FILL_IN__',
+        lastName: '__FILL_IN__',
+        password: '__FILL_IN__',
+        title: '__FILL_IN__',
+      }
+    ];
+    ```
+
+1. Start the development server.
+    ```shell
+    npm run dev
+    ```
+
+1.  Navigate to `localhost:5000` to view the application, which may take a minute to load the first time.
+    - **Note: set the localhost port to your preference in `webpack.dev.js`. Defaults to `5000`.**
 
 ## Cleanup
 
@@ -162,7 +193,7 @@ For any issue not addressed here, please open an issue or contact AWS Support.
    sh cloud9\_resize.sh 20
    df -h  
    ```
-### No space during `cdk deploy`: `OSError: [Errno 28] No space left on device` 
+### No space during `cdk deploy: OSError: [Errno 28] No space left on device` 
 
 * Consider pruning your unused Docker containers
    ```shell

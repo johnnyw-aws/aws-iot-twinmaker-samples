@@ -17,6 +17,7 @@ dist-ssr
 *.local
 awsCredentials.json
 **src/config/cognito.ts
+**src/config/sites.ts
 **src/config/users.ts
 
 # Editor directories and files
