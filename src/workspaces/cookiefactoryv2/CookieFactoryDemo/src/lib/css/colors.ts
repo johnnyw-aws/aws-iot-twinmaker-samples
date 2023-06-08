@@ -12,4 +12,4 @@ export const ALARM_STATUS_COLORS: Record<AlarmState, string> = {
 
 export const LINE_CHART_COLORS = ['#71C9B9', '#ED76EF'];
 
-export const STATUS_TIMELINE_TRACK_COLOR = '#424347';
+export const STATUS_TIMELINE_TRACK_COLOR = '#3073F1';

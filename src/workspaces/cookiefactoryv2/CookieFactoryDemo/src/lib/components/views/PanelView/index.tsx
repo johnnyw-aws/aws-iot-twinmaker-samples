@@ -138,13 +138,10 @@ function Control({ panel: { icon, id, label } }: { panel: Panel }) {
     </button>
   );
 }
+//Todo      Commented out of emptystate <CookieFactoryLogoWide className={styles.emptyStateLogo} />
 
 function EmptyState() {
-  return (
-    <main className={styles.emptyState}>
-      <CookieFactoryLogoWide className={styles.emptyStateLogo} />
-    </main>
-  );
+  return <main className={styles.emptyState}></main>;
 }
 
 function removeGlobalControls(controls: GlobalControl[]) {

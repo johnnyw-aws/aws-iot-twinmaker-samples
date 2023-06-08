@@ -23,3 +23,5 @@ export * from './PlusIcon';
 export * from './SceneIcon';
 export * from './TargetIcon';
 export * from './TrendIcon';
+export * from './AirportIcon';
+

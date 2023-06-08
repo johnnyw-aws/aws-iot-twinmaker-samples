@@ -1,7 +1,7 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved. 2023
 // SPDX-License-Identifier: Apache-2.0
 
-import { FactoryIcon } from '@/lib/components/svgs/icons';
+import { AirportIcon } from '@/lib/components/svgs/icons';
 import { createClassName, type ClassName } from '@/lib/core/utils/element';
 import { getSites } from '@/lib/init/sites';
 import { siteStore } from '@/lib/stores/site';
@@ -26,7 +26,7 @@ function SiteElement({ handlePointerUp, site }: { handlePointerUp: (site: Site) 
   return (
     <button className={styles.site} onPointerUp={() => handlePointerUp(site)}>
       <section className={styles.siteIcon}>
-        <FactoryIcon />
+        <AirportIcon />
       </section>
       <section className={styles.siteGroup}>
         <section className={styles.siteName}>{site.name}</section>
