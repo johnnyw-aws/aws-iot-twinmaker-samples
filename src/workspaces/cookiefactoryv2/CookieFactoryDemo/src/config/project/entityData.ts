@@ -34,6 +34,11 @@ const SOLAR_PROPERTY = {
   ALARM_PROPERTY_NAME_1: 'AlarmState'
 }
 
+const KIOSKS_PROPERTY = {
+  DATA_PROPERTY_NAME_1: 'TotalActive',
+  ALARM_PROPERTY_NAME_1: 'KioskState'
+}
+
 const ENTITY_IDs = {
   CHECKIN: 'ed6ee472-c43e-402d-8d17-78ff2130f046',
   CHECKIN2: 'e5b58a7d-a97e-498b-ac25-f4711bb25800',
@@ -48,7 +53,11 @@ const ENTITY_IDs = {
   GATE2: '00f01643-9672-46be-bc33-94b83d8f0865',
   ESCALATOR1: '5f6bae83-1954-420a-ab19-8162800fa529',
   ESCALATOR2: '8573db7b-c03c-41f4-943e-f57addba9677',
-  SOLAR1: 'a6638173-8ffa-4653-b329-e1be7112d4dd'
+  SOLAR1: 'a6638173-8ffa-4653-b329-e1be7112d4dd',
+  KIOSKGROUP1: '644fdebf-5c23-4b10-a6f4-2c58fe110be3',
+  KIOSKGROUP2: '250cc029-aa7b-4810-924e-523c800e2e3c',
+  KIOSKGROUP3: '703d78f1-38d0-44b6-bafe-54551a9d6c07',
+  KIOSKGROUP4: '4cfa7561-a893-4220-b432-15495020222b'
 }
 
 export const ALARM_PROPERTY_NAME = 'AlarmMessage';
@@ -160,6 +169,34 @@ export const ENTITY_DATA: EntityData[] = [
     componentName: 'SolarPanels1',
     properties: getPropertiesSolar(),
     name: 'SolarPanels1',
+    type: ENTITY_TYPES.Equipment
+  },
+  {
+    entityId: ENTITY_IDs.KIOSKGROUP1,
+    componentName: 'KioskGroup1',
+    properties: getPropertiesKiosks(),
+    name: 'KioskGroup1',
+    type: ENTITY_TYPES.Equipment
+  },
+  {
+    entityId: ENTITY_IDs.KIOSKGROUP2,
+    componentName: 'KioskGroup2',
+    properties: getPropertiesKiosks(),
+    name: 'KioskGroup2',
+    type: ENTITY_TYPES.Equipment
+  },
+  {
+    entityId: ENTITY_IDs.KIOSKGROUP3,
+    componentName: 'KioskGroup3',
+    properties: getPropertiesKiosks(),
+    name: 'KioskGroup3',
+    type: ENTITY_TYPES.Equipment
+  },
+  {
+    entityId: ENTITY_IDs.KIOSKGROUP4,
+    componentName: 'KioskGroup4',
+    properties: getPropertiesKiosks(),
+    name: 'KioskGroup4',
     type: ENTITY_TYPES.Equipment
   }
 ];
@@ -288,6 +325,7 @@ function getPropertiesEscalator(): ValueOf<EntityData, 'properties'> {
   ];
 }
 
+
 function getPropertiesSolar(): ValueOf<EntityData, 'properties'> {
   return [
     {
@@ -314,6 +352,27 @@ function getPropertiesSolar(): ValueOf<EntityData, 'properties'> {
       threshold: { upper: 15, lower: 20 },
       type: 'data',
       unit: 'C'
+    }
+  ];
+}
+
+function getPropertiesKiosks(): ValueOf<EntityData, 'properties'> {
+  return [
+    {
+      propertyQueryInfo: {
+        propertyName: KIOSKS_PROPERTY.ALARM_PROPERTY_NAME_1,
+        refId: crypto.randomUUID()
+      },
+      type: 'alarm'
+    },
+    {
+      propertyQueryInfo: {
+        propertyName: KIOSKS_PROPERTY.DATA_PROPERTY_NAME_1,
+        refId: crypto.randomUUID()
+      },
+      threshold: { upper: 20, lower: 5 },
+      type: 'data',
+      unit: '#'
     }
   ];
 }
