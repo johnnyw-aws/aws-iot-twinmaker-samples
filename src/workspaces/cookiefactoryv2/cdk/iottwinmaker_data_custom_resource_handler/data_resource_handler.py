@@ -123,12 +123,15 @@ def cfn_create_tmdt_data(event, context):
                 print("s3 download done")
 
                 try:
-                    start_time_offset_in_seconds = data['destination']['configuration']['start_time_offset_in_seconds']
+                    time_stamp_in_seconds = data['destination']['configuration']['absolute_start_time_in_epoch_seconds']
                 except:
-                    start_time_offset_in_seconds = 0
+                    try:
+                        start_time_offset_in_seconds = data['destination']['configuration']['start_time_offset_in_seconds']
+                    except:
+                        start_time_offset_in_seconds = 0
 
-                adjusted_start_time = datetime.datetime.now() + datetime.timedelta(seconds = start_time_offset_in_seconds)
-                time_stamp_in_seconds = int(round(adjusted_start_time.timestamp()))
+                    adjusted_start_time = datetime.datetime.now() + datetime.timedelta(seconds = start_time_offset_in_seconds)
+                    time_stamp_in_seconds = int(round(adjusted_start_time.timestamp()))
 
                 print(f"start_timestamp: {adjusted_start_time}, kvs_stream_name={kvs_stream_name}")
                 video_utils.upload_video(file_name=local_file_name, stream_name=kvs_stream_name, start_tmstp=str(time_stamp_in_seconds))

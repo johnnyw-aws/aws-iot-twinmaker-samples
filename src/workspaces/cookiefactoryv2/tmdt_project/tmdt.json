@@ -26,33 +26,46 @@
     "data": [
         {
             "type": "video",
-            "source": "../../cookiefactory/sample_data/video/cookiefactory_mixerroom_camera_01_1635724800000.mkv",
+            "source": "../sample_data/Cooler.mkv",
             "destination": {
                 "type": "kvs",
-                "kvs_stream_name": "cookiefactory_mixerroom_camera_01",
+                "kvs_stream_name": "cooler_1693357200",
                 "configuration": {
-                    "start_time_offset_in_seconds": -600
+                    "absolute_start_time_in_epoch_seconds": 1693357200
                 }
             }
         },
         {
             "type": "video",
-            "source": "../../cookiefactory/sample_data/video/cookiefactory_mixerroom_camera_02_1635724800000.mkv",
+            "source": "../sample_data/FarShot.mkv",
             "destination": {
                 "type": "kvs",
-                "kvs_stream_name": "cookiefactory_mixerroom_camera_02",
+                "kvs_stream_name": "farshot_1693357200",
                 "configuration": {
-                    "start_time_offset_in_seconds": -600
+                    "absolute_start_time_in_epoch_seconds": 1693357200
                 }
             }
         },
         {
-            "type": "timestream-timeseries",
-            "source": "../../cookiefactory/sample_data/telemetry/telemetry.csv",
+            "type": "video",
+            "source": "../sample_data/FullShot.mkv",
             "destination": {
-                "type": "timestream",
-                "database": "__FILL_IN_TS_DB__",
-                "table": "Telemetry"
+                "type": "kvs",
+                "kvs_stream_name": "fullshot_1693357200",
+                "configuration": {
+                    "absolute_start_time_in_epoch_seconds": 1693357200
+                }
+            }
+        },
+        {
+            "type": "video",
+            "source": "../sample_data/Packaging.mkv",
+            "destination": {
+                "type": "kvs",
+                "kvs_stream_name": "packaging_1693357200",
+                "configuration": {
+                    "absolute_start_time_in_epoch_seconds": 1693357200
+                }
             }
         }
     ]
