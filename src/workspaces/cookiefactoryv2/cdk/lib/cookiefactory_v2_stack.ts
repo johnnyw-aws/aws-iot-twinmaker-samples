@@ -494,6 +494,47 @@ export class CookieFactoryV2Stack extends cdk.Stack {
             entry: path.join(sample_libs_root, "udq_helper_utils"),
         });
 
+        //region - sample infrastructure content for telemetry data in Timestream
+        const timestreamDB = new timestream.CfnDatabase(this, "TimestreamTelemetry", {
+            databaseName: `${this.stackName}`
+        });
+        const timestreamTable = new timestream.CfnTable(this, "Telemetry", {
+            tableName: `Telemetry`,
+            databaseName: `${timestreamDB.databaseName}`, // create implicit CFN dependency
+            retentionProperties: {
+                memoryStoreRetentionPeriodInHours: (24 * 30).toString(10),
+                magneticStoreRetentionPeriodInDays: (24 * 30).toString(10)
+            }
+        });
+        timestreamTable.node.addDependency(timestreamDB);
+
+        const timestreamUdqRole = new iam.Role(this, 'timestreamUdqRole', {
+            assumedBy: new iam.ServicePrincipal('lambda.amazonaws.com'),
+        });
+        timestreamUdqRole.addManagedPolicy(iam.ManagedPolicy.fromManagedPolicyArn(this, "lambdaExecRole", "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"))
+        timestreamUdqRole.addManagedPolicy(iam.ManagedPolicy.fromAwsManagedPolicyName("AmazonTimestreamReadOnlyAccess"))
+
+        const timestreamReaderUDQ = new lambdapython.PythonFunction(this, 'timestreamReaderUDQ', {
+            entry: path.join(sample_modules_root,"timestream_telemetry","lambda_function"),
+            layers: [
+                udqHelperLayer,
+            ],
+            // name starts with "iottwinmaker-" so console-generated workspace role can invoke it
+            functionName: `iottwinmaker-tsUDQ-${this.stackName}`,
+            handler: "lambda_handler",
+            index: 'udq_data_reader.py',
+            memorySize: 256,
+            role: timestreamUdqRole,
+            runtime: lambda.Runtime.PYTHON_3_7,
+            timeout: cdk.Duration.minutes(15),
+            logRetention: logs.RetentionDays.ONE_DAY,
+            environment: {
+                "TIMESTREAM_DATABASE_NAME": `${timestreamDB.databaseName}`,
+                "TIMESTREAM_TABLE_NAME": `${timestreamTable.tableName}`,
+            }
+        });
+        //endregion
+
         //region - sample infrastructure content for synthetic cookieline telemetry data
         // https://aws-sdk-pandas.readthedocs.io/en/stable/layers.html
         const pandasLayer = lambda.LayerVersion.fromLayerVersionArn(this,
@@ -555,6 +596,10 @@ export class CookieFactoryV2Stack extends cdk.Stack {
                     resources: [
                         `arn:aws:kinesisvideo:${this.region}:${this.account}:stream/cookiefactory_mixerroom_camera_01/*`,
                         `arn:aws:kinesisvideo:${this.region}:${this.account}:stream/cookiefactory_mixerroom_camera_02/*`,
+                        `arn:aws:kinesisvideo:${this.region}:${this.account}:stream/cooler_1693357200/*`,
+                        `arn:aws:kinesisvideo:${this.region}:${this.account}:stream/farshot_1693357200/*`,
+                        `arn:aws:kinesisvideo:${this.region}:${this.account}:stream/fullshot_1693357200/*`,
+                        `arn:aws:kinesisvideo:${this.region}:${this.account}:stream/packaging_1693357200/*`,
                     ],
                     actions: [
                         "kinesisvideo:PutMedia",

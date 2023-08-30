@@ -132,8 +132,8 @@ def cfn_create_tmdt_data(event, context):
 
                     adjusted_start_time = datetime.datetime.now() + datetime.timedelta(seconds = start_time_offset_in_seconds)
                     time_stamp_in_seconds = int(round(adjusted_start_time.timestamp()))
+                    print(f"start_timestamp: {adjusted_start_time}, kvs_stream_name={kvs_stream_name}")
 
-                print(f"start_timestamp: {adjusted_start_time}, kvs_stream_name={kvs_stream_name}")
                 video_utils.upload_video(file_name=local_file_name, stream_name=kvs_stream_name, start_tmstp=str(time_stamp_in_seconds))
                 print(f"video upload done for {data['source']} -> {kvs_stream_name}")
                 os.remove(local_file_name)
