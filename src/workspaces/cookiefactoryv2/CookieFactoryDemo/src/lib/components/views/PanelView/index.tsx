@@ -3,44 +3,97 @@
 
 import { useCallback, useEffect, useMemo, type PointerEventHandler } from 'react';
 
+import { SITE_TYPE } from '@/config/sites';
 import { PanelLayout } from '@/lib/components/layouts';
 import { CloseAllIcon } from '@/lib/components/svgs/icons';
 import { CookieFactoryLogoWide } from '@/lib/components/svgs/logos';
 import { createClassName, type ClassName } from '@/lib/core/utils/element';
 import { PANELS } from '@/lib/init/panels';
 import { globalControlStore, useGlobalControlStore } from '@/lib/stores/control';
+import { useSelectedStore } from '@/lib/stores/entity';
 import { panelsStore, usePanelsStore } from '@/lib/stores/panels';
+import { useSiteStore } from '@/lib/stores/site';
 import type { GlobalControl, Panel } from '@/lib/types';
 
 import controlStyles from './control.module.css';
 import styles from './styles.module.css';
 
-const closeAllControl = (
-  <button className={styles.closeAllIcon} key={crypto.randomUUID()} onPointerUp={() => panelsStore.setState([])}>
-    <CloseAllIcon />
-  </button>
-);
+const VIEW_LABEL = 'Monitor';
+
+// const closeAllControl = (
+//   <button className={styles.closeAllIcon} key={crypto.randomUUID()} onPointerUp={() => panelsStore.setState([])}>
+//     <CloseAllIcon />
+//   </button>
+// );
 
 export function PanelView({ className }: { className?: ClassName }) {
   const [, setGlobalControl] = useGlobalControlStore();
-  const [panelsStore] = usePanelsStore();
+  const [panels, setPanels] = usePanelsStore();
+  const [selectedEntity] = useSelectedStore();
+  const [site] = useSiteStore();
 
-  useEffect(() => {
-    if (panelsStore.length) {
-      setGlobalControl((globalControl) => {
-        return !globalControl.includes(closeAllControl) ? [...globalControl, closeAllControl] : globalControl;
-      });
-    } else {
-      setGlobalControl((globalControl) => removeGlobalControls(globalControl));
+  const viewLabel = useMemo(() => {
+    return `${selectedEntity.entityData ? selectedEntity.entityData.type : SITE_TYPE} ${VIEW_LABEL}`;
+  }, [selectedEntity]);
+
+  const closeAllButton = useMemo(() => {
+    const { entityData } = selectedEntity;
+    const type = entityData ? entityData.type : SITE_TYPE;
+
+    return panels.length ? (
+      <button className={styles.closeAllIcon} key={crypto.randomUUID()} onPointerUp={() => setPanels([])}>
+        <CloseAllIcon />
+      </button>
+    ) : null;
+  }, [panels, selectedEntity]);
+
+  const head = useMemo(() => {
+    if (panels.length) {
+      if (selectedEntity.entityData) {
+        return (
+          <div className={styles.head}>
+            <div className={styles.entityName}>{selectedEntity.entityData.name}</div>
+            {selectedEntity.entityData.type && (
+              <div className={styles.entityType}>{selectedEntity.entityData.type}</div>
+            )}
+          </div>
+        );
+      }
+
+      if (site) {
+        return (
+          <div className={styles.head}>
+            <div className={styles.entityName}>{site?.name}</div>
+            <div className={styles.entityType}>{SITE_TYPE}</div>
+          </div>
+        );
+      }
     }
-  }, [panelsStore]);
 
-  useEffect(() => {
-    return () => globalControlStore.setState(removeGlobalControls);
-  }, []);
+    return null;
+  }, [panels, selectedEntity, site]);
+
+  // useEffect(() => {
+  //   if (panelsStore.length) {
+  //     setGlobalControl((globalControl) => {
+  //       return !globalControl.includes(closeAllControl) ? [...globalControl, closeAllControl] : globalControl;
+  //     });
+  //   } else {
+  //     setGlobalControl((globalControl) => removeGlobalControls(globalControl));
+  //   }
+  // }, [panelsStore]);
+
+  // useEffect(() => {
+  //   return () => globalControlStore.setState(removeGlobalControls);
+  // }, []);
 
   return (
-    <main className={createClassName(styles.root, className)}>
+    <main className={createClassName(styles.root, className)} data-has-panels={panels.length > 0}>
+      <section className={styles.viewInfo}>
+        {viewLabel}
+        {closeAllButton}
+      </section>
+      {head}
       <Panels />
       <ControlLayout />
     </main>
@@ -54,15 +107,17 @@ function Panels() {
   const panelElements = useMemo(() => {
     if (panelsStore.length === 0) return <EmptyState />;
 
-    return PANELS.sort((a, b) => a.priority - b.priority).reduce<JSX.Element[]>((accum, panel) => {
-      const hasPanel = panelsStore.find((id) => id == panel.id);
+    return PANELS.sort((a, b) => a.priority - b.priority)
+      .sort((a, b) => a.slot - b.slot)
+      .reduce<JSX.Element[]>((accum, panel) => {
+        const hasPanel = panelsStore.find((id) => id == panel.id);
 
-      if (hasPanel) {
-        accum.push(<PanelLayout key={panel.id} isExpandable={isExpandable} panel={panel} />);
-      }
+        if (hasPanel) {
+          accum.push(<PanelLayout key={panel.id} isExpandable={isExpandable} panel={panel} />);
+        }
 
-      return accum;
-    }, []);
+        return accum;
+      }, []);
   }, [panelsStore]);
 
   return (
@@ -125,16 +180,13 @@ function Control({ panel: { icon, id, label } }: { panel: Panel }) {
 
   return (
     <button
-      className={createClassName(controlStyles.root, {
-        [controlStyles.active]: panelsStore.length > 0,
-        [controlStyles.selected]: panelsStore.includes(id)
-      })}
+      className={controlStyles.button}
+      data-is-active={panelsStore.length > 0}
+      data-is-selected={panelsStore.includes(id)}
       onPointerUp={handlePointerUp}
     >
-      <section className={controlStyles.group}>
-        <div className={controlStyles.icon}>{icon}</div>
-        <div className={controlStyles.label}>{label}</div>
-      </section>
+      <div className={controlStyles.icon}>{icon}</div>
+      <div className={controlStyles.label}>{label}</div>
     </button>
   );
 }
@@ -144,6 +196,6 @@ function EmptyState() {
   return <main className={styles.emptyState}></main>;
 }
 
-function removeGlobalControls(controls: GlobalControl[]) {
-  return controls.filter((control) => control !== closeAllControl);
-}
+// function removeGlobalControls(controls: GlobalControl[]) {
+//   return controls.filter((control) => control !== closeAllControl);
+// }

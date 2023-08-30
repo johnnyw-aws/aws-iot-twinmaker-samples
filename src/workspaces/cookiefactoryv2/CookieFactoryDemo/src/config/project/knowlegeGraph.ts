@@ -4,12 +4,9 @@
 export const DEFAULT_QUERY_HOPS = 0;
 
 export const QUERY_ALL_EQUIPMENT_AND_PROCESS_STEPS = `
-  SELECT processStep, r1, e, r2, equipment
-  FROM EntityGraph
-  MATCH (cookieLine)<-[:isChildOf]-(processStepParent)<-[:isChildOf]-(processStep)-[r1]-(e)-[r2]-(equipment), equipment.components AS c
-  WHERE cookieLine.entityName = 'COOKIE_LINE'
-  AND processStepParent.entityName = 'PROCESS_STEP'
-  AND c.componentTypeId = 'com.example.cookiefactory.equipment'`;
+SELECT ahu,vav,r From EntityGraph
+MATCH (vav)<-[r]-(ahu)
+WHERE vav.entityName LIKE '%%%'` ;
 
 export function createQueryByEquipment(entityId: string, hops = DEFAULT_QUERY_HOPS) {
   const normalizedHops = Math.max(0, hops);

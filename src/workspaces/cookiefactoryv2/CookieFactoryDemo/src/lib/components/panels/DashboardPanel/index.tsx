@@ -4,15 +4,14 @@
 import { TimeSync } from '@iot-app-kit/react-components';
 import { useMemo } from 'react';
 
-import { CHART_ALARM_THRESHOLDS, VIEWPORT } from '@/config/project';
+import { CHART_ALARM_THRESHOLDS, CHART_COLOR_POOL, VIEWPORT } from '@/config/project';
 import { LineChart, StatusTimeline } from '@/lib/components/charts';
 import { createClassName, type ClassName } from '@/lib/core/utils/element';
-import { LINE_CHART_COLORS } from '@/lib/css/colors';
-import { normalizedEntityData } from '@/lib/init/entities';
-import { useAlarmHistoryQueriesStore, useSelectedStore, useSummaryStore } from '@/lib/stores/entity';
+import { getAllHistoryQueries, getEntityHistoryQueries, normalizedEntityData } from '@/lib/init/entities';
+import { useSelectedStore, useSummaryStore } from '@/lib/stores/entity';
 import { usePanelsStore } from '@/lib/stores/panels';
 import type { StyleSettingsMap } from '@/lib/types';
-import { createHistoryQueries, isEntityWithProperties } from '@/lib/utils/entity';
+import { isEntityWithProperties } from '@/lib/utils/entity';
 
 import '@iot-app-kit/react-components/styles.css';
 import css from './styles.module.css';
@@ -22,7 +21,6 @@ const ALARM_STATUS_TEXT = 'Alarm Status';
 const PROPERTY_DETAIL_TEXT = 'Property Detail';
 
 export function DashboardPanel({ className }: { className?: ClassName; entityId?: string }) {
-  const [alarmHistoryQueries] = useAlarmHistoryQueriesStore();
   const [panels] = usePanelsStore();
   const [selectedEntity] = useSelectedStore();
   const [entitySummaries] = useSummaryStore();
@@ -32,16 +30,14 @@ export function DashboardPanel({ className }: { className?: ClassName; entityId?
       if (entitySummaries) {
         if (isEntityWithProperties(entityData)) {
           const { name, properties } = entityData;
-          const property = properties.find(({ type }) => type === 'alarm');
 
-          if (property) {
-            const {
-              propertyQueryInfo: { refId }
-            } = property;
-            if (refId) {
-              accum[refId] = { detailedName: name, name };
-            }
-          }
+          properties
+            .filter(({ type }) => type === 'alarm-state')
+            .forEach(({ propertyQueryInfo: { refId } }) => {
+              if (refId) {
+                accum[refId] = { detailedName: name, name };
+              }
+            });
         }
       }
 
@@ -62,7 +58,7 @@ export function DashboardPanel({ className }: { className?: ClassName; entityId?
                 accum[refId] = {
                   detailedName: propertyName,
                   name: propertyName,
-                  color: LINE_CHART_COLORS[index],
+                  color: CHART_COLOR_POOL[index],
                   unit
                 };
               }
@@ -76,7 +72,7 @@ export function DashboardPanel({ className }: { className?: ClassName; entityId?
 
   const lineChartElements = useMemo(() => {
     if (selectedEntity.entityData && isEntityWithProperties(selectedEntity.entityData)) {
-      const historyQueries = createHistoryQueries(selectedEntity.entityData, 'data');
+      const historyQueries = getEntityHistoryQueries(selectedEntity.entityData, 'data', true);
 
       return historyQueries.map((query) => {
         return (
@@ -94,8 +90,21 @@ export function DashboardPanel({ className }: { className?: ClassName; entityId?
   }, [selectedEntity, entityDataStyles]);
 
   const statusTimelineElement = useMemo(() => {
-    if (selectedEntity.entityData && isEntityWithProperties(selectedEntity.entityData)) {
-      const historyQueries = createHistoryQueries(selectedEntity.entityData, 'alarm');
+    if (selectedEntity.entityData) {
+      if (isEntityWithProperties(selectedEntity.entityData)) {
+        const historyQueries = getEntityHistoryQueries(selectedEntity.entityData, 'alarm-state');
+
+        return (
+          <StatusTimeline
+            key={crypto.randomUUID()}
+            historyQueries={historyQueries}
+            thresholds={CHART_ALARM_THRESHOLDS}
+            styles={entityAlarmStyles}
+          />
+        );
+      }
+    } else {
+      const historyQueries = getAllHistoryQueries('alarm-state');
 
       return (
         <StatusTimeline
@@ -105,28 +114,17 @@ export function DashboardPanel({ className }: { className?: ClassName; entityId?
           styles={entityAlarmStyles}
         />
       );
-    } else if (alarmHistoryQueries.length) {
-      return (
-        <StatusTimeline
-          key={crypto.randomUUID()}
-          historyQueries={alarmHistoryQueries}
-          thresholds={CHART_ALARM_THRESHOLDS}
-          styles={entityAlarmStyles}
-        />
-      );
     }
-
-    return null;
-  }, [alarmHistoryQueries, entityAlarmStyles, selectedEntity]);
+  }, [entityAlarmStyles, selectedEntity]);
 
   return useMemo(() => {
-    return (
+    const t = statusTimelineElement ? (
       <main
         className={createClassName(css.root, className, { [css.multi]: selectedEntity.entityData !== null })}
         key={crypto.randomUUID()}
       >
+        <div className={css.name}>{selectedEntity.entityData ? ALARM_STATUS_TEXT : ALL_COMPONENTS_TEXT}</div>
         <TimeSync initialViewport={VIEWPORT}>
-          <div className={css.name}>{selectedEntity.entityData ? ALARM_STATUS_TEXT : ALL_COMPONENTS_TEXT}</div>
           {statusTimelineElement}
           {lineChartElements && (
             <>
@@ -136,6 +134,9 @@ export function DashboardPanel({ className }: { className?: ClassName; entityId?
           )}
         </TimeSync>
       </main>
+    ) : (
+      <main className={css.emptyState}>No data available</main>
     );
+    return t;
   }, [panels, selectedEntity, statusTimelineElement, lineChartElements]);
 }
