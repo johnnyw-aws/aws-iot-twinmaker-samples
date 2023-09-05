@@ -1,0 +1,2345 @@
+{
+    "specVersion": "1.0",
+    "version": "1",
+    "unit": "meters",
+    "properties": {
+        "environmentPreset": "neutral",
+        "componentSettings": {
+            "DataOverlay": {
+                "overlayPanelVisible": false
+            },
+            "Tag": {
+                "autoRescale": false,
+                "scale": 1
+            }
+        }
+    },
+    "nodes": [
+        {
+            "name": "CheckIn-1",
+            "transform": {
+                "position": [
+                    -1.0955829485609567,
+                    0.12855951258200005,
+                    -0.40772426277378404
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    1,
+                    1,
+                    1
+                ]
+            },
+            "transformConstraint": {},
+            "components": [
+                {
+                    "type": "Tag",
+                    "icon": "iottwinmaker.common.icon:Info",
+                    "ruleBasedMapId": "CheckIn-Rule",
+                    "valueDataBinding": {
+                        "dataBindingContext": {
+                            "entityId": "ed6ee472-c43e-402d-8d17-78ff2130f046",
+                            "componentName": "CheckIn-1",
+                            "propertyName": "People",
+                            "entityPath": "CheckIn"
+                        }
+                    },
+                    "navLink": {
+                        "params": {},
+                        "destination": ""
+                    }
+                },
+                {
+                    "type": "DataOverlay",
+                    "subType": "OverlayPanel",
+                    "valueDataBindings": [
+                        {
+                            "bindingName": "People",
+                            "valueDataBinding": {
+                                "dataBindingContext": {
+                                    "entityId": "ed6ee472-c43e-402d-8d17-78ff2130f046",
+                                    "componentName": "CheckIn-1",
+                                    "propertyName": "People",
+                                    "entityPath": "CheckIn"
+                                }
+                            }
+                        },
+                        {
+                            "bindingName": "Dwell-Time",
+                            "valueDataBinding": {
+                                "dataBindingContext": {
+                                    "entityId": "ed6ee472-c43e-402d-8d17-78ff2130f046",
+                                    "componentName": "CheckIn-1",
+                                    "propertyName": "Dwell-Time",
+                                    "entityPath": "CheckIn"
+                                }
+                            }
+                        }
+                    ],
+                    "dataRows": [
+                        {
+                            "rowType": "Markdown",
+                            "content": "### CheckIn-1\nPeople: **${People}** #  \nDwell-Time:  **${Dwell-Time}** mins"
+                        }
+                    ]
+                }
+            ],
+            "properties": {}
+        },
+        {
+            "name": "CheckIn-2",
+            "transform": {
+                "position": [
+                    -1.0861463611523612,
+                    0.12439970959883162,
+                    -0.8199008413224487
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    1,
+                    1,
+                    1
+                ]
+            },
+            "transformConstraint": {},
+            "components": [
+                {
+                    "type": "Tag",
+                    "icon": "iottwinmaker.common.icon:Info",
+                    "ruleBasedMapId": "CheckIn-Rule",
+                    "valueDataBinding": {
+                        "dataBindingContext": {
+                            "entityId": "e5b58a7d-a97e-498b-ac25-f4711bb25800",
+                            "componentName": "CheckIn-2",
+                            "propertyName": "People",
+                            "entityPath": "CheckIn-2"
+                        }
+                    }
+                },
+                {
+                    "type": "DataOverlay",
+                    "subType": "OverlayPanel",
+                    "valueDataBindings": [
+                        {
+                            "bindingName": "People",
+                            "valueDataBinding": {
+                                "dataBindingContext": {
+                                    "entityId": "e5b58a7d-a97e-498b-ac25-f4711bb25800",
+                                    "componentName": "CheckIn-2",
+                                    "propertyName": "People",
+                                    "entityPath": "CheckIn-2"
+                                }
+                            }
+                        },
+                        {
+                            "bindingName": "Dwell-Time",
+                            "valueDataBinding": {
+                                "dataBindingContext": {
+                                    "entityId": "e5b58a7d-a97e-498b-ac25-f4711bb25800",
+                                    "componentName": "CheckIn-2",
+                                    "propertyName": "Dwell-Time",
+                                    "entityPath": "CheckIn-2"
+                                }
+                            }
+                        }
+                    ],
+                    "dataRows": [
+                        {
+                            "rowType": "Markdown",
+                            "content": "### CheckIn-2\nPeople: **${People}** #  \nDwell-Time:  **${Dwell-Time}** mins"
+                        }
+                    ]
+                }
+            ],
+            "properties": {}
+        },
+        {
+            "name": "CheckIn-3",
+            "transform": {
+                "position": [
+                    -1.114620365505726,
+                    0.11446441449273403,
+                    -1.2415690691065677
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    1,
+                    1,
+                    1
+                ]
+            },
+            "transformConstraint": {},
+            "components": [
+                {
+                    "type": "Tag",
+                    "icon": "iottwinmaker.common.icon:Info",
+                    "ruleBasedMapId": "CheckIn-Rule",
+                    "valueDataBinding": {
+                        "dataBindingContext": {
+                            "entityId": "1ab8b859-c062-4955-b775-c7127c675fe1",
+                            "componentName": "CheckIn-3",
+                            "propertyName": "People",
+                            "entityPath": "CheckIn-3"
+                        }
+                    },
+                    "navLink": {
+                        "params": {}
+                    }
+                },
+                {
+                    "type": "DataOverlay",
+                    "subType": "OverlayPanel",
+                    "valueDataBindings": [
+                        {
+                            "bindingName": "People",
+                            "valueDataBinding": {
+                                "dataBindingContext": {
+                                    "entityId": "1ab8b859-c062-4955-b775-c7127c675fe1",
+                                    "componentName": "CheckIn-3",
+                                    "propertyName": "People",
+                                    "entityPath": "CheckIn-3"
+                                }
+                            }
+                        },
+                        {
+                            "bindingName": "Dwell-Time",
+                            "valueDataBinding": {
+                                "dataBindingContext": {
+                                    "entityId": "1ab8b859-c062-4955-b775-c7127c675fe1",
+                                    "componentName": "CheckIn-3",
+                                    "propertyName": "Dwell-Time",
+                                    "entityPath": "CheckIn-3"
+                                }
+                            }
+                        }
+                    ],
+                    "dataRows": [
+                        {
+                            "rowType": "Markdown",
+                            "content": "### CheckIn-3\nPeople: **${People}** #  \nDwell-Time:  **${Dwell-Time}** mins"
+                        }
+                    ]
+                }
+            ],
+            "properties": {}
+        },
+        {
+            "name": "Immigration-1",
+            "transform": {
+                "position": [
+                    -2.3466971230318787,
+                    0.12510436488887877,
+                    -0.0013972143608063092
+                ],
+                "rotation": [
+                    -7.074419175467527e-18,
+                    4.220582217051572e-15,
+                    -1.8474805019152993e-16
+                ],
+                "scale": [
+                    1,
+                    1,
+                    1
+                ]
+            },
+            "transformConstraint": {},
+            "components": [
+                {
+                    "type": "Tag",
+                    "icon": "iottwinmaker.common.icon:Info",
+                    "ruleBasedMapId": "CheckIn-Rule",
+                    "valueDataBinding": {
+                        "dataBindingContext": {
+                            "entityId": "e1c17ea8-a68e-43eb-92e9-05979d7c74b8",
+                            "componentName": "Immigration-1",
+                            "propertyName": "People",
+                            "entityPath": "Immigration"
+                        }
+                    }
+                },
+                {
+                    "type": "DataOverlay",
+                    "subType": "OverlayPanel",
+                    "valueDataBindings": [
+                        {
+                            "bindingName": "People",
+                            "valueDataBinding": {
+                                "dataBindingContext": {
+                                    "entityId": "e1c17ea8-a68e-43eb-92e9-05979d7c74b8",
+                                    "componentName": "Immigration-1",
+                                    "propertyName": "People",
+                                    "entityPath": "Immigration"
+                                }
+                            }
+                        },
+                        {
+                            "bindingName": "Dwell-Time",
+                            "valueDataBinding": {
+                                "dataBindingContext": {
+                                    "entityId": "e1c17ea8-a68e-43eb-92e9-05979d7c74b8",
+                                    "componentName": "Immigration-1",
+                                    "propertyName": "Dwell-Time",
+                                    "entityPath": "Immigration"
+                                }
+                            }
+                        }
+                    ],
+                    "dataRows": [
+                        {
+                            "rowType": "Markdown",
+                            "content": "### Immigration-1\nPeople: **${People}** #  \nDwell-Time:  **${Dwell-Time}** mins"
+                        }
+                    ]
+                }
+            ],
+            "properties": {}
+        },
+        {
+            "name": "Immigration-2",
+            "transform": {
+                "position": [
+                    -2.3801795577310836,
+                    0.10732462941240084,
+                    -0.6509618687087295
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    1,
+                    1,
+                    1
+                ]
+            },
+            "transformConstraint": {},
+            "components": [
+                {
+                    "type": "Tag",
+                    "icon": "iottwinmaker.common.icon:Info",
+                    "ruleBasedMapId": "CheckIn-Rule",
+                    "valueDataBinding": {
+                        "dataBindingContext": {
+                            "entityId": "579ceee7-b30b-422e-a10b-8c33b4521317",
+                            "componentName": "Immigration-2",
+                            "propertyName": "People",
+                            "entityPath": "Immigration-2"
+                        }
+                    }
+                },
+                {
+                    "type": "DataOverlay",
+                    "subType": "OverlayPanel",
+                    "valueDataBindings": [
+                        {
+                            "bindingName": "People",
+                            "valueDataBinding": {
+                                "dataBindingContext": {
+                                    "entityId": "579ceee7-b30b-422e-a10b-8c33b4521317",
+                                    "componentName": "Immigration-2",
+                                    "propertyName": "People",
+                                    "entityPath": "Immigration-2"
+                                }
+                            }
+                        },
+                        {
+                            "bindingName": "Dwell-Time",
+                            "valueDataBinding": {
+                                "dataBindingContext": {
+                                    "entityId": "579ceee7-b30b-422e-a10b-8c33b4521317",
+                                    "componentName": "Immigration-2",
+                                    "propertyName": "Dwell-Time",
+                                    "entityPath": "Immigration-2"
+                                }
+                            }
+                        }
+                    ],
+                    "dataRows": [
+                        {
+                            "rowType": "Markdown",
+                            "content": "### Immigration-2\nPeople: **${People}** #  \nDwell-Time:  **${Dwell-Time}** mins"
+                        }
+                    ]
+                }
+            ],
+            "properties": {}
+        },
+        {
+            "name": "Immigration-3",
+            "transform": {
+                "position": [
+                    -2.3963160012953715,
+                    0.10489656216458587,
+                    -1.3107892719038645
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    1,
+                    1,
+                    1
+                ]
+            },
+            "transformConstraint": {},
+            "components": [
+                {
+                    "type": "Tag",
+                    "icon": "iottwinmaker.common.icon:Info",
+                    "ruleBasedMapId": "CheckIn-Rule",
+                    "valueDataBinding": {
+                        "dataBindingContext": {
+                            "entityId": "e1ac9f3a-3703-4de2-903c-28c946b208ba",
+                            "componentName": "Immigration-3",
+                            "propertyName": "People",
+                            "entityPath": "Immigration-3"
+                        }
+                    }
+                },
+                {
+                    "type": "DataOverlay",
+                    "subType": "OverlayPanel",
+                    "valueDataBindings": [
+                        {
+                            "bindingName": "People",
+                            "valueDataBinding": {
+                                "dataBindingContext": {
+                                    "entityId": "e1ac9f3a-3703-4de2-903c-28c946b208ba",
+                                    "componentName": "Immigration-3",
+                                    "propertyName": "People",
+                                    "entityPath": "Immigration-3"
+                                }
+                            }
+                        },
+                        {
+                            "bindingName": "Dwell-Time",
+                            "valueDataBinding": {
+                                "dataBindingContext": {
+                                    "entityId": "e1ac9f3a-3703-4de2-903c-28c946b208ba",
+                                    "componentName": "Immigration-3",
+                                    "propertyName": "Dwell-Time",
+                                    "entityPath": "Immigration-3"
+                                }
+                            }
+                        }
+                    ],
+                    "dataRows": [
+                        {
+                            "rowType": "Markdown",
+                            "content": "### Immigration-3\nPeople: **${People}** #  \nDwell-Time:  **${Dwell-Time}** mins"
+                        }
+                    ]
+                }
+            ],
+            "properties": {}
+        },
+        {
+            "name": "Security-1",
+            "transform": {
+                "position": [
+                    -3.6911939903477764,
+                    0.291583771923531,
+                    0.14404875670450767
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    1,
+                    1,
+                    1
+                ]
+            },
+            "transformConstraint": {},
+            "components": [
+                {
+                    "type": "Tag",
+                    "icon": "iottwinmaker.common.icon:Info",
+                    "ruleBasedMapId": "CheckIn-Rule",
+                    "valueDataBinding": {
+                        "dataBindingContext": {
+                            "entityId": "3823faed-3815-469e-ba43-d02c253fcdc6",
+                            "componentName": "Security-1",
+                            "propertyName": "People",
+                            "entityPath": "Security"
+                        }
+                    }
+                },
+                {
+                    "type": "DataOverlay",
+                    "subType": "OverlayPanel",
+                    "valueDataBindings": [
+                        {
+                            "bindingName": "People",
+                            "valueDataBinding": {
+                                "dataBindingContext": {
+                                    "entityId": "3823faed-3815-469e-ba43-d02c253fcdc6",
+                                    "componentName": "Security-1",
+                                    "propertyName": "People",
+                                    "entityPath": "Security"
+                                }
+                            }
+                        },
+                        {
+                            "bindingName": "Dwell-Time",
+                            "valueDataBinding": {
+                                "dataBindingContext": {
+                                    "entityId": "3823faed-3815-469e-ba43-d02c253fcdc6",
+                                    "componentName": "Security-1",
+                                    "propertyName": "Dwell-Time",
+                                    "entityPath": "Security"
+                                }
+                            }
+                        }
+                    ],
+                    "dataRows": [
+                        {
+                            "rowType": "Markdown",
+                            "content": "### Security-1\nPeople: **${People}** #  \nDwell-Time:  **${Dwell-Time}** mins"
+                        }
+                    ]
+                }
+            ],
+            "properties": {}
+        },
+        {
+            "name": "Security-2",
+            "transform": {
+                "position": [
+                    -3.673334757294855,
+                    0.29060583813756957,
+                    -0.43314469805762634
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    1,
+                    1,
+                    1
+                ]
+            },
+            "transformConstraint": {},
+            "components": [
+                {
+                    "type": "Tag",
+                    "icon": "iottwinmaker.common.icon:Info",
+                    "ruleBasedMapId": "CheckIn-Rule",
+                    "valueDataBinding": {
+                        "dataBindingContext": {
+                            "entityId": "308154ec-4339-46f9-b1b8-5f2de98d1fb7",
+                            "componentName": "Security-2",
+                            "propertyName": "People",
+                            "entityPath": "Security-2"
+                        }
+                    }
+                },
+                {
+                    "type": "DataOverlay",
+                    "subType": "OverlayPanel",
+                    "valueDataBindings": [
+                        {
+                            "bindingName": "People",
+                            "valueDataBinding": {
+                                "dataBindingContext": {
+                                    "entityId": "308154ec-4339-46f9-b1b8-5f2de98d1fb7",
+                                    "componentName": "Security-2",
+                                    "propertyName": "People",
+                                    "entityPath": "Security-2"
+                                }
+                            }
+                        },
+                        {
+                            "bindingName": "Dwell-Time",
+                            "valueDataBinding": {
+                                "dataBindingContext": {
+                                    "entityId": "308154ec-4339-46f9-b1b8-5f2de98d1fb7",
+                                    "componentName": "Security-2",
+                                    "propertyName": "Dwell-Time",
+                                    "entityPath": "Security-2"
+                                }
+                            }
+                        }
+                    ],
+                    "dataRows": [
+                        {
+                            "rowType": "Markdown",
+                            "content": "### Security-2\nPeople: **${People}** #  \nDwell-Time:  **${Dwell-Time}** mins"
+                        }
+                    ]
+                }
+            ],
+            "properties": {}
+        },
+        {
+            "name": "Security-3",
+            "transform": {
+                "position": [
+                    -3.756956386998822,
+                    0.2849536849088061,
+                    -1.0071924600664577
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    1,
+                    1,
+                    1
+                ]
+            },
+            "transformConstraint": {},
+            "components": [
+                {
+                    "type": "Tag",
+                    "icon": "iottwinmaker.common.icon:Info",
+                    "ruleBasedMapId": "CheckIn-Rule",
+                    "valueDataBinding": {
+                        "dataBindingContext": {
+                            "entityId": "ca934781-394a-46fa-a68a-6c1267ec3d82",
+                            "componentName": "Security-3",
+                            "propertyName": "People",
+                            "entityPath": "Security-3"
+                        }
+                    }
+                },
+                {
+                    "type": "DataOverlay",
+                    "subType": "OverlayPanel",
+                    "valueDataBindings": [
+                        {
+                            "bindingName": "People",
+                            "valueDataBinding": {
+                                "dataBindingContext": {
+                                    "entityId": "ca934781-394a-46fa-a68a-6c1267ec3d82",
+                                    "componentName": "Security-3",
+                                    "propertyName": "People",
+                                    "entityPath": "Security-3"
+                                }
+                            }
+                        },
+                        {
+                            "bindingName": "Dwell-Time",
+                            "valueDataBinding": {
+                                "dataBindingContext": {
+                                    "entityId": "ca934781-394a-46fa-a68a-6c1267ec3d82",
+                                    "componentName": "Security-3",
+                                    "propertyName": "Dwell-Time",
+                                    "entityPath": "Security-3"
+                                }
+                            }
+                        }
+                    ],
+                    "dataRows": [
+                        {
+                            "rowType": "Markdown",
+                            "content": "### Security-3\nPeople: **${People}** #  \nDwell-Time:  **${Dwell-Time}** mins"
+                        }
+                    ]
+                }
+            ],
+            "properties": {}
+        },
+        {
+            "name": "no-arrows-people",
+            "transform": {
+                "position": [
+                    -3.7729335442939984,
+                    4.736310906090892,
+                    -17.101803010557695
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    2,
+                    2,
+                    2
+                ]
+            },
+            "transformConstraint": {},
+            "children": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27,
+                28,
+                29,
+                30,
+                31,
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39,
+                40
+            ],
+            "components": [
+                {
+                    "type": "ModelRef",
+                    "uri": "no-arrows-people.glb",
+                    "modelType": "GLB"
+                }
+            ],
+            "properties": {}
+        },
+        {
+            "name": "Overall View",
+            "transform": {
+                "position": [
+                    4.040670156050089,
+                    1.542466979187107,
+                    -0.9942475165290663
+                ],
+                "rotation": [
+                    -1.6583290255853944,
+                    1.4460162080694317,
+                    1.6590113809893854
+                ],
+                "scale": [
+                    0.25,
+                    0.25,
+                    0.25
+                ]
+            },
+            "transformConstraint": {},
+            "components": [
+                {
+                    "type": "Camera",
+                    "cameraIndex": 0
+                }
+            ],
+            "properties": {}
+        },
+        {
+            "name": "GateView",
+            "transform": {
+                "position": [
+                    -2.891027659647909,
+                    1.2904351523074031,
+                    0.35036625028870283
+                ],
+                "rotation": [
+                    -1.2120582161620805,
+                    1.3654340820579867,
+                    1.2050208745455764
+                ],
+                "scale": [
+                    0.49999999999999967,
+                    0.5000000000000001,
+                    0.4999999999999996
+                ]
+            },
+            "transformConstraint": {},
+            "components": [
+                {
+                    "type": "Camera",
+                    "cameraIndex": 1
+                }
+            ],
+            "properties": {}
+        },
+        {
+            "name": "Gate-1",
+            "transform": {
+                "position": [
+                    -8.190434794114415,
+                    0.8045545313233555,
+                    0.999186646632598
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    1,
+                    1,
+                    1
+                ]
+            },
+            "transformConstraint": {},
+            "components": [
+                {
+                    "type": "Tag",
+                    "icon": "iottwinmaker.common.icon:Info",
+                    "ruleBasedMapId": "Gate-Rule",
+                    "valueDataBinding": {
+                        "dataBindingContext": {
+                            "entityId": "b4049f6f-2224-4ef8-b3e5-5e9b9136d66b",
+                            "componentName": "Gate1-New",
+                            "propertyName": "Flight_State",
+                            "entityPath": "Gate"
+                        }
+                    }
+                },
+                {
+                    "type": "DataOverlay",
+                    "subType": "OverlayPanel",
+                    "valueDataBindings": [
+                        {
+                            "bindingName": "Destination",
+                            "valueDataBinding": {
+                                "dataBindingContext": {
+                                    "entityId": "b4049f6f-2224-4ef8-b3e5-5e9b9136d66b",
+                                    "componentName": "Gate1-New",
+                                    "propertyName": "Destination",
+                                    "entityPath": "Gate"
+                                }
+                            }
+                        },
+                        {
+                            "bindingName": "Flight-num",
+                            "valueDataBinding": {
+                                "dataBindingContext": {
+                                    "entityId": "b4049f6f-2224-4ef8-b3e5-5e9b9136d66b",
+                                    "componentName": "Gate1-New",
+                                    "propertyName": "Flight-Num",
+                                    "entityPath": "Gate"
+                                }
+                            }
+                        },
+                        {
+                            "bindingName": "Scheduled-departure",
+                            "valueDataBinding": {
+                                "dataBindingContext": {
+                                    "entityId": "b4049f6f-2224-4ef8-b3e5-5e9b9136d66b",
+                                    "componentName": "Gate1-New",
+                                    "propertyName": "Scheduled_Departure",
+                                    "entityPath": "Gate"
+                                }
+                            }
+                        },
+                        {
+                            "bindingName": "Estimated-Departure",
+                            "valueDataBinding": {
+                                "dataBindingContext": {
+                                    "entityId": "b4049f6f-2224-4ef8-b3e5-5e9b9136d66b",
+                                    "componentName": "Gate1-New",
+                                    "propertyName": "Estimated_Departure",
+                                    "entityPath": "Gate"
+                                }
+                            }
+                        }
+                    ],
+                    "dataRows": [
+                        {
+                            "rowType": "Markdown",
+                            "content": "### Gate-1\nDestination: **${Destination}**   \nFlight-Num: **${Flight-num}**   \nScheduled Departure: **${Scheduled-departure}** \nEstimated Departure: **${Estimated-Departure}**"
+                        }
+                    ]
+                }
+            ],
+            "properties": {}
+        },
+        {
+            "name": "Gate-2",
+            "transform": {
+                "position": [
+                    -8.367411262853945,
+                    0.7985645008799249,
+                    -0.8549105827775811
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    1,
+                    1,
+                    1
+                ]
+            },
+            "transformConstraint": {},
+            "components": [
+                {
+                    "type": "Tag",
+                    "icon": "iottwinmaker.common.icon:Info",
+                    "ruleBasedMapId": "Gate-Rule",
+                    "valueDataBinding": {
+                        "dataBindingContext": {
+                            "entityId": "00f01643-9672-46be-bc33-94b83d8f0865",
+                            "componentName": "Gate2-new",
+                            "propertyName": "Flight_State",
+                            "entityPath": "Gate2"
+                        }
+                    }
+                },
+                {
+                    "type": "DataOverlay",
+                    "subType": "OverlayPanel",
+                    "valueDataBindings": [
+                        {
+                            "bindingName": "Destination",
+                            "valueDataBinding": {
+                                "dataBindingContext": {
+                                    "entityId": "00f01643-9672-46be-bc33-94b83d8f0865",
+                                    "componentName": "Gate2-new",
+                                    "propertyName": "Destination",
+                                    "entityPath": "Gate2"
+                                }
+                            }
+                        },
+                        {
+                            "bindingName": "Estimated-Departure",
+                            "valueDataBinding": {
+                                "dataBindingContext": {
+                                    "entityId": "00f01643-9672-46be-bc33-94b83d8f0865",
+                                    "componentName": "Gate2-new",
+                                    "propertyName": "Estimated_Departure",
+                                    "entityPath": "Gate2"
+                                }
+                            }
+                        },
+                        {
+                            "bindingName": "Flight-num",
+                            "valueDataBinding": {
+                                "dataBindingContext": {
+                                    "entityId": "00f01643-9672-46be-bc33-94b83d8f0865",
+                                    "componentName": "Gate2-new",
+                                    "propertyName": "Flight-Num",
+                                    "entityPath": "Gate2"
+                                }
+                            }
+                        },
+                        {
+                            "bindingName": "Scheduled-departure",
+                            "valueDataBinding": {
+                                "dataBindingContext": {
+                                    "entityId": "00f01643-9672-46be-bc33-94b83d8f0865",
+                                    "componentName": "Gate2-new",
+                                    "propertyName": "Scheduled_Departure",
+                                    "entityPath": "Gate2"
+                                }
+                            }
+                        }
+                    ],
+                    "dataRows": [
+                        {
+                            "rowType": "Markdown",
+                            "content": "### Gate-2\nDestination: **${Destination}**   \nFlight-Num: **${Flight-num}**   \nScheduled Departure: **${Scheduled-departure}** \nEstimated Departure: **${Estimated-Departure}**\n"
+                        }
+                    ]
+                }
+            ],
+            "properties": {}
+        },
+        {
+            "name": "Escalator1",
+            "transform": {
+                "position": [
+                    -4.415760040283203,
+                    -1.351449966430664,
+                    -0.28314998745918274
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    1,
+                    1,
+                    1
+                ]
+            },
+            "transformConstraint": {
+                "snapToFloor": false
+            },
+            "components": [
+                {
+                    "parentRef": "f1ecf0ac-1635-4fbd-be18-292e30b1ec0b",
+                    "selector": "Cube195",
+                    "type": "SubModelRef"
+                },
+                {
+                    "type": "ModelShader",
+                    "valueDataBinding": {
+                        "dataBindingContext": {
+                            "entityId": "5f6bae83-1954-420a-ab19-8162800fa529",
+                            "componentName": "Escalator1",
+                            "propertyName": "AlarmState",
+                            "entityPath": "Escalator1"
+                        }
+                    },
+                    "ruleBasedMapId": "BMS-Rule"
+                }
+            ],
+            "properties": {}
+        },
+        {
+            "name": "Escalator2",
+            "transform": {
+                "position": [
+                    -4.415760040283203,
+                    0.16964000463485718,
+                    -0.28314998745918274
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    1,
+                    1,
+                    1
+                ]
+            },
+            "transformConstraint": {
+                "snapToFloor": false
+            },
+            "components": [
+                {
+                    "parentRef": "f1ecf0ac-1635-4fbd-be18-292e30b1ec0b",
+                    "selector": "Cube062",
+                    "type": "SubModelRef"
+                },
+                {
+                    "type": "ModelShader",
+                    "valueDataBinding": {
+                        "dataBindingContext": {
+                            "entityId": "8573db7b-c03c-41f4-943e-f57addba9677",
+                            "componentName": "Escalator2",
+                            "propertyName": "AlarmState",
+                            "entityPath": "Escalator2"
+                        }
+                    },
+                    "ruleBasedMapId": "BMS-Rule"
+                }
+            ],
+            "properties": {}
+        },
+        {
+            "name": "Solar-Panels",
+            "transform": {
+                "position": [
+                    3.8771700859069824,
+                    -1.6192100048065186,
+                    -0.3006899952888489
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    1,
+                    1,
+                    1
+                ]
+            },
+            "transformConstraint": {
+                "snapToFloor": false
+            },
+            "components": [
+                {
+                    "parentRef": "f1ecf0ac-1635-4fbd-be18-292e30b1ec0b",
+                    "selector": "Cylinder",
+                    "type": "SubModelRef"
+                },
+                {
+                    "type": "ModelShader",
+                    "valueDataBinding": {
+                        "dataBindingContext": {
+                            "entityId": "a6638173-8ffa-4653-b329-e1be7112d4dd",
+                            "componentName": "SolarPanels1",
+                            "propertyName": "AlarmState",
+                            "entityPath": "SolarPanels1"
+                        }
+                    },
+                    "ruleBasedMapId": "BMS-Rule"
+                }
+            ],
+            "properties": {}
+        },
+        {
+            "name": "Escalator1-tag",
+            "transform": {
+                "position": [
+                    -5.202427371297693,
+                    0.4119607921385402,
+                    1.4436883746926048
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    1,
+                    1,
+                    1
+                ]
+            },
+            "transformConstraint": {},
+            "components": [
+                {
+                    "type": "Tag",
+                    "icon": "iottwinmaker.common.icon:Info",
+                    "ruleBasedMapId": "BMS-Tags",
+                    "valueDataBinding": {
+                        "dataBindingContext": {
+                            "entityId": "5f6bae83-1954-420a-ab19-8162800fa529",
+                            "componentName": "Escalator1",
+                            "propertyName": "AlarmState",
+                            "entityPath": "Escalator1"
+                        }
+                    }
+                },
+                {
+                    "type": "DataOverlay",
+                    "subType": "OverlayPanel",
+                    "valueDataBindings": [
+                        {
+                            "bindingName": "FlowRate",
+                            "valueDataBinding": {
+                                "dataBindingContext": {
+                                    "entityId": "5f6bae83-1954-420a-ab19-8162800fa529",
+                                    "componentName": "Escalator1",
+                                    "propertyName": "FlowRate",
+                                    "entityPath": "Escalator1"
+                                }
+                            }
+                        },
+                        {
+                            "bindingName": "Vibration",
+                            "valueDataBinding": {
+                                "dataBindingContext": {
+                                    "entityId": "5f6bae83-1954-420a-ab19-8162800fa529",
+                                    "componentName": "Escalator1",
+                                    "propertyName": "Vibration",
+                                    "entityPath": "Escalator1"
+                                }
+                            }
+                        }
+                    ],
+                    "dataRows": [
+                        {
+                            "rowType": "Markdown",
+                            "content": "### Escalator-1\nFlow rate: **${FlowRate}** RPM \nVibration:  **${Vibration}** HZ"
+                        }
+                    ]
+                }
+            ],
+            "properties": {}
+        },
+        {
+            "name": "Escalator2-tag",
+            "transform": {
+                "position": [
+                    -5.2248711919790285,
+                    0.380129613994868,
+                    -0.08372403409104301
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    1,
+                    1,
+                    1
+                ]
+            },
+            "transformConstraint": {},
+            "components": [
+                {
+                    "type": "Tag",
+                    "icon": "iottwinmaker.common.icon:Info",
+                    "ruleBasedMapId": "BMS-Tags",
+                    "valueDataBinding": {
+                        "dataBindingContext": {
+                            "entityId": "8573db7b-c03c-41f4-943e-f57addba9677",
+                            "componentName": "Escalator2",
+                            "propertyName": "AlarmState",
+                            "entityPath": "Escalator2"
+                        }
+                    }
+                },
+                {
+                    "type": "DataOverlay",
+                    "subType": "OverlayPanel",
+                    "valueDataBindings": [
+                        {
+                            "bindingName": "FlowRate",
+                            "valueDataBinding": {
+                                "dataBindingContext": {
+                                    "entityId": "8573db7b-c03c-41f4-943e-f57addba9677",
+                                    "componentName": "Escalator2",
+                                    "propertyName": "FlowRate",
+                                    "entityPath": "Escalator2"
+                                }
+                            }
+                        },
+                        {
+                            "bindingName": "Vibration",
+                            "valueDataBinding": {
+                                "dataBindingContext": {
+                                    "entityId": "8573db7b-c03c-41f4-943e-f57addba9677",
+                                    "componentName": "Escalator2",
+                                    "propertyName": "Vibration",
+                                    "entityPath": "Escalator2"
+                                }
+                            }
+                        }
+                    ],
+                    "dataRows": [
+                        {
+                            "rowType": "Markdown",
+                            "content": "### Escalator-2\nFlow rate: **${FlowRate}** RPM \nVibration:  **${Vibration}** HZ"
+                        }
+                    ]
+                }
+            ],
+            "properties": {}
+        },
+        {
+            "name": "SolarPanels-tag",
+            "transform": {
+                "position": [
+                    1.862226551973136,
+                    0.6614170985418366,
+                    -0.6176208638968834
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    1,
+                    1,
+                    1
+                ]
+            },
+            "transformConstraint": {},
+            "components": [
+                {
+                    "type": "Tag",
+                    "icon": "iottwinmaker.common.icon:Info",
+                    "ruleBasedMapId": "BMS-Tags",
+                    "valueDataBinding": {
+                        "dataBindingContext": {
+                            "entityId": "a6638173-8ffa-4653-b329-e1be7112d4dd",
+                            "componentName": "SolarPanels1",
+                            "propertyName": "AlarmState",
+                            "entityPath": "SolarPanels1"
+                        }
+                    }
+                },
+                {
+                    "type": "DataOverlay",
+                    "subType": "OverlayPanel",
+                    "valueDataBindings": [
+                        {
+                            "bindingName": "Power",
+                            "valueDataBinding": {
+                                "dataBindingContext": {
+                                    "entityId": "a6638173-8ffa-4653-b329-e1be7112d4dd",
+                                    "componentName": "SolarPanels1",
+                                    "propertyName": "Power",
+                                    "entityPath": "SolarPanels1"
+                                }
+                            }
+                        },
+                        {
+                            "bindingName": "Temp",
+                            "valueDataBinding": {
+                                "dataBindingContext": {
+                                    "entityId": "a6638173-8ffa-4653-b329-e1be7112d4dd",
+                                    "componentName": "SolarPanels1",
+                                    "propertyName": "Temp",
+                                    "entityPath": "SolarPanels1"
+                                }
+                            }
+                        }
+                    ],
+                    "dataRows": [
+                        {
+                            "rowType": "Markdown",
+                            "content": "### Solar-Panels\nPower: **${Power}** W  \nTemp:  **${Temp}** C"
+                        }
+                    ]
+                }
+            ],
+            "properties": {}
+        },
+        {
+            "name": "kiosk",
+            "transform": {
+                "position": [
+                    -1.263659954071045,
+                    -2.21943998336792,
+                    -0.29802000522613525
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    1,
+                    1,
+                    1
+                ]
+            },
+            "transformConstraint": {
+                "snapToFloor": false
+            },
+            "components": [
+                {
+                    "parentRef": "f1ecf0ac-1635-4fbd-be18-292e30b1ec0b",
+                    "selector": "kiosk",
+                    "type": "SubModelRef"
+                },
+                {
+                    "type": "ModelShader",
+                    "valueDataBinding": {
+                        "dataBindingContext": {
+                            "entityId": "644fdebf-5c23-4b10-a6f4-2c58fe110be3",
+                            "componentName": "KioskGroup1",
+                            "propertyName": "KioskState",
+                            "entityPath": "KioskGroup1"
+                        }
+                    },
+                    "ruleBasedMapId": "Kiosk-Rule"
+                }
+            ],
+            "properties": {}
+        },
+        {
+            "name": "kiosk001",
+            "transform": {
+                "position": [
+                    -1.263659954071045,
+                    -1.7985299825668335,
+                    -0.29802000522613525
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    1,
+                    1,
+                    1
+                ]
+            },
+            "transformConstraint": {
+                "snapToFloor": false
+            },
+            "components": [
+                {
+                    "parentRef": "f1ecf0ac-1635-4fbd-be18-292e30b1ec0b",
+                    "selector": "kiosk001",
+                    "type": "SubModelRef"
+                },
+                {
+                    "type": "ModelShader",
+                    "valueDataBinding": {
+                        "dataBindingContext": {
+                            "entityId": "250cc029-aa7b-4810-924e-523c800e2e3c",
+                            "componentName": "KioskGroup2",
+                            "propertyName": "KioskState",
+                            "entityPath": "KioskGroup2"
+                        }
+                    },
+                    "ruleBasedMapId": "Kiosk-Rule"
+                }
+            ],
+            "properties": {}
+        },
+        {
+            "name": "kiosk002",
+            "transform": {
+                "position": [
+                    -1.263659954071045,
+                    -1.5883500576019287,
+                    -0.29802000522613525
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    1,
+                    1,
+                    1
+                ]
+            },
+            "transformConstraint": {
+                "snapToFloor": false
+            },
+            "components": [
+                {
+                    "parentRef": "f1ecf0ac-1635-4fbd-be18-292e30b1ec0b",
+                    "selector": "kiosk002",
+                    "type": "SubModelRef"
+                },
+                {
+                    "type": "ModelShader",
+                    "valueDataBinding": {
+                        "dataBindingContext": {
+                            "entityId": "703d78f1-38d0-44b6-bafe-54551a9d6c07",
+                            "componentName": "KioskGroup3",
+                            "propertyName": "KioskState",
+                            "entityPath": "KioskGroup3"
+                        }
+                    },
+                    "ruleBasedMapId": "Kiosk-Rule"
+                }
+            ],
+            "properties": {}
+        },
+        {
+            "name": "kiosk003",
+            "transform": {
+                "position": [
+                    -1.263659954071045,
+                    -1.2837400436401367,
+                    -0.29802000522613525
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    1,
+                    1,
+                    1
+                ]
+            },
+            "transformConstraint": {
+                "snapToFloor": false
+            },
+            "components": [
+                {
+                    "parentRef": "f1ecf0ac-1635-4fbd-be18-292e30b1ec0b",
+                    "selector": "kiosk003",
+                    "type": "SubModelRef"
+                },
+                {
+                    "type": "ModelShader",
+                    "valueDataBinding": {
+                        "dataBindingContext": {
+                            "entityId": "4cfa7561-a893-4220-b432-15495020222b",
+                            "componentName": "KioskGroup4",
+                            "propertyName": "KioskState",
+                            "entityPath": "KioskGroup4"
+                        }
+                    },
+                    "ruleBasedMapId": "Kiosk-Rule"
+                }
+            ],
+            "properties": {}
+        },
+        {
+            "name": "kiosk004",
+            "transform": {
+                "position": [
+                    -0.9621000289916992,
+                    -2.21943998336792,
+                    -0.29802000522613525
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0.6853032446596604
+                ],
+                "scale": [
+                    1.000003457069397,
+                    1.000003457069397,
+                    1
+                ]
+            },
+            "transformConstraint": {
+                "snapToFloor": false
+            },
+            "components": [
+                {
+                    "parentRef": "f1ecf0ac-1635-4fbd-be18-292e30b1ec0b",
+                    "selector": "kiosk004",
+                    "type": "SubModelRef"
+                },
+                {
+                    "type": "ModelShader",
+                    "valueDataBinding": {
+                        "dataBindingContext": {
+                            "entityId": "644fdebf-5c23-4b10-a6f4-2c58fe110be3",
+                            "componentName": "KioskGroup1",
+                            "propertyName": "KioskState",
+                            "entityPath": "KioskGroup1"
+                        }
+                    },
+                    "ruleBasedMapId": "Kiosk-Rule"
+                }
+            ],
+            "properties": {}
+        },
+        {
+            "name": "kiosk005",
+            "transform": {
+                "position": [
+                    -0.7521299719810486,
+                    -2.21943998336792,
+                    -0.29802000522613525
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0.6853032446596604
+                ],
+                "scale": [
+                    1.000003457069397,
+                    1.000003457069397,
+                    1
+                ]
+            },
+            "transformConstraint": {
+                "snapToFloor": false
+            },
+            "components": [
+                {
+                    "parentRef": "f1ecf0ac-1635-4fbd-be18-292e30b1ec0b",
+                    "selector": "kiosk005",
+                    "type": "SubModelRef"
+                },
+                {
+                    "type": "ModelShader",
+                    "valueDataBinding": {
+                        "dataBindingContext": {
+                            "entityId": "250cc029-aa7b-4810-924e-523c800e2e3c",
+                            "componentName": "KioskGroup2",
+                            "propertyName": "KioskState",
+                            "entityPath": "KioskGroup2"
+                        }
+                    },
+                    "ruleBasedMapId": "Kiosk-Rule"
+                }
+            ],
+            "properties": {}
+        },
+        {
+            "name": "kiosk006",
+            "transform": {
+                "position": [
+                    -0.55035001039505,
+                    -2.216710090637207,
+                    -0.29802000522613525
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0.6853032446596604
+                ],
+                "scale": [
+                    1.000003457069397,
+                    1.000003457069397,
+                    1
+                ]
+            },
+            "transformConstraint": {
+                "snapToFloor": false
+            },
+            "components": [
+                {
+                    "parentRef": "f1ecf0ac-1635-4fbd-be18-292e30b1ec0b",
+                    "selector": "kiosk006",
+                    "type": "SubModelRef"
+                },
+                {
+                    "type": "ModelShader",
+                    "valueDataBinding": {
+                        "dataBindingContext": {
+                            "entityId": "703d78f1-38d0-44b6-bafe-54551a9d6c07",
+                            "componentName": "KioskGroup3",
+                            "propertyName": "KioskState",
+                            "entityPath": "KioskGroup3"
+                        }
+                    },
+                    "ruleBasedMapId": "Kiosk-Rule"
+                }
+            ],
+            "properties": {}
+        },
+        {
+            "name": "kiosk007",
+            "transform": {
+                "position": [
+                    -0.36765000224113464,
+                    -2.216710090637207,
+                    -0.29802000522613525
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0.6853032446596604
+                ],
+                "scale": [
+                    1.000003457069397,
+                    1.000003457069397,
+                    1
+                ]
+            },
+            "transformConstraint": {
+                "snapToFloor": false
+            },
+            "components": [
+                {
+                    "parentRef": "f1ecf0ac-1635-4fbd-be18-292e30b1ec0b",
+                    "selector": "kiosk007",
+                    "type": "SubModelRef"
+                },
+                {
+                    "type": "ModelShader",
+                    "valueDataBinding": {
+                        "dataBindingContext": {
+                            "entityId": "4cfa7561-a893-4220-b432-15495020222b",
+                            "componentName": "KioskGroup4",
+                            "propertyName": "KioskState",
+                            "entityPath": "KioskGroup4"
+                        }
+                    },
+                    "ruleBasedMapId": "Kiosk-Rule"
+                }
+            ],
+            "properties": {}
+        },
+        {
+            "name": "kiosk008",
+            "transform": {
+                "position": [
+                    -0.36765000224113464,
+                    -1.5947400331497192,
+                    -0.29802000522613525
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0.6853032446596604
+                ],
+                "scale": [
+                    1.000003457069397,
+                    1.000003457069397,
+                    1
+                ]
+            },
+            "transformConstraint": {
+                "snapToFloor": false
+            },
+            "components": [
+                {
+                    "parentRef": "f1ecf0ac-1635-4fbd-be18-292e30b1ec0b",
+                    "selector": "kiosk008",
+                    "type": "SubModelRef"
+                },
+                {
+                    "type": "ModelShader",
+                    "valueDataBinding": {
+                        "dataBindingContext": {
+                            "entityId": "644fdebf-5c23-4b10-a6f4-2c58fe110be3",
+                            "componentName": "KioskGroup1",
+                            "propertyName": "KioskState",
+                            "entityPath": "KioskGroup1"
+                        }
+                    },
+                    "ruleBasedMapId": "Kiosk-Rule"
+                }
+            ],
+            "properties": {}
+        },
+        {
+            "name": "kiosk009",
+            "transform": {
+                "position": [
+                    -0.55035001039505,
+                    -1.5947400331497192,
+                    -0.29802000522613525
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0.6853032446596604
+                ],
+                "scale": [
+                    1.000003457069397,
+                    1.000003457069397,
+                    1
+                ]
+            },
+            "transformConstraint": {
+                "snapToFloor": false
+            },
+            "components": [
+                {
+                    "parentRef": "f1ecf0ac-1635-4fbd-be18-292e30b1ec0b",
+                    "selector": "kiosk009",
+                    "type": "SubModelRef"
+                },
+                {
+                    "type": "ModelShader",
+                    "valueDataBinding": {
+                        "dataBindingContext": {
+                            "entityId": "250cc029-aa7b-4810-924e-523c800e2e3c",
+                            "componentName": "KioskGroup2",
+                            "propertyName": "KioskState",
+                            "entityPath": "KioskGroup2"
+                        }
+                    },
+                    "ruleBasedMapId": "Kiosk-Rule"
+                }
+            ],
+            "properties": {}
+        },
+        {
+            "name": "kiosk010",
+            "transform": {
+                "position": [
+                    -0.7521299719810486,
+                    -1.5974700450897217,
+                    -0.29802000522613525
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0.6853032446596604
+                ],
+                "scale": [
+                    1.000003457069397,
+                    1.000003457069397,
+                    1
+                ]
+            },
+            "transformConstraint": {
+                "snapToFloor": false
+            },
+            "components": [
+                {
+                    "parentRef": "f1ecf0ac-1635-4fbd-be18-292e30b1ec0b",
+                    "selector": "kiosk010",
+                    "type": "SubModelRef"
+                },
+                {
+                    "type": "ModelShader",
+                    "valueDataBinding": {
+                        "dataBindingContext": {
+                            "entityId": "703d78f1-38d0-44b6-bafe-54551a9d6c07",
+                            "componentName": "KioskGroup3",
+                            "propertyName": "KioskState",
+                            "entityPath": "KioskGroup3"
+                        }
+                    },
+                    "ruleBasedMapId": "Kiosk-Rule"
+                }
+            ],
+            "properties": {}
+        },
+        {
+            "name": "kiosk011",
+            "transform": {
+                "position": [
+                    -0.9621000289916992,
+                    -1.5974700450897217,
+                    -0.29802000522613525
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0.6853032446596604
+                ],
+                "scale": [
+                    1.000003457069397,
+                    1.000003457069397,
+                    1
+                ]
+            },
+            "transformConstraint": {
+                "snapToFloor": false
+            },
+            "components": [
+                {
+                    "parentRef": "f1ecf0ac-1635-4fbd-be18-292e30b1ec0b",
+                    "selector": "kiosk011",
+                    "type": "SubModelRef"
+                },
+                {
+                    "type": "ModelShader",
+                    "valueDataBinding": {
+                        "dataBindingContext": {
+                            "entityId": "4cfa7561-a893-4220-b432-15495020222b",
+                            "componentName": "KioskGroup4",
+                            "propertyName": "KioskState",
+                            "entityPath": "KioskGroup4"
+                        }
+                    },
+                    "ruleBasedMapId": "Kiosk-Rule"
+                }
+            ],
+            "properties": {}
+        },
+        {
+            "name": "kiosk012",
+            "transform": {
+                "position": [
+                    0.22437000274658203,
+                    -1.575719952583313,
+                    -0.29802000522613525
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    1,
+                    1,
+                    1
+                ]
+            },
+            "transformConstraint": {
+                "snapToFloor": false
+            },
+            "components": [
+                {
+                    "parentRef": "f1ecf0ac-1635-4fbd-be18-292e30b1ec0b",
+                    "selector": "kiosk012",
+                    "type": "SubModelRef"
+                },
+                {
+                    "type": "ModelShader",
+                    "valueDataBinding": {
+                        "dataBindingContext": {
+                            "entityId": "644fdebf-5c23-4b10-a6f4-2c58fe110be3",
+                            "componentName": "KioskGroup1",
+                            "propertyName": "KioskState",
+                            "entityPath": "KioskGroup1"
+                        }
+                    },
+                    "ruleBasedMapId": "Kiosk-Rule"
+                }
+            ],
+            "properties": {}
+        },
+        {
+            "name": "kiosk013",
+            "transform": {
+                "position": [
+                    0.22437000274658203,
+                    -1.3065400123596191,
+                    -0.29802000522613525
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    1,
+                    1,
+                    1
+                ]
+            },
+            "transformConstraint": {
+                "snapToFloor": false
+            },
+            "components": [
+                {
+                    "parentRef": "f1ecf0ac-1635-4fbd-be18-292e30b1ec0b",
+                    "selector": "kiosk013",
+                    "type": "SubModelRef"
+                },
+                {
+                    "type": "ModelShader",
+                    "valueDataBinding": {
+                        "dataBindingContext": {
+                            "entityId": "250cc029-aa7b-4810-924e-523c800e2e3c",
+                            "componentName": "KioskGroup2",
+                            "propertyName": "KioskState",
+                            "entityPath": "KioskGroup2"
+                        }
+                    },
+                    "ruleBasedMapId": "Kiosk-Rule"
+                }
+            ],
+            "properties": {}
+        },
+        {
+            "name": "kiosk014",
+            "transform": {
+                "position": [
+                    -1.8794399499893188,
+                    -2.21943998336792,
+                    -0.29802000522613525
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    1,
+                    1,
+                    1
+                ]
+            },
+            "transformConstraint": {
+                "snapToFloor": false
+            },
+            "components": [
+                {
+                    "parentRef": "f1ecf0ac-1635-4fbd-be18-292e30b1ec0b",
+                    "selector": "kiosk014",
+                    "type": "SubModelRef"
+                },
+                {
+                    "type": "ModelShader",
+                    "valueDataBinding": {
+                        "dataBindingContext": {
+                            "entityId": "703d78f1-38d0-44b6-bafe-54551a9d6c07",
+                            "componentName": "KioskGroup3",
+                            "propertyName": "KioskState",
+                            "entityPath": "KioskGroup3"
+                        }
+                    },
+                    "ruleBasedMapId": "Kiosk-Rule"
+                }
+            ],
+            "properties": {}
+        },
+        {
+            "name": "kiosk015",
+            "transform": {
+                "position": [
+                    -1.8794399499893188,
+                    -1.9234100580215454,
+                    -0.29802000522613525
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    1,
+                    1,
+                    1
+                ]
+            },
+            "transformConstraint": {
+                "snapToFloor": false
+            },
+            "components": [
+                {
+                    "parentRef": "f1ecf0ac-1635-4fbd-be18-292e30b1ec0b",
+                    "selector": "kiosk015",
+                    "type": "SubModelRef"
+                },
+                {
+                    "type": "ModelShader",
+                    "valueDataBinding": {
+                        "dataBindingContext": {
+                            "entityId": "4cfa7561-a893-4220-b432-15495020222b",
+                            "componentName": "KioskGroup4",
+                            "propertyName": "KioskState",
+                            "entityPath": "KioskGroup4"
+                        }
+                    },
+                    "ruleBasedMapId": "Kiosk-Rule"
+                }
+            ],
+            "properties": {}
+        },
+        {
+            "name": "kiosk016",
+            "transform": {
+                "position": [
+                    -1.8794399499893188,
+                    -1.3649200201034546,
+                    -0.29802000522613525
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    1,
+                    1,
+                    1
+                ]
+            },
+            "transformConstraint": {
+                "snapToFloor": false
+            },
+            "components": [
+                {
+                    "parentRef": "f1ecf0ac-1635-4fbd-be18-292e30b1ec0b",
+                    "selector": "kiosk016",
+                    "type": "SubModelRef"
+                },
+                {
+                    "type": "ModelShader",
+                    "valueDataBinding": {
+                        "dataBindingContext": {
+                            "entityId": "644fdebf-5c23-4b10-a6f4-2c58fe110be3",
+                            "componentName": "KioskGroup1",
+                            "propertyName": "KioskState",
+                            "entityPath": "KioskGroup1"
+                        }
+                    },
+                    "ruleBasedMapId": "Kiosk-Rule"
+                }
+            ],
+            "properties": {}
+        },
+        {
+            "name": "kiosk017",
+            "transform": {
+                "position": [
+                    -1.8794399499893188,
+                    -1.6609599590301514,
+                    -0.29802000522613525
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    1,
+                    1,
+                    1
+                ]
+            },
+            "transformConstraint": {
+                "snapToFloor": false
+            },
+            "components": [
+                {
+                    "parentRef": "f1ecf0ac-1635-4fbd-be18-292e30b1ec0b",
+                    "selector": "kiosk017",
+                    "type": "SubModelRef"
+                },
+                {
+                    "type": "ModelShader",
+                    "valueDataBinding": {
+                        "dataBindingContext": {
+                            "entityId": "250cc029-aa7b-4810-924e-523c800e2e3c",
+                            "componentName": "KioskGroup2",
+                            "propertyName": "KioskState",
+                            "entityPath": "KioskGroup2"
+                        }
+                    },
+                    "ruleBasedMapId": "Kiosk-Rule"
+                }
+            ],
+            "properties": {}
+        },
+        {
+            "name": "kiosk018",
+            "transform": {
+                "position": [
+                    -7.9417901039123535,
+                    -1.2365599870681763,
+                    0.09070999920368195
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    1,
+                    1,
+                    1
+                ]
+            },
+            "transformConstraint": {
+                "snapToFloor": false
+            },
+            "components": [
+                {
+                    "parentRef": "f1ecf0ac-1635-4fbd-be18-292e30b1ec0b",
+                    "selector": "kiosk018",
+                    "type": "SubModelRef"
+                },
+                {
+                    "type": "ModelShader",
+                    "valueDataBinding": {
+                        "dataBindingContext": {
+                            "entityId": "703d78f1-38d0-44b6-bafe-54551a9d6c07",
+                            "componentName": "KioskGroup3",
+                            "propertyName": "KioskState",
+                            "entityPath": "KioskGroup3"
+                        }
+                    },
+                    "ruleBasedMapId": "Kiosk-Rule"
+                }
+            ],
+            "properties": {}
+        },
+        {
+            "name": "kiosk019",
+            "transform": {
+                "position": [
+                    -7.9417901039123535,
+                    -0.8494099974632263,
+                    0.09070999920368195
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    1,
+                    1,
+                    1
+                ]
+            },
+            "transformConstraint": {
+                "snapToFloor": false
+            },
+            "components": [
+                {
+                    "parentRef": "f1ecf0ac-1635-4fbd-be18-292e30b1ec0b",
+                    "selector": "kiosk019",
+                    "type": "SubModelRef"
+                },
+                {
+                    "type": "ModelShader",
+                    "valueDataBinding": {
+                        "dataBindingContext": {
+                            "entityId": "4cfa7561-a893-4220-b432-15495020222b",
+                            "componentName": "KioskGroup4",
+                            "propertyName": "KioskState",
+                            "entityPath": "KioskGroup4"
+                        }
+                    },
+                    "ruleBasedMapId": "Kiosk-Rule"
+                }
+            ],
+            "properties": {}
+        },
+        {
+            "name": "Kiosks-Tag",
+            "transform": {
+                "position": [
+                    -0.8468694194568087,
+                    0.13144333208639436,
+                    1.8313929042628807
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    1,
+                    1,
+                    1
+                ]
+            },
+            "transformConstraint": {},
+            "components": [
+                {
+                    "type": "Tag",
+                    "icon": "iottwinmaker.common.icon:Info",
+                    "ruleBasedMapId": "Kiosk-Tag",
+                    "valueDataBinding": {
+                        "dataBindingContext": {
+                            "entityId": "644fdebf-5c23-4b10-a6f4-2c58fe110be3",
+                            "componentName": "KioskGroup1",
+                            "propertyName": "TotalActive",
+                            "entityPath": "KioskGroup1"
+                        }
+                    },
+                    "navLink": {
+                        "params": {}
+                    }
+                },
+                {
+                    "type": "DataOverlay",
+                    "subType": "OverlayPanel",
+                    "valueDataBindings": [
+                        {
+                            "bindingName": "TotalActive",
+                            "valueDataBinding": {
+                                "dataBindingContext": {
+                                    "entityId": "644fdebf-5c23-4b10-a6f4-2c58fe110be3",
+                                    "componentName": "KioskGroup1",
+                                    "propertyName": "TotalActive",
+                                    "entityPath": "KioskGroup1"
+                                }
+                            }
+                        }
+                    ],
+                    "dataRows": [
+                        {
+                            "rowType": "Markdown",
+                            "content": "### Check-In Kiosks\nAvailability: **${TotalActive}** /20\n"
+                        }
+                    ]
+                }
+            ],
+            "properties": {}
+        }
+    ],
+    "rootNodeIndexes": [
+        9
+    ],
+    "cameras": [
+        {
+            "fov": 53.13,
+            "near": 0.1,
+            "far": 1000,
+            "zoom": 1,
+            "cameraType": "Perspective"
+        },
+        {
+            "fov": 53.13,
+            "near": 0.1,
+            "far": 1000,
+            "zoom": 1,
+            "cameraType": "Perspective"
+        }
+    ],
+    "rules": {
+        "CheckIn-Rule": {
+            "statements": [
+                {
+                    "expression": "People < 15",
+                    "target": "iottwinmaker.common.icon:Info"
+                },
+                {
+                    "expression": "People >= 15 && People <= 30",
+                    "target": "iottwinmaker.common.icon:Warning"
+                },
+                {
+                    "expression": "People > 30",
+                    "target": "iottwinmaker.common.icon:Error"
+                }
+            ]
+        },
+        "Gate-Rule": {
+            "statements": [
+                {
+                    "expression": "Flight_State == \"On TIme\"",
+                    "target": "iottwinmaker.common.icon:Info"
+                },
+                {
+                    "expression": "Flight_State == \"Delayed\"",
+                    "target": "iottwinmaker.common.icon:Warning"
+                },
+                {
+                    "expression": "Flight_State == \"Cancelled\"",
+                    "target": "iottwinmaker.common.icon:Error"
+                }
+            ]
+        },
+        "BMS-Rule": {
+            "statements": [
+                {
+                    "expression": "AlarmState == \"High\"",
+                    "target": "iottwinmaker.common.color:#d13212"
+                },
+                {
+                    "expression": "AlarmState == \"Medium\"",
+                    "target": "iottwinmaker.common.color:#fff115"
+                }
+            ]
+        },
+        "BMS-Tags": {
+            "statements": [
+                {
+                    "expression": "AlarmState == \"High\"",
+                    "target": "iottwinmaker.common.icon:Error"
+                },
+                {
+                    "expression": "AlarmState == \"Medium\"",
+                    "target": "iottwinmaker.common.icon:Warning"
+                }
+            ]
+        },
+        "Kiosk-Rule": {
+            "statements": [
+                {
+                    "expression": "KioskState == \"Medium\"",
+                    "target": "iottwinmaker.common.color:#ffe600"
+                },
+                {
+                    "expression": "KioskState == \"High\"",
+                    "target": "iottwinmaker.common.color:#d13212"
+                }
+            ]
+        },
+        "Kiosk-Tag": {
+            "statements": [
+                {
+                    "expression": "TotalActive <= 10",
+                    "target": "iottwinmaker.common.icon:Error"
+                },
+                {
+                    "expression": "TotalActive > 10 && TotalActive <= 18",
+                    "target": "iottwinmaker.common.icon:Warning"
+                }
+            ]
+        }
+    },
+    "defaultCameraIndex": 0
+}

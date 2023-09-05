@@ -1,0 +1,1351 @@
+{
+    "People": 12,
+    "Dwell-Time": 23,
+    "AlarmState": "Normal",
+    "Name": "CheckIn-1",
+    "Time": "00:00:00"
+}{
+    "People": 6,
+    "Dwell-Time": 28,
+    "AlarmState": "Normal",
+    "Name": "CheckIn-2",
+    "Time": "00:00:00"
+}{
+    "People": 6,
+    "Dwell-Time": 5,
+    "AlarmState": "Normal",
+    "Name": "CheckIn-3",
+    "Time": "00:00:00"
+}{
+    "People": 11,
+    "Dwell-Time": 32,
+    "AlarmState": "Low",
+    "Name": "Immigration-1",
+    "Time": "00:00:00"
+}{
+    "People": 3,
+    "Dwell-Time": 17,
+    "AlarmState": "Low",
+    "Name": "Immigration-2",
+    "Time": "00:00:00"
+}{
+    "People": 19,
+    "Dwell-Time": 15,
+    "AlarmState": "Low",
+    "Name": "Immigration-3",
+    "Time": "00:00:00"
+}{
+    "People": 6,
+    "Dwell-Time": 43,
+    "AlarmState": "Normal",
+    "Name": "Security-1",
+    "Time": "00:00:00"
+}{
+    "People": 7,
+    "Dwell-Time": 34,
+    "AlarmState": "Normal",
+    "Name": "Security-2",
+    "Time": "00:00:00"
+}{
+    "People": 15,
+    "Dwell-Time": 43,
+    "AlarmState": "Normal",
+    "Name": "Security-3",
+    "Time": "00:00:00"
+}{
+    "People": 12,
+    "Dwell-Time": 23,
+    "AlarmState": "Low",
+    "Name": "CheckIn-1",
+    "Time": "00:00:10"
+}{
+    "People": 17,
+    "Dwell-Time": 48,
+    "AlarmState": "Low",
+    "Name": "CheckIn-2",
+    "Time": "00:00:10"
+}{
+    "People": 6,
+    "Dwell-Time": 28,
+    "AlarmState": "Low",
+    "Name": "CheckIn-3",
+    "Time": "00:00:10"
+}{
+    "People": 15,
+    "Dwell-Time": 51,
+    "AlarmState": "Low",
+    "Name": "Immigration-1",
+    "Time": "00:00:10"
+}{
+    "People": 17,
+    "Dwell-Time": 12,
+    "AlarmState": "Low",
+    "Name": "Immigration-2",
+    "Time": "00:00:10"
+}{
+    "People": 18,
+    "Dwell-Time": 44,
+    "AlarmState": "Low",
+    "Name": "Immigration-3",
+    "Time": "00:00:10"
+}{
+    "People": 19,
+    "Dwell-Time": 59,
+    "AlarmState": "Normal",
+    "Name": "Security-1",
+    "Time": "00:00:10"
+}{
+    "People": 6,
+    "Dwell-Time": 53,
+    "AlarmState": "Normal",
+    "Name": "Security-2",
+    "Time": "00:00:10"
+}{
+    "People": 3,
+    "Dwell-Time": 21,
+    "AlarmState": "Normal",
+    "Name": "Security-3",
+    "Time": "00:00:10"
+}{
+    "People": 15,
+    "Dwell-Time": 19,
+    "AlarmState": "Low",
+    "Name": "CheckIn-1",
+    "Time": "00:00:20"
+}{
+    "People": 7,
+    "Dwell-Time": 57,
+    "AlarmState": "Low",
+    "Name": "CheckIn-2",
+    "Time": "00:00:20"
+}{
+    "People": 15,
+    "Dwell-Time": 10,
+    "AlarmState": "Low",
+    "Name": "CheckIn-3",
+    "Time": "00:00:20"
+}{
+    "People": 10,
+    "Dwell-Time": 17,
+    "AlarmState": "Normal",
+    "Name": "Immigration-1",
+    "Time": "00:00:20"
+}{
+    "People": 5,
+    "Dwell-Time": 8,
+    "AlarmState": "Normal",
+    "Name": "Immigration-2",
+    "Time": "00:00:20"
+}{
+    "People": 6,
+    "Dwell-Time": 24,
+    "AlarmState": "Normal",
+    "Name": "Immigration-3",
+    "Time": "00:00:20"
+}{
+    "People": 18,
+    "Dwell-Time": 34,
+    "AlarmState": "Low",
+    "Name": "Security-1",
+    "Time": "00:00:20"
+}{
+    "People": 19,
+    "Dwell-Time": 30,
+    "AlarmState": "Low",
+    "Name": "Security-2",
+    "Time": "00:00:20"
+}{
+    "People": 3,
+    "Dwell-Time": 36,
+    "AlarmState": "Low",
+    "Name": "Security-3",
+    "Time": "00:00:20"
+}{
+    "People": 7,
+    "Dwell-Time": 56,
+    "AlarmState": "Normal",
+    "Name": "CheckIn-1",
+    "Time": "00:00:30"
+}{
+    "People": 11,
+    "Dwell-Time": 50,
+    "AlarmState": "Normal",
+    "Name": "CheckIn-2",
+    "Time": "00:00:30"
+}{
+    "People": 6,
+    "Dwell-Time": 9,
+    "AlarmState": "Normal",
+    "Name": "CheckIn-3",
+    "Time": "00:00:30"
+}{
+    "People": 13,
+    "Dwell-Time": 23,
+    "AlarmState": "Low",
+    "Name": "Immigration-1",
+    "Time": "00:00:30"
+}{
+    "People": 6,
+    "Dwell-Time": 45,
+    "AlarmState": "Low",
+    "Name": "Immigration-2",
+    "Time": "00:00:30"
+}{
+    "People": 19,
+    "Dwell-Time": 27,
+    "AlarmState": "Low",
+    "Name": "Immigration-3",
+    "Time": "00:00:30"
+}{
+    "People": 17,
+    "Dwell-Time": 36,
+    "AlarmState": "Low",
+    "Name": "Security-1",
+    "Time": "00:00:30"
+}{
+    "People": 11,
+    "Dwell-Time": 49,
+    "AlarmState": "Low",
+    "Name": "Security-2",
+    "Time": "00:00:30"
+}{
+    "People": 17,
+    "Dwell-Time": 51,
+    "AlarmState": "Low",
+    "Name": "Security-3",
+    "Time": "00:00:30"
+}{
+    "People": 13,
+    "Dwell-Time": 26,
+    "AlarmState": "Low",
+    "Name": "CheckIn-1",
+    "Time": "00:00:40"
+}{
+    "People": 17,
+    "Dwell-Time": 11,
+    "AlarmState": "Low",
+    "Name": "CheckIn-2",
+    "Time": "00:00:40"
+}{
+    "People": 12,
+    "Dwell-Time": 38,
+    "AlarmState": "Low",
+    "Name": "CheckIn-3",
+    "Time": "00:00:40"
+}{
+    "People": 11,
+    "Dwell-Time": 56,
+    "AlarmState": "Low",
+    "Name": "Immigration-1",
+    "Time": "00:00:40"
+}{
+    "People": 12,
+    "Dwell-Time": 41,
+    "AlarmState": "Low",
+    "Name": "Immigration-2",
+    "Time": "00:00:40"
+}{
+    "People": 18,
+    "Dwell-Time": 60,
+    "AlarmState": "Low",
+    "Name": "Immigration-3",
+    "Time": "00:00:40"
+}{
+    "People": 17,
+    "Dwell-Time": 18,
+    "AlarmState": "Normal",
+    "Name": "Security-1",
+    "Time": "00:00:40"
+}{
+    "People": 2,
+    "Dwell-Time": 8,
+    "AlarmState": "Normal",
+    "Name": "Security-2",
+    "Time": "00:00:40"
+}{
+    "People": 13,
+    "Dwell-Time": 41,
+    "AlarmState": "Normal",
+    "Name": "Security-3",
+    "Time": "00:00:40"
+}{
+    "People": 19,
+    "Dwell-Time": 58,
+    "AlarmState": "Normal",
+    "Name": "CheckIn-1",
+    "Time": "00:00:50"
+}{
+    "People": 10,
+    "Dwell-Time": 55,
+    "AlarmState": "Normal",
+    "Name": "CheckIn-2",
+    "Time": "00:00:50"
+}{
+    "People": 3,
+    "Dwell-Time": 42,
+    "AlarmState": "Normal",
+    "Name": "CheckIn-3",
+    "Time": "00:00:50"
+}{
+    "People": 13,
+    "Dwell-Time": 21,
+    "AlarmState": "Normal",
+    "Name": "Immigration-1",
+    "Time": "00:00:50"
+}{
+    "People": 7,
+    "Dwell-Time": 16,
+    "AlarmState": "Normal",
+    "Name": "Immigration-2",
+    "Time": "00:00:50"
+}{
+    "People": 10,
+    "Dwell-Time": 55,
+    "AlarmState": "Normal",
+    "Name": "Immigration-3",
+    "Time": "00:00:50"
+}{
+    "People": 8,
+    "Dwell-Time": 14,
+    "AlarmState": "Low",
+    "Name": "Security-1",
+    "Time": "00:00:50"
+}{
+    "People": 20,
+    "Dwell-Time": 30,
+    "AlarmState": "Low",
+    "Name": "Security-2",
+    "Time": "00:00:50"
+}{
+    "People": 17,
+    "Dwell-Time": 26,
+    "AlarmState": "Low",
+    "Name": "Security-3",
+    "Time": "00:00:50"
+}{
+    "People": 26,
+    "Dwell-Time": 97,
+    "AlarmState": "Medium",
+    "Name": "CheckIn-1",
+    "Time": "00:01:00"
+}{
+    "People": 26,
+    "Dwell-Time": 36,
+    "AlarmState": "Medium",
+    "Name": "CheckIn-2",
+    "Time": "00:01:00"
+}{
+    "People": 30,
+    "Dwell-Time": 52,
+    "AlarmState": "Medium",
+    "Name": "CheckIn-3",
+    "Time": "00:01:00"
+}{
+    "People": 27,
+    "Dwell-Time": 103,
+    "AlarmState": "Medium",
+    "Name": "Immigration-1",
+    "Time": "00:01:00"
+}{
+    "People": 27,
+    "Dwell-Time": 69,
+    "AlarmState": "Medium",
+    "Name": "Immigration-2",
+    "Time": "00:01:00"
+}{
+    "People": 31,
+    "Dwell-Time": 42,
+    "AlarmState": "Medium",
+    "Name": "Immigration-3",
+    "Time": "00:01:00"
+}{
+    "People": 25,
+    "Dwell-Time": 34,
+    "AlarmState": "Medium",
+    "Name": "Security-1",
+    "Time": "00:01:00"
+}{
+    "People": 34,
+    "Dwell-Time": 46,
+    "AlarmState": "Medium",
+    "Name": "Security-2",
+    "Time": "00:01:00"
+}{
+    "People": 26,
+    "Dwell-Time": 68,
+    "AlarmState": "Medium",
+    "Name": "Security-3",
+    "Time": "00:01:00"
+}{
+    "People": 33,
+    "Dwell-Time": 42,
+    "AlarmState": "High",
+    "Name": "CheckIn-1",
+    "Time": "00:01:10"
+}{
+    "People": 33,
+    "Dwell-Time": 74,
+    "AlarmState": "High",
+    "Name": "CheckIn-2",
+    "Time": "00:01:10"
+}{
+    "People": 29,
+    "Dwell-Time": 25,
+    "AlarmState": "High",
+    "Name": "CheckIn-3",
+    "Time": "00:01:10"
+}{
+    "People": 30,
+    "Dwell-Time": 33,
+    "AlarmState": "Medium",
+    "Name": "Immigration-1",
+    "Time": "00:01:10"
+}{
+    "People": 30,
+    "Dwell-Time": 50,
+    "AlarmState": "Medium",
+    "Name": "Immigration-2",
+    "Time": "00:01:10"
+}{
+    "People": 25,
+    "Dwell-Time": 53,
+    "AlarmState": "Medium",
+    "Name": "Immigration-3",
+    "Time": "00:01:10"
+}{
+    "People": 34,
+    "Dwell-Time": 73,
+    "AlarmState": "High",
+    "Name": "Security-1",
+    "Time": "00:01:10"
+}{
+    "People": 30,
+    "Dwell-Time": 75,
+    "AlarmState": "High",
+    "Name": "Security-2",
+    "Time": "00:01:10"
+}{
+    "People": 34,
+    "Dwell-Time": 98,
+    "AlarmState": "High",
+    "Name": "Security-3",
+    "Time": "00:01:10"
+}{
+    "People": 35,
+    "Dwell-Time": 85,
+    "AlarmState": "High",
+    "Name": "CheckIn-1",
+    "Time": "00:01:20"
+}{
+    "People": 33,
+    "Dwell-Time": 58,
+    "AlarmState": "High",
+    "Name": "CheckIn-2",
+    "Time": "00:01:20"
+}{
+    "People": 31,
+    "Dwell-Time": 86,
+    "AlarmState": "High",
+    "Name": "CheckIn-3",
+    "Time": "00:01:20"
+}{
+    "People": 35,
+    "Dwell-Time": 105,
+    "AlarmState": "High",
+    "Name": "Immigration-1",
+    "Time": "00:01:20"
+}{
+    "People": 27,
+    "Dwell-Time": 87,
+    "AlarmState": "High",
+    "Name": "Immigration-2",
+    "Time": "00:01:20"
+}{
+    "People": 33,
+    "Dwell-Time": 66,
+    "AlarmState": "High",
+    "Name": "Immigration-3",
+    "Time": "00:01:20"
+}{
+    "People": 28,
+    "Dwell-Time": 28,
+    "AlarmState": "Medium",
+    "Name": "Security-1",
+    "Time": "00:01:20"
+}{
+    "People": 27,
+    "Dwell-Time": 94,
+    "AlarmState": "Medium",
+    "Name": "Security-2",
+    "Time": "00:01:20"
+}{
+    "People": 30,
+    "Dwell-Time": 56,
+    "AlarmState": "Medium",
+    "Name": "Security-3",
+    "Time": "00:01:20"
+}{
+    "People": 35,
+    "Dwell-Time": 63,
+    "AlarmState": "High",
+    "Name": "CheckIn-1",
+    "Time": "00:01:30"
+}{
+    "People": 28,
+    "Dwell-Time": 43,
+    "AlarmState": "High",
+    "Name": "CheckIn-2",
+    "Time": "00:01:30"
+}{
+    "People": 34,
+    "Dwell-Time": 43,
+    "AlarmState": "High",
+    "Name": "CheckIn-3",
+    "Time": "00:01:30"
+}{
+    "People": 32,
+    "Dwell-Time": 103,
+    "AlarmState": "High",
+    "Name": "Immigration-1",
+    "Time": "00:01:30"
+}{
+    "People": 28,
+    "Dwell-Time": 94,
+    "AlarmState": "High",
+    "Name": "Immigration-2",
+    "Time": "00:01:30"
+}{
+    "People": 33,
+    "Dwell-Time": 33,
+    "AlarmState": "High",
+    "Name": "Immigration-3",
+    "Time": "00:01:30"
+}{
+    "People": 27,
+    "Dwell-Time": 81,
+    "AlarmState": "High",
+    "Name": "Security-1",
+    "Time": "00:01:30"
+}{
+    "People": 31,
+    "Dwell-Time": 58,
+    "AlarmState": "High",
+    "Name": "Security-2",
+    "Time": "00:01:30"
+}{
+    "People": 35,
+    "Dwell-Time": 73,
+    "AlarmState": "High",
+    "Name": "Security-3",
+    "Time": "00:01:30"
+}{
+    "People": 31,
+    "Dwell-Time": 46,
+    "AlarmState": "Medium",
+    "Name": "CheckIn-1",
+    "Time": "00:01:40"
+}{
+    "People": 26,
+    "Dwell-Time": 96,
+    "AlarmState": "Medium",
+    "Name": "CheckIn-2",
+    "Time": "00:01:40"
+}{
+    "People": 28,
+    "Dwell-Time": 92,
+    "AlarmState": "Medium",
+    "Name": "CheckIn-3",
+    "Time": "00:01:40"
+}{
+    "People": 32,
+    "Dwell-Time": 28,
+    "AlarmState": "Medium",
+    "Name": "Immigration-1",
+    "Time": "00:01:40"
+}{
+    "People": 28,
+    "Dwell-Time": 78,
+    "AlarmState": "Medium",
+    "Name": "Immigration-2",
+    "Time": "00:01:40"
+}{
+    "People": 30,
+    "Dwell-Time": 76,
+    "AlarmState": "Medium",
+    "Name": "Immigration-3",
+    "Time": "00:01:40"
+}{
+    "People": 25,
+    "Dwell-Time": 101,
+    "AlarmState": "Medium",
+    "Name": "Security-1",
+    "Time": "00:01:40"
+}{
+    "People": 25,
+    "Dwell-Time": 50,
+    "AlarmState": "Medium",
+    "Name": "Security-2",
+    "Time": "00:01:40"
+}{
+    "People": 35,
+    "Dwell-Time": 44,
+    "AlarmState": "Medium",
+    "Name": "Security-3",
+    "Time": "00:01:40"
+}{
+    "People": 29,
+    "Dwell-Time": 28,
+    "AlarmState": "Medium",
+    "Name": "CheckIn-1",
+    "Time": "00:01:50"
+}{
+    "People": 33,
+    "Dwell-Time": 32,
+    "AlarmState": "Medium",
+    "Name": "CheckIn-2",
+    "Time": "00:01:50"
+}{
+    "People": 29,
+    "Dwell-Time": 87,
+    "AlarmState": "Medium",
+    "Name": "CheckIn-3",
+    "Time": "00:01:50"
+}{
+    "People": 32,
+    "Dwell-Time": 104,
+    "AlarmState": "High",
+    "Name": "Immigration-1",
+    "Time": "00:01:50"
+}{
+    "People": 32,
+    "Dwell-Time": 25,
+    "AlarmState": "High",
+    "Name": "Immigration-2",
+    "Time": "00:01:50"
+}{
+    "People": 29,
+    "Dwell-Time": 33,
+    "AlarmState": "High",
+    "Name": "Immigration-3",
+    "Time": "00:01:50"
+}{
+    "People": 30,
+    "Dwell-Time": 79,
+    "AlarmState": "Medium",
+    "Name": "Security-1",
+    "Time": "00:01:50"
+}{
+    "People": 31,
+    "Dwell-Time": 33,
+    "AlarmState": "Medium",
+    "Name": "Security-2",
+    "Time": "00:01:50"
+}{
+    "People": 30,
+    "Dwell-Time": 45,
+    "AlarmState": "Medium",
+    "Name": "Security-3",
+    "Time": "00:01:50"
+}{
+    "People": 28,
+    "Dwell-Time": 45,
+    "AlarmState": "Medium",
+    "Name": "CheckIn-1",
+    "Time": "00:02:00"
+}{
+    "People": 28,
+    "Dwell-Time": 53,
+    "AlarmState": "Medium",
+    "Name": "CheckIn-2",
+    "Time": "00:02:00"
+}{
+    "People": 34,
+    "Dwell-Time": 42,
+    "AlarmState": "Medium",
+    "Name": "CheckIn-3",
+    "Time": "00:02:00"
+}{
+    "People": 27,
+    "Dwell-Time": 29,
+    "AlarmState": "Medium",
+    "Name": "Immigration-1",
+    "Time": "00:02:00"
+}{
+    "People": 33,
+    "Dwell-Time": 96,
+    "AlarmState": "Medium",
+    "Name": "Immigration-2",
+    "Time": "00:02:00"
+}{
+    "People": 27,
+    "Dwell-Time": 96,
+    "AlarmState": "Medium",
+    "Name": "Immigration-3",
+    "Time": "00:02:00"
+}{
+    "People": 26,
+    "Dwell-Time": 99,
+    "AlarmState": "High",
+    "Name": "Security-1",
+    "Time": "00:02:00"
+}{
+    "People": 32,
+    "Dwell-Time": 80,
+    "AlarmState": "High",
+    "Name": "Security-2",
+    "Time": "00:02:00"
+}{
+    "People": 35,
+    "Dwell-Time": 73,
+    "AlarmState": "High",
+    "Name": "Security-3",
+    "Time": "00:02:00"
+}{
+    "People": 30,
+    "Dwell-Time": 69,
+    "AlarmState": "High",
+    "Name": "CheckIn-1",
+    "Time": "00:02:10"
+}{
+    "People": 29,
+    "Dwell-Time": 29,
+    "AlarmState": "High",
+    "Name": "CheckIn-2",
+    "Time": "00:02:10"
+}{
+    "People": 35,
+    "Dwell-Time": 33,
+    "AlarmState": "High",
+    "Name": "CheckIn-3",
+    "Time": "00:02:10"
+}{
+    "People": 32,
+    "Dwell-Time": 97,
+    "AlarmState": "Medium",
+    "Name": "Immigration-1",
+    "Time": "00:02:10"
+}{
+    "People": 25,
+    "Dwell-Time": 53,
+    "AlarmState": "Medium",
+    "Name": "Immigration-2",
+    "Time": "00:02:10"
+}{
+    "People": 29,
+    "Dwell-Time": 62,
+    "AlarmState": "Medium",
+    "Name": "Immigration-3",
+    "Time": "00:02:10"
+}{
+    "People": 30,
+    "Dwell-Time": 89,
+    "AlarmState": "Medium",
+    "Name": "Security-1",
+    "Time": "00:02:10"
+}{
+    "People": 28,
+    "Dwell-Time": 37,
+    "AlarmState": "Medium",
+    "Name": "Security-2",
+    "Time": "00:02:10"
+}{
+    "People": 28,
+    "Dwell-Time": 55,
+    "AlarmState": "Medium",
+    "Name": "Security-3",
+    "Time": "00:02:10"
+}{
+    "People": 34,
+    "Dwell-Time": 63,
+    "AlarmState": "High",
+    "Name": "CheckIn-1",
+    "Time": "00:02:20"
+}{
+    "People": 29,
+    "Dwell-Time": 100,
+    "AlarmState": "High",
+    "Name": "CheckIn-2",
+    "Time": "00:02:20"
+}{
+    "People": 33,
+    "Dwell-Time": 80,
+    "AlarmState": "High",
+    "Name": "CheckIn-3",
+    "Time": "00:02:20"
+}{
+    "People": 31,
+    "Dwell-Time": 37,
+    "AlarmState": "Medium",
+    "Name": "Immigration-1",
+    "Time": "00:02:20"
+}{
+    "People": 26,
+    "Dwell-Time": 42,
+    "AlarmState": "Medium",
+    "Name": "Immigration-2",
+    "Time": "00:02:20"
+}{
+    "People": 34,
+    "Dwell-Time": 41,
+    "AlarmState": "Medium",
+    "Name": "Immigration-3",
+    "Time": "00:02:20"
+}{
+    "People": 28,
+    "Dwell-Time": 37,
+    "AlarmState": "High",
+    "Name": "Security-1",
+    "Time": "00:02:20"
+}{
+    "People": 32,
+    "Dwell-Time": 100,
+    "AlarmState": "High",
+    "Name": "Security-2",
+    "Time": "00:02:20"
+}{
+    "People": 33,
+    "Dwell-Time": 30,
+    "AlarmState": "High",
+    "Name": "Security-3",
+    "Time": "00:02:20"
+}{
+    "People": 27,
+    "Dwell-Time": 71,
+    "AlarmState": "Medium",
+    "Name": "CheckIn-1",
+    "Time": "00:02:30"
+}{
+    "People": 25,
+    "Dwell-Time": 88,
+    "AlarmState": "Medium",
+    "Name": "CheckIn-2",
+    "Time": "00:02:30"
+}{
+    "People": 34,
+    "Dwell-Time": 49,
+    "AlarmState": "Medium",
+    "Name": "CheckIn-3",
+    "Time": "00:02:30"
+}{
+    "People": 29,
+    "Dwell-Time": 75,
+    "AlarmState": "Medium",
+    "Name": "Immigration-1",
+    "Time": "00:02:30"
+}{
+    "People": 28,
+    "Dwell-Time": 30,
+    "AlarmState": "Medium",
+    "Name": "Immigration-2",
+    "Time": "00:02:30"
+}{
+    "People": 31,
+    "Dwell-Time": 100,
+    "AlarmState": "Medium",
+    "Name": "Immigration-3",
+    "Time": "00:02:30"
+}{
+    "People": 30,
+    "Dwell-Time": 92,
+    "AlarmState": "Medium",
+    "Name": "Security-1",
+    "Time": "00:02:30"
+}{
+    "People": 27,
+    "Dwell-Time": 32,
+    "AlarmState": "Medium",
+    "Name": "Security-2",
+    "Time": "00:02:30"
+}{
+    "People": 28,
+    "Dwell-Time": 78,
+    "AlarmState": "Medium",
+    "Name": "Security-3",
+    "Time": "00:02:30"
+}{
+    "People": 28,
+    "Dwell-Time": 89,
+    "AlarmState": "Medium",
+    "Name": "CheckIn-1",
+    "Time": "00:02:40"
+}{
+    "People": 34,
+    "Dwell-Time": 95,
+    "AlarmState": "Medium",
+    "Name": "CheckIn-2",
+    "Time": "00:02:40"
+}{
+    "People": 30,
+    "Dwell-Time": 88,
+    "AlarmState": "Medium",
+    "Name": "CheckIn-3",
+    "Time": "00:02:40"
+}{
+    "People": 35,
+    "Dwell-Time": 36,
+    "AlarmState": "High",
+    "Name": "Immigration-1",
+    "Time": "00:02:40"
+}{
+    "People": 29,
+    "Dwell-Time": 91,
+    "AlarmState": "High",
+    "Name": "Immigration-2",
+    "Time": "00:02:40"
+}{
+    "People": 35,
+    "Dwell-Time": 78,
+    "AlarmState": "High",
+    "Name": "Immigration-3",
+    "Time": "00:02:40"
+}{
+    "People": 31,
+    "Dwell-Time": 64,
+    "AlarmState": "High",
+    "Name": "Security-1",
+    "Time": "00:02:40"
+}{
+    "People": 32,
+    "Dwell-Time": 73,
+    "AlarmState": "High",
+    "Name": "Security-2",
+    "Time": "00:02:40"
+}{
+    "People": 30,
+    "Dwell-Time": 47,
+    "AlarmState": "High",
+    "Name": "Security-3",
+    "Time": "00:02:40"
+}{
+    "People": 29,
+    "Dwell-Time": 87,
+    "AlarmState": "Medium",
+    "Name": "CheckIn-1",
+    "Time": "00:02:50"
+}{
+    "People": 28,
+    "Dwell-Time": 32,
+    "AlarmState": "Medium",
+    "Name": "CheckIn-2",
+    "Time": "00:02:50"
+}{
+    "People": 35,
+    "Dwell-Time": 25,
+    "AlarmState": "Medium",
+    "Name": "CheckIn-3",
+    "Time": "00:02:50"
+}{
+    "People": 30,
+    "Dwell-Time": 36,
+    "AlarmState": "Medium",
+    "Name": "Immigration-1",
+    "Time": "00:02:50"
+}{
+    "People": 27,
+    "Dwell-Time": 98,
+    "AlarmState": "Medium",
+    "Name": "Immigration-2",
+    "Time": "00:02:50"
+}{
+    "People": 31,
+    "Dwell-Time": 87,
+    "AlarmState": "Medium",
+    "Name": "Immigration-3",
+    "Time": "00:02:50"
+}{
+    "People": 25,
+    "Dwell-Time": 48,
+    "AlarmState": "Medium",
+    "Name": "Security-1",
+    "Time": "00:02:50"
+}{
+    "People": 33,
+    "Dwell-Time": 54,
+    "AlarmState": "Medium",
+    "Name": "Security-2",
+    "Time": "00:02:50"
+}{
+    "People": 25,
+    "Dwell-Time": 76,
+    "AlarmState": "Medium",
+    "Name": "Security-3",
+    "Time": "00:02:50"
+}{
+    "People": 11,
+    "Dwell-Time": 38,
+    "AlarmState": "Low",
+    "Name": "CheckIn-1",
+    "Time": "00:03:00"
+}{
+    "People": 16,
+    "Dwell-Time": 39,
+    "AlarmState": "Low",
+    "Name": "CheckIn-2",
+    "Time": "00:03:00"
+}{
+    "People": 10,
+    "Dwell-Time": 59,
+    "AlarmState": "Low",
+    "Name": "CheckIn-3",
+    "Time": "00:03:00"
+}{
+    "People": 19,
+    "Dwell-Time": 33,
+    "AlarmState": "Low",
+    "Name": "Immigration-1",
+    "Time": "00:03:00"
+}{
+    "People": 11,
+    "Dwell-Time": 57,
+    "AlarmState": "Low",
+    "Name": "Immigration-2",
+    "Time": "00:03:00"
+}{
+    "People": 15,
+    "Dwell-Time": 30,
+    "AlarmState": "Low",
+    "Name": "Immigration-3",
+    "Time": "00:03:00"
+}{
+    "People": 10,
+    "Dwell-Time": 26,
+    "AlarmState": "Low",
+    "Name": "Security-1",
+    "Time": "00:03:00"
+}{
+    "People": 14,
+    "Dwell-Time": 40,
+    "AlarmState": "Low",
+    "Name": "Security-2",
+    "Time": "00:03:00"
+}{
+    "People": 14,
+    "Dwell-Time": 25,
+    "AlarmState": "Low",
+    "Name": "Security-3",
+    "Time": "00:03:00"
+}{
+    "People": 13,
+    "Dwell-Time": 36,
+    "AlarmState": "Low",
+    "Name": "CheckIn-1",
+    "Time": "00:03:10"
+}{
+    "People": 15,
+    "Dwell-Time": 60,
+    "AlarmState": "Low",
+    "Name": "CheckIn-2",
+    "Time": "00:03:10"
+}{
+    "People": 17,
+    "Dwell-Time": 15,
+    "AlarmState": "Low",
+    "Name": "CheckIn-3",
+    "Time": "00:03:10"
+}{
+    "People": 10,
+    "Dwell-Time": 26,
+    "AlarmState": "Normal",
+    "Name": "Immigration-1",
+    "Time": "00:03:10"
+}{
+    "People": 12,
+    "Dwell-Time": 30,
+    "AlarmState": "Normal",
+    "Name": "Immigration-2",
+    "Time": "00:03:10"
+}{
+    "People": 10,
+    "Dwell-Time": 44,
+    "AlarmState": "Normal",
+    "Name": "Immigration-3",
+    "Time": "00:03:10"
+}{
+    "People": 19,
+    "Dwell-Time": 45,
+    "AlarmState": "Low",
+    "Name": "Security-1",
+    "Time": "00:03:10"
+}{
+    "People": 19,
+    "Dwell-Time": 27,
+    "AlarmState": "Low",
+    "Name": "Security-2",
+    "Time": "00:03:10"
+}{
+    "People": 15,
+    "Dwell-Time": 13,
+    "AlarmState": "Low",
+    "Name": "Security-3",
+    "Time": "00:03:10"
+}{
+    "People": 15,
+    "Dwell-Time": 55,
+    "AlarmState": "Low",
+    "Name": "CheckIn-1",
+    "Time": "00:03:20"
+}{
+    "People": 11,
+    "Dwell-Time": 28,
+    "AlarmState": "Low",
+    "Name": "CheckIn-2",
+    "Time": "00:03:20"
+}{
+    "People": 15,
+    "Dwell-Time": 30,
+    "AlarmState": "Low",
+    "Name": "CheckIn-3",
+    "Time": "00:03:20"
+}{
+    "People": 19,
+    "Dwell-Time": 22,
+    "AlarmState": "Low",
+    "Name": "Immigration-1",
+    "Time": "00:03:20"
+}{
+    "People": 12,
+    "Dwell-Time": 55,
+    "AlarmState": "Low",
+    "Name": "Immigration-2",
+    "Time": "00:03:20"
+}{
+    "People": 18,
+    "Dwell-Time": 31,
+    "AlarmState": "Low",
+    "Name": "Immigration-3",
+    "Time": "00:03:20"
+}{
+    "People": 18,
+    "Dwell-Time": 56,
+    "AlarmState": "Low",
+    "Name": "Security-1",
+    "Time": "00:03:20"
+}{
+    "People": 17,
+    "Dwell-Time": 23,
+    "AlarmState": "Low",
+    "Name": "Security-2",
+    "Time": "00:03:20"
+}{
+    "People": 16,
+    "Dwell-Time": 16,
+    "AlarmState": "Low",
+    "Name": "Security-3",
+    "Time": "00:03:20"
+}{
+    "People": 17,
+    "Dwell-Time": 31,
+    "AlarmState": "Low",
+    "Name": "CheckIn-1",
+    "Time": "00:03:30"
+}{
+    "People": 20,
+    "Dwell-Time": 52,
+    "AlarmState": "Low",
+    "Name": "CheckIn-2",
+    "Time": "00:03:30"
+}{
+    "People": 16,
+    "Dwell-Time": 17,
+    "AlarmState": "Low",
+    "Name": "CheckIn-3",
+    "Time": "00:03:30"
+}{
+    "People": 16,
+    "Dwell-Time": 50,
+    "AlarmState": "Low",
+    "Name": "Immigration-1",
+    "Time": "00:03:30"
+}{
+    "People": 18,
+    "Dwell-Time": 10,
+    "AlarmState": "Low",
+    "Name": "Immigration-2",
+    "Time": "00:03:30"
+}{
+    "People": 11,
+    "Dwell-Time": 22,
+    "AlarmState": "Low",
+    "Name": "Immigration-3",
+    "Time": "00:03:30"
+}{
+    "People": 15,
+    "Dwell-Time": 40,
+    "AlarmState": "Low",
+    "Name": "Security-1",
+    "Time": "00:03:30"
+}{
+    "People": 16,
+    "Dwell-Time": 57,
+    "AlarmState": "Low",
+    "Name": "Security-2",
+    "Time": "00:03:30"
+}{
+    "People": 16,
+    "Dwell-Time": 14,
+    "AlarmState": "Low",
+    "Name": "Security-3",
+    "Time": "00:03:30"
+}{
+    "People": 19,
+    "Dwell-Time": 52,
+    "AlarmState": "Low",
+    "Name": "CheckIn-1",
+    "Time": "00:03:40"
+}{
+    "People": 13,
+    "Dwell-Time": 54,
+    "AlarmState": "Low",
+    "Name": "CheckIn-2",
+    "Time": "00:03:40"
+}{
+    "People": 17,
+    "Dwell-Time": 19,
+    "AlarmState": "Low",
+    "Name": "CheckIn-3",
+    "Time": "00:03:40"
+}{
+    "People": 11,
+    "Dwell-Time": 26,
+    "AlarmState": "Low",
+    "Name": "Immigration-1",
+    "Time": "00:03:40"
+}{
+    "People": 11,
+    "Dwell-Time": 28,
+    "AlarmState": "Low",
+    "Name": "Immigration-2",
+    "Time": "00:03:40"
+}{
+    "People": 18,
+    "Dwell-Time": 32,
+    "AlarmState": "Low",
+    "Name": "Immigration-3",
+    "Time": "00:03:40"
+}{
+    "People": 12,
+    "Dwell-Time": 56,
+    "AlarmState": "Low",
+    "Name": "Security-1",
+    "Time": "00:03:40"
+}{
+    "People": 15,
+    "Dwell-Time": 42,
+    "AlarmState": "Low",
+    "Name": "Security-2",
+    "Time": "00:03:40"
+}{
+    "People": 15,
+    "Dwell-Time": 21,
+    "AlarmState": "Low",
+    "Name": "Security-3",
+    "Time": "00:03:40"
+}{
+    "People": 14,
+    "Dwell-Time": 53,
+    "AlarmState": "Low",
+    "Name": "CheckIn-1",
+    "Time": "00:03:50"
+}{
+    "People": 18,
+    "Dwell-Time": 29,
+    "AlarmState": "Low",
+    "Name": "CheckIn-2",
+    "Time": "00:03:50"
+}{
+    "People": 20,
+    "Dwell-Time": 45,
+    "AlarmState": "Low",
+    "Name": "CheckIn-3",
+    "Time": "00:03:50"
+}{
+    "People": 11,
+    "Dwell-Time": 35,
+    "AlarmState": "Low",
+    "Name": "Immigration-1",
+    "Time": "00:03:50"
+}{
+    "People": 11,
+    "Dwell-Time": 48,
+    "AlarmState": "Low",
+    "Name": "Immigration-2",
+    "Time": "00:03:50"
+}{
+    "People": 13,
+    "Dwell-Time": 41,
+    "AlarmState": "Low",
+    "Name": "Immigration-3",
+    "Time": "00:03:50"
+}{
+    "People": 13,
+    "Dwell-Time": 57,
+    "AlarmState": "Low",
+    "Name": "Security-1",
+    "Time": "00:03:50"
+}{
+    "People": 11,
+    "Dwell-Time": 52,
+    "AlarmState": "Low",
+    "Name": "Security-2",
+    "Time": "00:03:50"
+}{
+    "People": 16,
+    "Dwell-Time": 16,
+    "AlarmState": "Low",
+    "Name": "Security-3",
+    "Time": "00:03:50"
+}{
+    "People": 3,
+    "Dwell-Time": 31,
+    "AlarmState": "Normal",
+    "Name": "CheckIn-1",
+    "Time": "00:04:00"
+}{
+    "People": 18,
+    "Dwell-Time": 50,
+    "AlarmState": "Normal",
+    "Name": "CheckIn-2",
+    "Time": "00:04:00"
+}{
+    "People": 2,
+    "Dwell-Time": 7,
+    "AlarmState": "Normal",
+    "Name": "CheckIn-3",
+    "Time": "00:04:00"
+}{
+    "People": 2,
+    "Dwell-Time": 16,
+    "AlarmState": "Normal",
+    "Name": "Immigration-1",
+    "Time": "00:04:00"
+}{
+    "People": 6,
+    "Dwell-Time": 55,
+    "AlarmState": "Normal",
+    "Name": "Immigration-2",
+    "Time": "00:04:00"
+}{
+    "People": 8,
+    "Dwell-Time": 31,
+    "AlarmState": "Normal",
+    "Name": "Immigration-3",
+    "Time": "00:04:00"
+}{
+    "People": 11,
+    "Dwell-Time": 34,
+    "AlarmState": "Normal",
+    "Name": "Security-1",
+    "Time": "00:04:00"
+}{
+    "People": 13,
+    "Dwell-Time": 7,
+    "AlarmState": "Normal",
+    "Name": "Security-2",
+    "Time": "00:04:00"
+}{
+    "People": 0,
+    "Dwell-Time": 7,
+    "AlarmState": "Normal",
+    "Name": "Security-3",
+    "Time": "00:04:00"
+}

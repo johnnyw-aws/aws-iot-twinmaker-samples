@@ -1,0 +1,36 @@
+{
+    "componentTypeId": "com.example.relationships.2",
+    "isSingleton": false,
+    "propertyDefinitions": {
+        "feed": {
+            "dataType": {
+                "nestedType": {
+                    "type": "RELATIONSHIP"
+                },
+                "type": "LIST"
+            },
+            "isExternalId": false,
+            "isFinal": false,
+            "isImported": false,
+            "isInherited": false,
+            "isRequiredInEntity": false,
+            "isStoredExternally": false,
+            "isTimeSeries": false
+        },
+        "feed2": {
+            "dataType": {
+                "nestedType": {
+                    "type": "RELATIONSHIP"
+                },
+                "type": "LIST"
+            },
+            "isExternalId": false,
+            "isFinal": false,
+            "isImported": false,
+            "isInherited": false,
+            "isRequiredInEntity": false,
+            "isStoredExternally": false,
+            "isTimeSeries": false
+        }
+    }
+}

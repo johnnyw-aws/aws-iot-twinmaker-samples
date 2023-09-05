@@ -27,14 +27,14 @@ data = []
 try:
    telemetryDataFileName = os.environ['TELEMETRY_DATA_FILE_NAME']
    if telemetryDataFileName is None or telemetryDataFileName.strip() == '':
-       telemetryDataFileName = 'demoTelemetryData.json'
+       telemetryDataFileName = 'demoTelemetryData2.json'
    print(f"telemetryDataFileName: {telemetryDataFileName}")
    with open(telemetryDataFileName, 'r') as f:
        lines = f.readlines()
        for line in lines:
            data.append(json.loads(line.strip()))
 except:
-   with open('demoTelemetryData.json', 'r') as f:
+   with open('demoTelemetryData2.json', 'r') as f:
        lines = f.readlines()
        for line in lines:
            data.append(json.loads(line.strip()))
@@ -45,16 +45,33 @@ df = pd.DataFrame(data)
 
 # re-mapping of entity names to entity_ids for CookieLine1 telemetry data
 simulatorName_to_entityId = {
-    "plasticLiner": "PLASTIC_LINER_a77e76bc-53f3-420d-8b2f-76103c810fac",
-    "boxErector": "BOX_ERECTOR_142496af-df2e-490e-aed5-2580eaf75e40",
-    "labelingBelt": "LABELING_BELT_5f98ffd2-ced1-48dd-a111-e3503b4e8532",
-    "freezingTunnel": "FREEZER_TUNNEL_e12e0733-f5df-4604-8f10-417f49e6d298",
-    "boxSealer": "BOX_SEALER_ad434a34-4363-4a36-8153-20bd7189951d",
-    "cookieFormer": "COOKIE_FORMER_19556bfd-469c-40bc-a389-dbeab255c144",
-    "conveyorRight": "CONVEYOR_RIGHT_TURN_c4f2df3d-26a2-45c5-a6c9-02ca00eb4af6",
-    "verticalConveyor": "VERTICAL_CONVEYOR_d5423f7f-379c-4a97-aae0-3a5c0bcc9116",
-    "conveyorLeft": "CONVEYOR_LEFT_TURN_b28f2ca9-b6a7-44cd-a62d-7f76fc17ba45",
-    "conveyorStraight": "CONVEYOR_STRIGHT_9c62c546-f8ef-489d-9938-d46a12c97f32",
+    "CheckIn-1": 'ed6ee472-c43e-402d-8d17-78ff2130f046',
+    "CheckIn-2": 'e5b58a7d-a97e-498b-ac25-f4711bb25800',
+    "CheckIn-3": '1ab8b859-c062-4955-b775-c7127c675fe1',
+    "Security-1": '3823faed-3815-469e-ba43-d02c253fcdc6',
+    "Security-2": '308154ec-4339-46f9-b1b8-5f2de98d1fb7',
+    "Security-3": 'ca934781-394a-46fa-a68a-6c1267ec3d82',
+    "Immigration-1": 'e1c17ea8-a68e-43eb-92e9-05979d7c74b8',
+    "Immigration-2": '579ceee7-b30b-422e-a10b-8c33b4521317',
+    "Immigration-3": 'e1ac9f3a-3703-4de2-903c-28c946b208ba',
+    "GATE": 'b4049f6f-2224-4ef8-b3e5-5e9b9136d66b',
+    "GATE2": '00f01643-9672-46be-bc33-94b83d8f0865',
+    "ESCALATOR1": '5f6bae83-1954-420a-ab19-8162800fa529',
+    "ESCALATOR2": '8573db7b-c03c-41f4-943e-f57addba9677',
+    "SOLAR1": 'a6638173-8ffa-4653-b329-e1be7112d4dd',
+    "KIOSKGROUP1": '644fdebf-5c23-4b10-a6f4-2c58fe110be3',
+    "KIOSKGROUP2": '250cc029-aa7b-4810-924e-523c800e2e3c',
+    "KIOSKGROUP3": '703d78f1-38d0-44b6-bafe-54551a9d6c07',
+    "KIOSKGROUP4": '4cfa7561-a893-4220-b432-15495020222b',
+    "AIRCRAFTARRIVAL": 'a31d3c52-b5fe-492f-9bec-5617646d6cc2',
+    "DEBOARDING": 'd64414d1-bccd-49f8-9382-97c54ff3ea66',
+    "FUELING": '4b85e473-e1fe-44f1-acce-a6d835bd45c0',
+    "CATERING": '41ef2138-2d20-45c4-8a3b-3c329ae58e86', 
+    "CLEANING": '977a540d-936f-4bfa-9a71-7a66d7f150ea',
+    "BOARDING": 'd8e53a64-c202-40f6-aeb1-733ac9222cdd',
+    "UNLOADING": '8958e6fc-97b9-4c6c-9f7d-0fe34f797375',
+    "LOADING": 'feca186d-caeb-4c74-bfc8-8908320b4154',
+    "READYTAKEOFF": 'f79de777-59ca-41d4-b99d-383c1da1f765'
 }
 def remap_ids(row):
     return simulatorName_to_entityId[row['Name']]
@@ -85,7 +102,7 @@ class RenderIoTTwinMakerDataRow(IoTTwinMakerDataRow):
         # Note: this synthetic data generator is currently specific to CookieLine
         return IoTTwinMakerReference(ecp=EntityComponentPropertyRef(
             entity_id=self.entity_id,
-            component_name='CookieLineComponent',
+            component_name='AirportDataComponent',
             property_name=self.property_name
         ))
 

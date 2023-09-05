@@ -1,0 +1,57 @@
+{
+    "componentTypeId": "com.example.airport.passengerflow",
+    "extendsFrom": [
+        "com.amazon.iottwinmaker.alarm.basic",
+        "com.example.synthetic-telemetry"
+    ],
+    "functions": {
+        "dataReader": {
+            "implementedBy": {
+                "isNative": false,
+                "lambda": {
+                    "arn": "__TO_FILL_IN_SYNTHETIC_DATA_ARN__"
+                }
+            },
+            "isInherited": true
+        }
+    },
+    "isSingleton": false,
+    "propertyDefinitions": {
+        "AlarmState": {
+            "dataType": {
+                "type": "STRING"
+            },
+            "isExternalId": false,
+            "isFinal": false,
+            "isImported": false,
+            "isInherited": false,
+            "isRequiredInEntity": false,
+            "isStoredExternally": true,
+            "isTimeSeries": true
+        },
+        "People": {
+            "dataType": {
+                "type": "INTEGER"
+            },
+            "isExternalId": false,
+            "isFinal": false,
+            "isImported": false,
+            "isInherited": false,
+            "isRequiredInEntity": false,
+            "isStoredExternally": true,
+            "isTimeSeries": true
+        },
+        "Dwell-Time": {
+            "dataType": {
+                "type": "INTEGER"
+            },
+            "isExternalId": false,
+            "isFinal": false,
+            "isImported": false,
+            "isInherited": false,
+            "isRequiredInEntity": false,
+            "isStoredExternally": true,
+            "isTimeSeries": true
+        }
+    }
+}
