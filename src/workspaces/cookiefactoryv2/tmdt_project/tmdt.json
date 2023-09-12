@@ -3,7 +3,9 @@
     "component_types": [
         "com.example.relationships.json",
         "com.example.relationships.2.json",
-        "com.example.relationships.3.json"
+        "com.example.relationships.3.json",
+        "com.example.airport.passengerflow.json",
+        "com.example.synthetic-telemetry.json"
     ],
     "scenes": [
         "Simulator1-Entities.json"

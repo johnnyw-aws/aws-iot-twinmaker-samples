@@ -177,7 +177,6 @@ export class TmdtApplication extends Construct {
 
             // remove fields from materialized TMDT entity snapshot that are not allowed when calling create entity (such as definitions from component-type)
             if (componentsDetails != undefined) {
-                console.log('componentsDetails', componentsDetails); // FIXME remove
                 filteredComponentDetails = Object.entries(componentsDetails).reduce((acc, [componentName, componentDetail]) => {
                     if (componentDetail['properties'] != undefined) {
                         var propertiesDetails = componentDetail['properties'] as object;

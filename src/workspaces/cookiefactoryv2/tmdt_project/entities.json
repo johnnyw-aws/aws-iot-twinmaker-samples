@@ -578,7 +578,7 @@
                 }
             },
             "AirportDataComponent": {
-                "componentTypeId": "com.example.airport.passengerflow.json"
+                "componentTypeId": "com.example.airport.passengerflow"
             }
         },
         "description": "",
@@ -671,7 +671,7 @@
                 }
             },
             "AirportDataComponent": {
-                "componentTypeId": "com.example.airport.passengerflow.json"
+                "componentTypeId": "com.example.airport.passengerflow"
             }
         },
         "description": "",
@@ -707,7 +707,7 @@
                 }
             },
             "AirportDataComponent": {
-                "componentTypeId": "com.example.airport.passengerflow.json"
+                "componentTypeId": "com.example.airport.passengerflow"
             }
         },
         "description": "",
@@ -743,7 +743,7 @@
                 }
             },
             "AirportDataComponent": {
-                "componentTypeId": "com.example.airport.passengerflow.json"
+                "componentTypeId": "com.example.airport.passengerflow"
             }
         },
         "description": "",
@@ -779,7 +779,7 @@
                 }
             },
             "AirportDataComponent": {
-                "componentTypeId": "com.example.airport.passengerflow.json"
+                "componentTypeId": "com.example.airport.passengerflow"
             }
         },
         "description": "",
@@ -940,7 +940,7 @@
                 }
             },
             "AirportDataComponent": {
-                "componentTypeId": "com.example.airport.passengerflow.json"
+                "componentTypeId": "com.example.airport.passengerflow"
             }
         },
         "description": "",
@@ -1303,7 +1303,7 @@
                 }
             },
             "AirportDataComponent": {
-                "componentTypeId": "com.example.airport.passengerflow.json"
+                "componentTypeId": "com.example.airport.passengerflow"
             }
         },
         "description": "",
@@ -1339,7 +1339,7 @@
                 }
             },
             "AirportDataComponent": {
-                "componentTypeId": "com.example.airport.passengerflow.json"
+                "componentTypeId": "com.example.airport.passengerflow"
             }
         },
         "description": "",
@@ -1500,7 +1500,7 @@
                 }
             },
             "AirportDataComponent": {
-                "componentTypeId": "com.example.airport.passengerflow.json"
+                "componentTypeId": "com.example.airport.passengerflow"
             }
         },
         "description": "",
