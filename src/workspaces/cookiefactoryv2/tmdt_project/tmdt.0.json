@@ -6,10 +6,16 @@
         "com.example.relationships.3.json"
     ],
     "scenes": [
+        "Simulator1-Entities-PassengerFlow.json",
+        "Simulator1-copy.json",
+        "Simulator1.json",
+        "Simulator1-Entities-BMS.json",
+        "Simulator1-Entities-Gates.json",
+        "Airport-BMS.json",
         "Simulator1-Entities.json"
     ],
     "models": [
-        "3d_models/no-arrows-people.glb"
+        "no-arrows-people.glb"
     ],
     "entities": "entities.json"
 }

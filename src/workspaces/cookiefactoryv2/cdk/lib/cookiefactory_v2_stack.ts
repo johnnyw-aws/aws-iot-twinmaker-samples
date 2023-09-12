@@ -177,22 +177,29 @@ export class TmdtApplication extends Construct {
 
             // remove fields from materialized TMDT entity snapshot that are not allowed when calling create entity (such as definitions from component-type)
             if (componentsDetails != undefined) {
+                console.log('componentsDetails', componentsDetails); // FIXME remove
                 filteredComponentDetails = Object.entries(componentsDetails).reduce((acc, [componentName, componentDetail]) => {
-                    var propertiesDetails = componentDetail['properties'] as object;
-                    var filteredProperties = Object.entries(propertiesDetails).reduce((propertiesAccumulator, [propName, propDetail]) => {
-                        if (propDetail.hasOwnProperty("value") && propDetail['value'] != undefined) {
-                            propertiesAccumulator[propName] = {
-                                "value": propDetail['value']
-                            };
-                        }
-                        return propertiesAccumulator;
-                    }, {} as { [key: string]: object });
+                    if (componentDetail['properties'] != undefined) {
+                        var propertiesDetails = componentDetail['properties'] as object;
+                        var filteredProperties = Object.entries(propertiesDetails).reduce((propertiesAccumulator, [propName, propDetail]) => {
+                            if (propDetail.hasOwnProperty("value") && propDetail['value'] != undefined) {
+                                propertiesAccumulator[propName] = {
+                                    "value": propDetail['value']
+                                };
+                            }
+                            return propertiesAccumulator;
+                        }, {} as { [key: string]: object });
 
-                    // process
-                    acc[componentName] = {
-                        'componentTypeId': componentDetail['componentTypeId'],
-                        'properties': filteredProperties,
-                    };
+                        acc[componentName] = {
+                            'componentTypeId': componentDetail['componentTypeId'],
+                            'properties': filteredProperties,
+                        };
+                    } else {
+                        acc[componentName] = {
+                            'componentTypeId': componentDetail['componentTypeId'],
+                        };
+                    }
+
                     return acc;
                 }, {} as { [key: string]: object });
             } else {
@@ -270,17 +277,19 @@ export class TmdtApplication extends Construct {
             assetMap[model] = modelAsset.s3ObjectUrl;
         }
 
-        for (var data of tmdtConfig['data']) {
-            verbose.log(`data: ${JSON.stringify(data)}`);
-            verbose.log(`props.tmdtRoot: ${props.tmdtRoot}`);
-            const dataFilePath = path.join(props.tmdtRoot, data['source']);
-            verbose.log(`dataFilePath: ${dataFilePath}`);
-            const dataName = path.basename(dataFilePath);
-            var dataAsset = new assets.Asset(this, `${dataName}-asset`, {
-                path: dataFilePath,
-            });
-            assetsBucket = dataAsset.s3BucketName;
-            assetMap[data['source']] = dataAsset.s3ObjectUrl;
+        if (tmdtConfig['data'] != undefined) {
+            for (var data of tmdtConfig['data']) {
+                verbose.log(`data: ${JSON.stringify(data)}`);
+                verbose.log(`props.tmdtRoot: ${props.tmdtRoot}`);
+                const dataFilePath = path.join(props.tmdtRoot, data['source']);
+                verbose.log(`dataFilePath: ${dataFilePath}`);
+                const dataName = path.basename(dataFilePath);
+                var dataAsset = new assets.Asset(this, `${dataName}-asset`, {
+                    path: dataFilePath,
+                });
+                assetsBucket = dataAsset.s3BucketName;
+                assetMap[data['source']] = dataAsset.s3ObjectUrl;
+            }
         }
         verbose.log(`assetMap: ${assetMap}`);
 
