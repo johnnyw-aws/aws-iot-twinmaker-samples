@@ -24,7 +24,8 @@ trap 'echo "******* FAILED *******" 1>&2' ERR
 export WS_S3_BUCKET=twinmaker-cfv3-$AWS_DEFAULT_REGION-$CDK_DEFAULT_ACCOUNT-$(echo "$WORKSPACE_ID" | tr '[:upper:]' '[:lower:]')
 echo "WS_S3_BUCKET: ${WS_S3_BUCKET}"
 
-aws ecr-public get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin public.ecr.aws
+# GetAuthorizationToken command is only supported in us-east-1
+aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws
 
 npm install
 
