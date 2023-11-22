@@ -10,7 +10,7 @@ This README walks you through setting up the optional AI assistant for the Baker
   export WORKSPACE_ID=__FILL_IN__
   ```
 
-- Prepare environment (run from the same directory as this README)
+- Prepare environment (run from the same directory as this README). Note: can take 10-20 minutes for chainlit to build.
   ```shell
   cd assistant && ./install.sh
   ```
