@@ -344,7 +344,7 @@ export class TmdtApplication extends Construct {
             index: 'data_resource_handler.py',
             memorySize: 256,
             role: iottwinmakerDataCustomResourceLifecycleExecutionRole,
-            runtime: lambda.Runtime.PYTHON_3_7,
+            runtime: lambda.Runtime.PYTHON_3_10,
             timeout: cdk.Duration.minutes(15),
             logRetention: logs.RetentionDays.ONE_DAY,
         });
@@ -525,7 +525,7 @@ export class CookieFactoryV2Stack extends cdk.Stack {
             index: 'udq_data_reader.py',
             memorySize: 256,
             role: timestreamUdqRole,
-            runtime: lambda.Runtime.PYTHON_3_7,
+            runtime: lambda.Runtime.PYTHON_3_10,
             timeout: cdk.Duration.minutes(15),
             logRetention: logs.RetentionDays.ONE_DAY,
             environment: {
@@ -553,7 +553,7 @@ export class CookieFactoryV2Stack extends cdk.Stack {
             index: 'synthetic_udq_reader.py',
             memorySize: 256,
             role: timestreamUdqRole,
-            runtime: lambda.Runtime.PYTHON_3_7,
+            runtime: lambda.Runtime.PYTHON_3_10,
             timeout: cdk.Duration.minutes(15),
             logRetention: logs.RetentionDays.ONE_DAY,
             environment: {
