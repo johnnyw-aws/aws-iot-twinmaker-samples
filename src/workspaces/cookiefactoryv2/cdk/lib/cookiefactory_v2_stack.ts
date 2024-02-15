@@ -338,6 +338,7 @@ export class TmdtApplication extends Construct {
             layers: [
                 new lambdapython.PythonLayerVersion(this, 'opencv_lambda_layer', {
                     entry: path.join(sample_libs_root, 'opencv_utils'),
+                    compatibleRuntimes: [lambda.Runtime.PYTHON_3_10],
                 }),
             ],
             handler: "handler",
@@ -492,6 +493,7 @@ export class CookieFactoryV2Stack extends cdk.Stack {
         // lambda layer for helper utilities for implementing UDQ Lambdas
         const udqHelperLayer = new lambdapython.PythonLayerVersion(this, 'udq_utils_layer', {
             entry: path.join(sample_libs_root, "udq_helper_utils"),
+            compatibleRuntimes: [lambda.Runtime.PYTHON_3_10]
         });
 
         //region - sample infrastructure content for telemetry data in Timestream
