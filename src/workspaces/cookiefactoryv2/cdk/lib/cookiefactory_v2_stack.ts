@@ -538,7 +538,7 @@ export class CookieFactoryV2Stack extends cdk.Stack {
         //region - sample infrastructure content for synthetic cookieline telemetry data
         // https://aws-sdk-pandas.readthedocs.io/en/stable/layers.html
         const pandasLayer = lambda.LayerVersion.fromLayerVersionArn(this,
-          'awsPandasLayer', `arn:aws:lambda:${this.region}:336392948345:layer:AWSSDKPandas-Python37:5`)
+          'awsPandasLayer', `arn:aws:lambda:${this.region}:336392948345:layer:AWSSDKPandas-Python310:11`)
 
         // synthetic data lambda
         const syntheticDataUDQ = new lambdapython.PythonFunction(this, 'syntheticDataUDQ', {

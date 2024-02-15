@@ -558,7 +558,7 @@ export class CookieFactoryV3Stack extends cdk.Stack {
         //region - sample infrastructure content for synthetic cookieline telemetry data
         // https://aws-sdk-pandas.readthedocs.io/en/stable/layers.html
         const pandasLayer = lambda.LayerVersion.fromLayerVersionArn(this,
-          'awsPandasLayer', `arn:aws:lambda:${this.region}:336392948345:layer:AWSSDKPandas-Python37:5`)
+          'awsPandasLayer', `arn:aws:lambda:${this.region}:336392948345:layer:AWSSDKPandas-Python310:11`)
 
         var telemetryDataAsset = new assets.Asset(this, `demo-data-asset`, {
             path: path.join(cookiefactoryv3_root, "cdk", "synthetic_replay_connector", "data.csv"),
