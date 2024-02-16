@@ -1,2 +1,3 @@
 opencv-python==4.7.0.72
 requests==2.31.0
+urllib3<2
